@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zemyst</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #2563eb;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #fff;
+            color: #333;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+			justify-content: space-between;
+            padding: 4rem 2rem;
+			max-width: 1200px;
+			margin: 0 auto;
+        }
+
+        .about-text,.about-image {
+			flex:1;
+        }
+		.about-text{
+			text-align: left;
+		}
+        .about-image {
+            background: #f8f9fa;
+            overflow: hidden;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-image .placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+            font-size: 1.2rem;
+        }
+
+        /* Products Section */
+        .products {
+            background: #f8f9fa;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            height: 200px;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-image .placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .product-description {
+            color: #666;
+            line-height: 1.6;
+        }
+		/* Impact Section */
+		#impact {
+		    padding: 80px 0;
+		    max-width: 1200px;
+		    margin: 0 auto;
+		    text-align: center;
+		}
+
+		#impact h2 {
+		    font-size: 2.5rem;
+		    margin-bottom: 2rem;
+		    color: #333;
+		}
+
+		#impact p {
+		    font-size: 1.2rem;
+		    color: #666;
+		    line-height: 1.8;
+		    max-width: 800px;
+		    margin: 0 auto 2rem;
+		}
+
+		#impact img {
+		    max-width: 100%;
+		    height: auto;
+		    border-radius: 20px;
+		    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+		    margin-top: 2rem;
+		}
+
+		/* Responsive for smaller screens */
+		@media (max-width: 768px) {
+		    #impact h2 {
+		        font-size: 2rem;
+		    }
+
+		    #impact p {
+		        font-size: 1rem;
+		        padding: 0 1rem;
+		    }
+		}
+		@media (max-width: 768px) {
+		    /* Nav */
+		    .nav-menu {
+		        display: none;
+		    }
+
+		    /* Hero section adjustments */
+		    .hero-inner {
+		        flex-direction: column;
+		        text-align: center;
+		    }
+
+		    .hero-content {
+		        text-align: center;
+		    }
+
+		    .hero h1 {
+		        font-size: 2rem;
+		        margin-bottom: 0.75rem;
+		    }
+
+		    .hero p {
+		        font-size: 1rem;
+		        margin-bottom: 1.5rem;
+		    }
+
+		    .cta-button {
+		        padding: 0.75rem 1.5rem;
+		        font-size: 1rem;
+		    }
+
+		    .hero-image-container {
+		        width: 100%;
+		        margin-top: 1rem;
+		    }
+
+		    /* Section title */
+		    .section-title {
+		        font-size: 2rem;
+		    }
+
+		    /* About section */
+		    .about-content {
+		        flex-direction: column;
+		        padding: 2rem 1rem;
+		    }
+
+		    .about-text {
+		        text-align: center;
+		    }
+
+		    .about-text p {
+		        font-size: 1rem;
+		    }
+
+		    /* Product cards */
+		    .products-grid {
+		        grid-template-columns: 1fr;
+		        padding: 0 1rem;
+		    }
+
+		    .product-title {
+		        font-size: 1.2rem;
+		    }
+
+		    .product-description {
+		        font-size: 1rem;
+		    }
+
+		    /* Testimonials */
+		    .testimonials-grid {
+		        grid-template-columns: 1fr;
+		        padding: 0 1rem;
+		    }
+
+		    .testimonial-message {
+		        font-size: 1rem;
+		    }
+
+		    /* Blog cards */
+		    .blog-grid {
+		        grid-template-columns: 1fr;
+		        padding: 0 1rem;
+		    }
+
+		    .blog-title {
+		        font-size: 1.2rem;
+		    }
+
+		    .blog-excerpt {
+		        font-size: 1rem;
+		    }
+			@media (max-width: 768px) {
+			  .blog-image {
+			    height: 150px;
+			  }
+			}
+
+		    /* Impact section */
+		    #impact h2 {
+		        font-size: 2rem;
+		    }
+
+		    #impact p {
+		        font-size: 1rem;
+		        padding: 0 1rem;
+		    }
+
+		    /* Contact section */
+		    .contact-links {
+		        flex-direction: column;
+		        align-items: center;
+		    }
+
+		    .contact-content {
+		        padding: 2rem 1rem;
+		    }
+
+		    .contact-link {
+		        width: 100%;
+		        text-align: center;
+		    }
+		}
+
+		.contact-intro {
+		  font-size: 1.2rem;
+		  margin-bottom: 2rem;
+		}
+
+		@media (min-width: 769px) {
+		    .about-content {
+		        grid-template-columns: 1fr 1fr;
+		    }
+
+		    .about-content.swap {
+		        direction: rtl;
+		    }
+
+		    .about-content.swap > * {
+		        direction: ltr;
+		    }
+		}
+		@media (max-width: 768px) {
+		    .about-content {
+		        flex-direction: column;
+		    }
+
+		    .about-image {
+		        order: 2;
+		    }
+
+		    .about-text {
+		        order: 1;
+		    }
+		}
+
+
+
+
+        /* Testimonials Section */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #e9ecef;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .testimonial-avatar .placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+        }
+
+        .testimonial-message {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .testimonial-position {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Blog Section */
+        .blog {
+            background: #f8f9fa;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            height: 200px;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-image .placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+        }
+		.contact-image {
+		    max-width: 100%;
+		    border-radius: 10px;
+		    margin-top: 20px;
+		}
+		.placeholder {
+		    background: #f3f3f3;
+		    color: #666;
+		    padding: 30px;
+		    text-align: center;
+		    border: 1px dashed #ccc;
+		    margin-top: 20px;
+		}
+		.hero-inner {
+		    display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		    gap: 2rem;
+		    max-width: 1200px;
+		    margin: 0 auto;
+		    padding: 0 2rem;
+		}
+
+		.hero-content {
+		    flex: 1;
+		    text-align: left;
+		}
+
+		.hero-image-container {
+		    flex: 1;
+		}
+
+		.hero-image-container img {
+		    width: 100%;
+		    height: auto;
+		    border-radius: 20px;
+		    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+		}
+
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+		.contact-wrapper {
+		  display: flex;
+		  align-items: flex-start;
+		  justify-content: center;
+		  flex-wrap: wrap;
+		  margin-top: 2rem;
+		}
+
+		.contact-details p {
+		  margin-bottom: 1rem;
+		  font-size: 1.1rem;
+		}
+		.contact-details {
+		  flex: 1;
+		  min-width: 250px;
+		  text-align: left;
+		  padding: 0;
+		}
+
+		#contact-image-container {
+		  flex: 0 0 auto;
+		  display: flex;
+		  justify-content: center;
+		}
+
+		#contact-image-container img {
+		  max-width: 250px;
+		  width: 100%;
+		  border-radius: 10px;
+		  margin-top: 20px;
+		  transform: translate(-20px, -40px);
+		}
+
+		/* Mobile responsiveness */
+		@media (max-width: 768px) {
+		  .contact-wrapper {
+		    flex-direction: column;
+			align-items: center;
+		    text-align: center;
+		  }
+
+		  .contact-details {
+		    text-align: center;
+		  }
+
+		  #contact-image-container {
+		    justify-content: center;
+		  }
+		}
+
+        .contact {
+            background: #333;
+            color: white;
+            text-align: center;
+        }
+		#contact-details {
+		  text-align: center;
+		}
+
+
+        .contact-content {
+            padding: 0 2rem;
+        }
+        .no-data {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 2rem;
+            color: #999;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+		.hamburger {
+		    display: none;
+		    font-size: 2rem;
+		    cursor: pointer;
+		}
+
+		@media (max-width: 768px) {
+		    .nav-menu {
+		        display: none;
+		        flex-direction: column;
+		        position: absolute;
+		        top: 70px;
+		        right: 0;
+		        background: white;
+		        width: 200px;
+		        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+		        padding: 1rem;
+		        z-index: 1001;
+		    }
+
+		    .nav-menu.active {
+		        display: flex;
+		    }
+
+		    .nav-menu li {
+		        margin: 1rem 0;
+		    }
+
+		    .hamburger {
+		        display: block;
+		    }
+		}
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Zemyst</div>
+            <nav>
+				<div class="hamburger" onclick="toggleMobileMenu()">&#9776;</div>
+				    <ul class="nav-menu">
+				        <li><a href="#home">Home</a></li>
+				        <li><a href="#about">About</a></li>
+				        <li><a href="#products">Products</a></li>
+				        <li><a href="#testimonials">Testimonials</a></li>
+				        <li><a href="#blog">Blog</a></li>
+				        <li><a href="#contact">Contact</a></li>
+				    </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Section -->
+	<section id="home" class="hero">
+	    <div class="hero-inner">
+	        <div class="hero-content">
+	            <h1 th:text="${homeSection != null ? homeSection.content : 'Welcome to Our Platform'}"></h1>
+	            <p>Discover amazing products and services tailored for you</p>
+	            <a href="#products" class="cta-button">Get Started</a>
+	        </div>
+	        <div th:if="${homeSection != null and homeSection.hasImage}" class="hero-image-container">
+	            <img th:src="@{'/api/images/section/' + ${homeSection.id}}" alt="Home Image">
+	        </div>
+	    </div>
+	</section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+		<h2 class="section-title">About Us</h2>
+		    <div class="about-content">
+		        <div class="about-image">
+		            <img th:if="${aboutSection != null and aboutSection.hasImage}"
+		                 th:src="@{'/api/images/section/' + ${aboutSection.id}}"
+		                 alt="About Image" />
+
+		            <div class="placeholder" th:if="${aboutSection == null or !aboutSection.hasImage}">
+		                Supporting Image
+		            </div>
+		        </div>
+		        <div class="about-text">
+		            <p th:text="${aboutSection != null ? aboutSection.content : 'We are a leading company dedicated to providing exceptional products and services to our customers.'}">
+		                We are a leading company dedicated to providing exceptional products and services to our customers.
+		            </p>
+		        </div>
+		    </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="section products">
+        <h2 class="section-title">Our Products & Services</h2>
+        <div class="products-grid">
+            <div th:if="${#lists.isEmpty(products)}" class="no-data">
+                No products available
+            </div>
+            <div th:each="product : ${products}" class="product-card">
+				<div class="product-image">
+				    <img th:if="${product.hasImage}" 
+				         th:src="@{'/api/images/product/' + ${product.id}}" 
+				         th:alt="${product.name}"
+				         style="display: block;"
+				         onload="this.nextElementSibling.style.display='none';"
+				         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+				    <div class="placeholder" th:style="${product.hasImage} ? 'display: none;' : 'display: block;'">
+				        Product Image
+				    </div>
+				</div>
+                <div class="product-content">
+                    <h3 class="product-title" th:text="${product.name}">Product Name</h3>
+                    <p class="product-description" th:text="${product.description}">Product Description</p>
+                </div>
+            </div>
+        </div>
+    </section>
+	
+	<!--impact section -->
+	<section id="impact" class="my-12 text-center">
+	    <h2 class="text-3xl font-bold mb-4">Our Impact</h2>
+	    <p th:text="${impactSection.content}"></p>
+	    
+	    <div class="mt-4" th:if="${impactSection.hasImage}">
+	        <img th:src="@{'/api/images/section/' + ${impactSection.id}}" alt="Impact Image" class="mx-auto rounded-lg shadow-lg">
+	    </div>
+	</section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <div class="testimonials-grid">
+            <div th:if="${#lists.isEmpty(testimonials)}" class="no-data">
+                No testimonials available
+            </div>
+            <div th:each="testimonial : ${testimonials}" class="testimonial-card">
+                <div class="testimonial-avatar">
+                    <img th:if="${testimonial.hasImage}" 
+                         th:src="@{'/api/images/testimonial/' + ${testimonial.id}}" 
+                         th:alt="${testimonial.name}"
+                         style="display: block;"
+                         onload="this.nextElementSibling.style.display='none';"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                    <div class="placeholder" th:style="${testimonial.hasImage} ? 'display: none;' : 'display: block;'">
+                        <span th:text="${#strings.substring(testimonial.name,0,1).toUpperCase()}">A</span>
+                    </div>
+                </div>
+                <p class="testimonial-message" th:text="'&quot;' + ${testimonial.message} + '&quot;'">"Testimonial message"</p>
+                <div class="testimonial-name" th:text="${testimonial.name}">Client Name</div>
+                <div class="testimonial-position" th:text="${testimonial.position}">Position</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="section blog">
+        <h2 class="section-title">Latest Blog Posts</h2>
+        <div class="blog-grid">
+            <div th:if="${#lists.isEmpty(blogPosts)}" class="no-data">
+                No blog posts available
+            </div>
+            <div th:each="post : ${blogPosts}" class="blog-card">
+                <div class="blog-image">
+                    <img th:if="${post.hasImage}" 
+                         th:src="@{'/api/images/blog/' + ${post.id}}" 
+                         th:alt="${post.title}"
+                         style="display: block;"
+                         onload="this.nextElementSibling.style.display='none';"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                    <div class="placeholder" th:style="${post.hasImage} ? 'display: none;' : 'display: block;'">
+                        Blog Image
+                    </div>
+                </div>
+                <div class="blog-content">
+                    <h3 class="blog-title" th:text="${post.title}">Blog Title</h3>
+                    <p class="blog-excerpt" th:text="${post.content}">Blog excerpt</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+	<section id="contact" class="section contact">
+	  <h2 class="section-title">Get In Touch</h2>
+	  <p class="contact-intro">Contact us today!</p>
+	  <div class="contact-wrapper">
+	    <div id="contact-details" class="contact-details">
+			<p><strong>Email:</strong> <a id="contact-email" href=""></a></p>
+	      <p><strong>Phone:</strong> <a id="contact-phone" href=""></a></p>
+	    </div>
+	    <div id="contact-image-container"></div>
+	  </div>
+	</section>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+		async function loadContact() {
+		  try {
+		    const response = await fetch('/sections/contact');
+		    if (!response.ok) {
+		      throw new Error('Failed to fetch contact info');
+		    }
+
+		    const contact = await response.json();
+
+		    if (contact.contactInfo) {
+				const emailLink = document.getElementById('contact-email');
+				  emailLink.textContent = contact.contactInfo.email;
+				  emailLink.href = 'mailto:' + contact.contactInfo.email;
+
+				  const phoneLink = document.getElementById('contact-phone');
+				    phoneLink.textContent = contact.contactInfo.phone;
+				    phoneLink.href = 'tel:' + contact.contactInfo.phone;
+		    }
+
+		    if (contact.hasImage) {
+		      document.getElementById('contact-image-container').innerHTML = `
+		        <img src="/api/images/section/${contact.id}" alt="Contact Image" class="contact-image">
+		      `;
+		    } else {
+		      document.getElementById('contact-image-container').innerHTML = `<div class="placeholder">Contact Image</div>`;
+		    }
+
+		  } catch (error) {
+		    console.error('Error loading contact info:', error);
+		  }
+		}
+
+
+		window.addEventListener('load', loadContact);
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Debug function to check image loading
+        function checkImageStatus() {
+            const images = document.querySelectorAll('img[src*="/api/images/"]');
+            images.forEach(img => {
+                console.log('Image:', img.src, 'Status:', img.complete ? 'Loaded' : 'Loading');
+                if (!img.complete) {
+                    img.onload = () => console.log('Image loaded:', img.src);
+                    img.onerror = () => console.log('Image failed:', img.src);
+                }
+            });
+        }
+		function toggleMobileMenu() {
+		    const navMenu = document.querySelector('.nav-menu');
+		    navMenu.classList.toggle('active');
+		}
+
+
+        // Check image status after page load
+        window.addEventListener('load', checkImageStatus);
+    </script>
+</body>
+</html>

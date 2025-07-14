@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Content Management</title>
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .admin-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-header .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .section-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+		.blog-image {
+		    width: 100%;
+		    aspect-ratio: 16 / 9;
+		    object-fit: cover;
+		    border-radius: 8px;
+		    margin-bottom: 1rem;
+		    display: block;
+		}
+		.item-image {
+		    width: 100%;
+		    aspect-ratio: 16 / 9;
+		    object-fit: cover;
+		    object-position: top center; /* moves crop to favor top */
+		    border-radius: 8px;
+		    margin-bottom: 1rem;
+		    display: block;
+		}
+
+
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .file-input {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input label {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin-bottom: 0;
+        }
+
+        .file-input label:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 5px 15px rgba(81, 207, 102, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffd43b 0%, #fab005 100%);
+            color: #333;
+        }
+
+        .btn-warning:hover {
+            box-shadow: 0 5px 15px rgba(255, 212, 59, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .item-actions .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+		.current-image {
+		  max-width: 300px;
+		  height: auto;
+		  display: block;
+		  margin: 1rem 0;
+		  border-radius: 12px;
+		  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		}
+
+        .current-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .password-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .password-section h3 {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        /* Inline editing styles */
+        .edit-mode {
+            border: 2px dashed #667eea;
+            background: #f8f9ff;
+        }
+
+        .edit-form {
+            display: none;
+        }
+
+        .edit-form.active {
+            display: block;
+        }
+
+        .view-mode {
+            display: block;
+        }
+
+        .view-mode.hidden {
+            display: none;
+        }
+
+        .edit-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .edit-actions .btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 0 0.5rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                margin-bottom: 0.5rem;
+            }
+            
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div class="user-info">
+            <div>
+                <h1>Admin Panel</h1>
+                <p>Content Management System</p>
+            </div>
+            <a href="/admin/logout" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('sections')">Sections</button>
+            <button class="tab" onclick="switchTab('products')">Products</button>
+            <button class="tab" onclick="switchTab('testimonials')">Testimonials</button>
+            <button class="tab" onclick="switchTab('blog')">Blog Posts</button>
+            <button class="tab" onclick="switchTab('settings')">Settings</button>
+        </div>
+
+        <!-- Sections Tab -->
+        <div id="sections" class="tab-content active">
+            <div id="sections-loading" class="loading">Loading sections...</div>
+            <div id="sections-content"></div>
+        </div>
+
+        <!-- Products Tab -->
+        <div id="products" class="tab-content">
+            <div class="section-card">
+                <h3>Add New Product</h3>
+                <form id="new-product-form">
+                    <div class="form-group">
+                        <label for="new-product-name">Product Name</label>
+                        <input type="text" id="new-product-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-product-description">Description</label>
+                        <textarea id="new-product-description" name="description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Image</label>
+                        <div class="file-input">
+                            <input type="file" id="new-product-image" name="image" accept="image/*">
+                            <label for="new-product-image">Choose Image or drag here</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Add Product</button>
+                </form>
+            </div>
+            <div id="products-loading" class="loading">Loading products...</div>
+            <div id="products-content"></div>
+        </div>
+
+        <!-- Testimonials Tab -->
+        <div id="testimonials" class="tab-content">
+            <div id="testimonials-loading" class="loading">Loading testimonials...</div>
+            <div id="testimonials-content"></div>
+        </div>
+
+        <!-- Blog Tab -->
+        <div id="blog" class="tab-content">
+            <div id="blog-loading" class="loading">Loading blog posts...</div>
+            <div id="blog-content"></div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+            <div class="password-section">
+                <h3>Change Password</h3>
+                <form id="password-form">
+                    <div class="form-group">
+                        <label for="new-password">New Password</label>
+                        <input type="password" id="new-password" name="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentData = {};
+
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSections();
+            loadProducts();
+            loadTestimonials();
+            loadBlogPosts();
+            setupEventListeners();
+        });
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function setupEventListeners() {
+            // New product form
+            document.getElementById('new-product-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                createProduct();
+            });
+
+            // Password change form
+            document.getElementById('password-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                changePassword();
+            });
+
+            // File input preview
+            document.getElementById('new-product-image').addEventListener('change', function(e) {
+                previewImage(e.target, e.target.parentElement);
+            });
+        }
+
+        function previewImage(input, container) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    let preview = container.querySelector('.image-preview');
+                    if (!preview) {
+                        preview = document.createElement('img');
+                        preview.className = 'image-preview';
+                        container.appendChild(preview);
+                    }
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function showMessage(message, type = 'success') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'success' ? 'success-message' : 'error-message';
+            messageDiv.textContent = message;
+            
+            document.body.insertBefore(messageDiv, document.body.firstChild);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        // Load sections from API
+        async function loadSections() {
+            try {
+                document.getElementById('sections-loading').classList.add('show');
+                const response = await fetch('/api/sections');
+                const sections = await response.json();
+                currentData.sections = sections;
+                renderSections(sections);
+            } catch (error) {
+                console.error('Error loading sections:', error);
+                showMessage('Error loading sections', 'error');
+            } finally {
+                document.getElementById('sections-loading').classList.remove('show');
+            }
+        }
+
+		function renderSections(sections) {
+		  const content = document.getElementById('sections-content');
+		  content.innerHTML = sections.map(section => {
+		    let contentFields = '';
+
+		    if (section.name.toLowerCase() === 'contact' && section.contactInfo) {
+		      // For contact section — render individual fields
+		      contentFields = `
+		        <div class="form-group">
+		          <label>Email</label>
+		          <input type="email" name="email" value="${section.contactInfo.email}" required>
+		        </div>
+		        <div class="form-group">
+		          <label>Phone</label>
+		          <input type="text" name="phone" value="${section.contactInfo.phone}" required>
+		        </div>
+		      `;
+		    } else {
+		      // Default content textarea for other sections
+		      contentFields = `
+		        <div class="form-group">
+		          <label>Content</label>
+		          <textarea name="content" required>${section.content || ''}</textarea>
+		        </div>
+		      `;
+		    }
+
+		    return `
+		      <div class="section-card">
+		        <h3>${section.name}</h3>
+		        <form onsubmit="updateSection(event, ${section.id}, '${section.name}')">
+		          ${contentFields}
+		          <div class="form-group">
+		            <label>Image</label>
+		            ${section.hasImage ? `<img src="/api/images/section/${section.id}" class="current-image">` : ''}
+		            <div class="file-input">
+		              <input type="file" id="section-image-${section.id}" name="image" accept="image/*">
+		              <label for="section-image-${section.id}">Choose new image</label>
+		            </div>
+		          </div>
+		          <button type="submit" class="btn">Update Section</button>
+		        </form>
+		      </div>
+		    `;
+		  }).join('');
+		}
+        // Load products from API
+        async function loadProducts() {
+            try {
+                document.getElementById('products-loading').classList.add('show');
+                const response = await fetch('/api/products');
+                const products = await response.json();
+                currentData.products = products;
+                renderProducts(products);
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showMessage('Error loading products', 'error');
+            } finally {
+                document.getElementById('products-loading').classList.remove('show');
+            }
+        }
+
+        function renderProducts(products) {
+            const content = document.getElementById('products-content');
+            content.innerHTML = `
+                <div class="items-grid">
+                    ${products.map(product => `
+                        <div class="item-card" id="product-${product.id}">
+                            <div class="view-mode" id="product-view-${product.id}">
+                                ${product.hasImage ? `<img src="/api/images/product/${product.id}" class="item-image">` : ''}
+                                <h4>${product.name}</h4>
+                                <p>${product.description}</p>
+                                <div class="item-actions">
+                                    <button class="btn btn-warning" onclick="editProduct(${product.id})">Edit</button>
+                                    <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Delete</button>
+                                </div>
+                            </div>
+                            <div class="edit-form" id="product-edit-${product.id}">
+                                <form onsubmit="updateProduct(event, ${product.id})">
+                                    <div class="form-group">
+                                        <label>Product Name</label>
+                                        <input type="text" name="name" value="${product.name}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea name="description" required>${product.description}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Update Image</label>
+                                        <div class="file-input">
+                                            <input type="file" id="edit-product-image-${product.id}" name="image" accept="image/*">
+                                            <label for="edit-product-image-${product.id}">Choose new image</label>
+                                        </div>
+                                    </div>
+                                    <div class="edit-actions">
+                                        <button type="submit" class="btn btn-success">Save</button>
+                                        <button type="button" class="btn btn-secondary" onclick="cancelEdit(${product.id})">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Load testimonials from API
+        async function loadTestimonials() {
+            try {
+                document.getElementById('testimonials-loading').classList.add('show');
+                const response = await fetch('/admin/testimonials');
+                const testimonials = await response.json();
+                currentData.testimonials = testimonials;
+                renderTestimonials(testimonials);
+            } catch (error) {
+                console.error('Error loading testimonials:', error);
+                showMessage('Error loading testimonials', 'error');
+            } finally {
+                document.getElementById('testimonials-loading').classList.remove('show');
+            }
+        }
+
+		function renderTestimonials(testimonials) {
+		    const content = document.getElementById('testimonials-content');
+		    content.innerHTML = `
+		        <div class="items-grid">
+
+		            <!-- Add Testimonial card -->
+		            <div class="item-card add-card">
+		                <h4>Add Testimonial</h4>
+		                <form onsubmit="addTestimonial(event)" enctype="multipart/form-data">
+		                    <div class="form-group">
+		                        <label>Name</label>
+		                        <input type="text" name="name" required>
+		                    </div>
+		                    <div class="form-group">
+		                        <label>Designation</label>
+		                        <input type="text" name="position" required>
+		                    </div>
+		                    <div class="form-group">
+		                        <label>Message</label>
+		                        <textarea name="message" required></textarea>
+		                    </div>
+		                    <div class="form-group">
+		                        <label>Image</label>
+		                        <div class="file-input">
+		                            <input type="file" id="add-testimonial-image" name="image" accept="image/*">
+		                            <label for="add-testimonial-image">Choose Image</label>
+		                        </div>
+		                    </div>
+		                    <div class="edit-actions">
+		                        <button type="submit" class="btn btn-success">Add</button>
+		                    </div>
+		                </form>
+		            </div>
+
+		            ${testimonials.map(testimonial => `
+		                <div class="item-card" id="testimonial-${testimonial.id}">
+		                    <div class="view-mode" id="testimonial-view-${testimonial.id}">
+		                        ${testimonial.hasImage ? `<img src="/admin/images/testimonial/${testimonial.id}" class="item-image">` : ''}
+		                        <h4>${testimonial.name}</h4>
+		                        <p><strong>${testimonial.position}</strong></p>
+		                        <p>${testimonial.message}</p>
+		                        <div class="item-actions">
+		                            <button class="btn btn-warning" onclick="editTestimonial(${testimonial.id})">Edit</button>
+		                            <button class="btn btn-danger" onclick="deleteTestimonial(${testimonial.id})">Delete</button>
+		                        </div>
+		                    </div>
+		                    <div class="edit-form" id="testimonial-edit-${testimonial.id}">
+		                        <form onsubmit="updateTestimonial(event, ${testimonial.id})">
+		                            <div class="form-group">
+		                                <label>Name</label>
+		                                <input type="text" name="name" value="${testimonial.name}" required>
+		                            </div>
+		                            <div class="form-group">
+		                                <label>Designation</label>
+		                                <input type="text" name="position" value="${testimonial.position}" required>
+		                            </div>
+		                            <div class="form-group">
+		                                <label>Message</label>
+		                                <textarea name="message" required>${testimonial.message}</textarea>
+		                            </div>
+		                            <div class="form-group">
+		                                <label>Update Image</label>
+		                                <div class="file-input">
+		                                    <input type="file" id="edit-testimonial-image-${testimonial.id}" name="image" accept="image/*">
+		                                    <label for="edit-testimonial-image-${testimonial.id}">Choose new image</label>
+		                                </div>
+		                            </div>
+		                            <div class="edit-actions">
+		                                <button type="submit" class="btn btn-success">Save</button>
+		                                <button type="button" class="btn btn-secondary" onclick="cancelTestimonialEdit(${testimonial.id})">Cancel</button>
+		                            </div>
+		                        </form>
+		                    </div>
+		                </div>
+		            `).join('')}
+
+		        </div>
+		    `;
+		}
+
+		function editTestimonial(id) {
+		    document.getElementById(`testimonial-view-${id}`).style.display = 'none';
+		    document.getElementById(`testimonial-edit-${id}`).style.display = 'block';
+		}
+
+		function cancelTestimonialEdit(id) {
+		    document.getElementById(`testimonial-edit-${id}`).style.display = 'none';
+		    document.getElementById(`testimonial-view-${id}`).style.display = 'block';
+		}
+		async function addTestimonial(event) {
+		    event.preventDefault();
+		    const form = event.target;
+		    const formData = new FormData(form);
+
+		    try {
+		        const response = await fetch('/admin/create-testimonial', {
+		            method: 'POST',
+		            body: formData
+		        });
+				const result = await response.text();
+		        if (response.ok && result.startsWith("Success")) {
+		            showMessage('Testimonial added successfully');
+		            loadTestimonials();
+		        } else {
+		            showMessage(result || 'Failed to add testimonial', 'error');
+		        }
+		    } catch (error) {
+		        console.error('Error adding testimonial:', error);
+		        showMessage('Error adding testimonial', 'error');
+		    }
+		}
+
+		async function updateTestimonial(event, id) {
+		    event.preventDefault();
+		    const form = event.target;
+		    const formData = new FormData(form);
+
+		    try {
+				formData.append('id', id);
+		        const response = await fetch(`/admin/update-testimonial`, {
+		            method: 'POST',
+		            body: formData
+		        });
+		        if (response.ok) {
+		            showMessage('Testimonial updated successfully');
+		            loadTestimonials();
+		        } else {
+		            showMessage('Failed to update testimonial', 'error');
+		        }
+		    } catch (error) {
+		        console.error('Error updating testimonial:', error);
+		        showMessage('Error updating testimonial', 'error');
+		    }
+		}
+
+        // Load blog posts from API
+        async function loadBlogPosts() {
+            try {
+                document.getElementById('blog-loading').classList.add('show');
+                const response = await fetch('/api/blog');
+                const posts = await response.json();
+                currentData.blog = posts;
+                renderBlogPosts(posts);
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+                showMessage('Error loading blog posts', 'error');
+            } finally {
+                document.getElementById('blog-loading').classList.remove('show');
+            }
+        }
+		// Move these functions OUTSIDE of renderBlogPosts function
+		function editBlog(id) {
+		    document.getElementById(`blog-view-${id}`).style.display = 'none';
+		    document.getElementById(`blog-edit-${id}`).style.display = 'block';
+		}
+
+		function cancelBlogEdit(id) {
+		    document.getElementById(`blog-edit-${id}`).style.display = 'none';
+		    document.getElementById(`blog-view-${id}`).style.display = 'block';
+		}
+
+		function updateBlog(event, id) {
+		    event.preventDefault();
+		    const form = event.target;
+		    const formData = new FormData(form);
+		    formData.append('id', id);
+
+		    fetch('/admin/update-blog', {
+		        method: 'POST',
+		        body: formData
+		    })
+		    .then(response => {
+		        if (response.ok) {
+		            showMessage('Blog post updated successfully!');
+		            loadBlogPosts();
+		        } else {
+		            showMessage('Failed to update blog post', 'error');
+		        }
+		    })
+		    .catch(err => {
+		        console.error(err);
+		        showMessage('Error updating blog post', 'error');
+		    });
+		}
+
+		function deleteBlog(id) {
+		    if (!confirm('Are you sure you want to delete this blog post?')) return;
+		    
+		    const formData = new FormData();
+		    formData.append('id', id);
+
+		    fetch('/admin/delete-blog', {
+		        method: 'POST',
+		        body: formData
+		    })
+		    .then(response => {
+		        if (response.ok) {
+		            showMessage('Blog post deleted successfully!');
+		            loadBlogPosts();
+		        } else {
+		            showMessage('Failed to delete blog post', 'error');
+		        }
+		    })
+		    .catch(err => {
+		        console.error(err);
+		        showMessage('Error deleting blog post', 'error');
+		    });
+		}
+
+		function createBlog(event) {
+		    event.preventDefault();
+
+		    const form = document.getElementById('new-blog-form');
+		    const formData = new FormData(form);
+		    
+		    fetch('/admin/create-blog', {
+		        method: 'POST',
+		        body: formData
+		    })
+		    .then(response => {
+		        if (response.ok) {
+		            showMessage('Blog post added successfully!');
+		            form.reset();
+		            loadBlogPosts();
+		        } else {
+		            showMessage('Failed to add blog post', 'error');
+		        }
+		    })
+		    .catch(err => {
+		        console.error(err);
+		        showMessage('Error adding blog post', 'error');
+		    });
+		}
+
+		// Updated renderBlogPosts function (remove the inner function definitions)
+		function renderBlogPosts(posts) {
+		    const content = document.getElementById('blog-content');
+
+		    content.innerHTML = `
+		        <h3>Add New Blog Post</h3>
+		        <form id="new-blog-form" enctype="multipart/form-data">
+		            <div class="form-group">
+		                <label>Title</label>
+		                <input type="text" name="title" required>
+		            </div>
+		            <div class="form-group">
+		                <label>Content</label>
+		                <textarea name="content" required></textarea>
+		            </div>
+		            <div class="form-group">
+		                <label>Image</label>
+		                <div class="file-input">
+		                    <input type="file" id="new-blog-image" name="image" accept="image/*">
+		                    <label for="new-blog-image">Choose image</label>
+		                </div>
+		            </div>
+		            <button type="submit" class="btn btn-primary">Add Blog Post</button>
+		        </form>
+		        <hr>
+		        <div class="items-grid">
+		            ${posts.map(post => `
+		                <div class="item-card" id="blog-${post.id}">
+							<div class="view-mode" id="blog-view-${post.id}">
+							    <h4>${post.title}</h4>
+							    <img src="/admin/images/blog/${post.id}" alt="${post.title} image" class="blog-image">
+							    <p>${post.content}</p>
+							    <div class="item-actions">
+							        <button class="btn btn-warning" onclick="editBlog(${post.id})">Edit</button>
+							        <button class="btn btn-danger" onclick="deleteBlog(${post.id})">Delete</button>
+							    </div>
+							</div>
+		                    <div class="edit-form" id="blog-edit-${post.id}">
+		                        <form onsubmit="updateBlog(event, ${post.id})">
+		                            <div class="form-group">
+		                                <label>Title</label>
+		                                <input type="text" name="title" value="${post.title}" required>
+		                            </div>
+		                            <div class="form-group">
+		                                <label>Content</label>
+		                                <textarea name="content" required>${post.content}</textarea>
+		                            </div>
+		                            <div class="form-group">
+		                                <label>Update Image</label>
+		                                <div class="file-input">
+		                                    <input type="file" id="edit-blog-image-${post.id}" name="image" accept="image/*">
+		                                    <label for="edit-blog-image-${post.id}">Choose new image</label>
+		                                </div>
+		                            </div>
+		                            <div class="edit-actions">
+		                                <button type="submit" class="btn btn-success">Save</button>
+		                                <button type="button" class="btn btn-secondary" onclick="cancelBlogEdit(${post.id})">Cancel</button>
+		                            </div>
+		                        </form>
+		                    </div>
+		                </div>
+		            `).join('')}
+		        </div>
+		    `;
+
+		    // Add event listener for the new blog form
+		    document.getElementById('new-blog-form').addEventListener('submit', createBlog);
+
+		    // Add event listener for image preview
+		    document.getElementById('new-blog-image').addEventListener('change', function(e) {
+		        previewImage(e.target, e.target.parentElement);
+		    });
+		}
+
+        // Update section
+		async function updateSection(event, id, name) {
+		  event.preventDefault();
+		  const form = event.target;
+		  const formData = new FormData();
+
+		  formData.append('id', id);
+
+		  if (name.toLowerCase() === 'contact') {
+		    // Build contactInfo JSON
+		    const email = form.querySelector('input[name="email"]').value;
+		    const phone = form.querySelector('input[name="phone"]').value;
+		    const content = JSON.stringify({ email, phone });
+		    formData.append('content', content);
+		  } else {
+		    // Regular content textarea
+		    const content = form.querySelector('textarea[name="content"]').value;
+		    formData.append('content', content);
+		  }
+
+		  const imageInput = form.querySelector('input[type="file"]');
+		  if (imageInput && imageInput.files.length > 0) {
+		    formData.append('image', imageInput.files[0]);
+		  }
+
+		  try {
+		    const response = await fetch('/admin/update-section', {
+		      method: 'POST',
+		      body: formData
+		    });
+
+		    const result = await response.text();
+		    if (result === 'Success') {
+		      showMessage('Section updated successfully!');
+		      loadSections();
+		    } else {
+		      showMessage(result, 'error');
+		    }
+		  } catch (error) {
+		    console.error('Error updating section:', error);
+		    showMessage('Error updating section', 'error');
+		  }
+		}
+
+        // Create new product
+        async function createProduct() {
+            const formData = new FormData(document.getElementById('new-product-form'));
+
+            try {
+                const response = await fetch('/admin/create-product', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.text();
+                if (result === 'Success') {
+                    showMessage('Product created successfully!');
+                    document.getElementById('new-product-form').reset();
+                    loadProducts();
+                } else {
+                    showMessage(result, 'error');
+                }
+            } catch (error) {
+                console.error('Error creating product:', error);
+                showMessage('Error creating product', 'error');
+            }
+        }
+
+        // Enhanced edit product function with inline editing
+        function editProduct(id) {
+            const viewMode = document.getElementById(`product-view-${id}`);
+            const editForm = document.getElementById(`product-edit-${id}`);
+            const card = document.getElementById(`product-${id}`);
+            
+            // Hide view mode and show edit form
+            viewMode.classList.add('hidden');
+            editForm.classList.add('active');
+            card.classList.add('edit-mode');
+        }
+
+        // Cancel edit function
+        function cancelEdit(id) {
+            const viewMode = document.getElementById(`product-view-${id}`);
+            const editForm = document.getElementById(`product-edit-${id}`);
+            const card = document.getElementById(`product-${id}`);
+            
+            // Show view mode and hide edit form
+            viewMode.classList.remove('hidden');
+            editForm.classList.remove('active');
+            card.classList.remove('edit-mode');
+        }
+
+        // Update product function
+        async function updateProduct(event, id) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            formData.append('id', id);
+
+            try {
+                const response = await fetch('/admin/update-product', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.text();
+                if (result === 'Success') {
+                    showMessage('Product updated successfully!');
+                    loadProducts(); // Reload products to show updated data
+                } else {
+                    showMessage(result, 'error');
+                }
+            } catch (error) {
+                console.error('Error updating product:', error);
+                showMessage('Error updating product', 'error');
+            }
+        }
+
+        // Delete testimonial
+        async function deleteTestimonial(id) {
+            if (!confirm('Are you sure you want to delete this testimonial?')) return;
+
+            try {
+                const formData = new FormData();
+                formData.append('id', id);
+
+                const response = await fetch('/admin/delete-testimonial', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.text();
+                if (result === 'Success') {
+                    showMessage('Testimonial deleted successfully!');
+                    loadTestimonials();
+                } else {
+                    showMessage(result, 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting testimonial:', error);
+                showMessage('Error deleting testimonial', 'error');
+            }
+        }
+
+        // Delete blog
+        async function deleteBlog(id) {
+            if (!confirm('Are you sure you want to delete this blog post?')) return;
+
+            try {
+                const formData = new FormData();
+                formData.append('id', id);
+
+                const response = await fetch('/admin/delete-blog', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.text();
+                if (result === 'Success') {
+                    showMessage('Blog post deleted successfully!');
+                    loadBlogPosts();
+                } else {
+                    showMessage(result, 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting blog post:', error);
+                showMessage('Error deleting blog post', 'error');
+            }
+        }
+
+        // Delete product
+        async function deleteProduct(id) {
+            if (!confirm('Are you sure you want to delete this product?')) {
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('id', id);
+
+                const response = await fetch('/admin/delete-product', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.text();
+                if (result === 'Success') {
+                    showMessage('Product deleted successfully!');
+                    loadProducts();
+                } else {
+                    showMessage(result, 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                showMessage('Error deleting product', 'error');
+            }
+        }
+
+        // Change password
+        async function changePassword() {
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (newPassword !== confirmPassword) {
+                showMessage('Passwords do not match', 'error');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showMessage('Password must be at least 6 characters long', 'error');
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('newPassword', newPassword);
+
+                const response = await fetch('/admin/change-password', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.text();
+                if (result === 'Success') {
+                    showMessage('Password changed successfully!');
+                    document.getElementById('password-form').reset();
+                } else {
+                    showMessage(result, 'error');
+                }
+            } catch (error) {
+                showMessage('Error changing password', 'error');
+            }
+        }
+    </script>
+</body>
+</html>
