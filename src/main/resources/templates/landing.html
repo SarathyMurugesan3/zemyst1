@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>zemyst</title>
+	<link rel="icon" type="image/png" href="/images/Logo.png?v=2"/>
     <style>
         * {
             margin: 0;
@@ -266,6 +267,23 @@
 		        padding: 0 1rem;
 		    }
 		}
+		@media (max-width: 768px) {
+			.hero-image-container {
+			        display: flex;
+			        justify-content: center;
+			    }
+			    .hero-image-container img {
+			        max-width: 180px;
+			        width: auto;
+			    }
+		}
+
+		@media (max-width: 480px) {
+		    .hero-image-container img {
+		        max-width: 150px;
+		    }
+		}
+
 		@media (max-width: 768px) {
 		    /* Nav */
 		    .nav-menu {
@@ -569,6 +587,7 @@
 
 		.hero-image-container img {
 		    width: 100%;
+			max-width: 400px;
 		    height: auto;
 		    border-radius: 20px;
 		    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -732,13 +751,32 @@
                 align-items: center;
             }
         }
+		.logo {
+		    display: flex;
+		    align-items: center;
+		    font-size: 1.5rem;
+		    font-weight: bold;
+		    color: #2563eb;
+		}
+
+		.logo-image {
+		    height: 32px;
+		    width: 32px;
+		    margin-right: 10px;
+		    border-radius: 50%;
+		    object-fit: cover;
+		}
+
     </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <div class="nav-container">
-            <div class="logo">Zemyst</div>
+            <div class="logo">			
+				<img src="/images/Logo.png" alt="Zemyst Logo" class="logo-image">
+			    Zemyst
+			</div>
             <nav>
 				<div class="hamburger" onclick="toggleMobileMenu()">&#9776;</div>
 				    <ul class="nav-menu">
