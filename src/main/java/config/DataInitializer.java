@@ -18,83 +18,74 @@ public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private SectionRepository sectionRepository;
-    
+
     @Autowired
     private ProductRepository productRepository;
-    
+
     @Autowired
     private TestimonialRepository testimonialRepository;
-    
+
     @Autowired
     private BlogRepository blogRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        
-        // Initialize sections if they don't exist
-        if (sectionRepository.count() == 0) {
-            Section heroSection = new Section();
-            heroSection.setName("hero");
-            heroSection.setContent("Welcome to Our Amazing Platform");
-            sectionRepository.save(heroSection);
-            
-            Section aboutSection = new Section();
-            aboutSection.setName("about");
-            aboutSection.setContent("We are a leading company dedicated to providing exceptional products and services to our customers. With years of experience and a commitment to excellence, we deliver solutions that exceed expectations.");
-            sectionRepository.save(aboutSection);
+
+        // Initialize sections individually if they don't exist
+        createSectionIfMissing("home", "Welcome to Our Amazing Platform");
+        createSectionIfMissing("about", "We are a leading company dedicated to providing exceptional products and services to our customers. With years of experience and a commitment to excellence, we deliver solutions that exceed expectations.");
+        createSectionIfMissing("impact", "Our products have made a tangible difference in the lives of our customers.");
+        createSectionIfMissing("contact", "Get in touch with us via email or phone. We look forward to hearing from you!");
+
+        // Initialize products individually if they don't exist
+        createProductIfMissing("Premium Service", "Our flagship service offering comprehensive solutions for your business needs.");
+        createProductIfMissing("Consulting Package", "Expert consultation to help you make informed decisions and optimize your operations.");
+        createProductIfMissing("Support Plan", "24/7 support and maintenance to ensure your systems run smoothly.");
+
+        // Initialize testimonials individually if they don't exist
+        createTestimonialIfMissing("John Smith", "Excellent service! The team exceeded our expectations and delivered outstanding results.", "CEO, Tech Solutions");
+        createTestimonialIfMissing("Sarah Johnson", "Professional, reliable, and innovative. Highly recommend their services.", "Marketing Director, StartupCorp");
+
+        // Initialize blog posts individually if they don't exist
+        createBlogPostIfMissing("5 Tips for Better Business Growth", "Full content here...");
+        createBlogPostIfMissing("The Future of Digital Transformation", "Full content here...");
+        createBlogPostIfMissing("Customer Success Stories", "Full content here...");
+    }
+
+    private void createSectionIfMissing(String name, String content) {
+        if (!sectionRepository.existsByName(name)) {
+            Section section = new Section();
+            section.setName(name);
+            section.setContent(content);
+            sectionRepository.save(section);
         }
-        
-        // Initialize products if they don't exist
-        if (productRepository.count() == 0) {
-            Product product1 = new Product();
-            product1.setName("Premium Service");
-            product1.setDescription("Our flagship service offering comprehensive solutions for your business needs.");
-            productRepository.save(product1);
-            
-            Product product2 = new Product();
-            product2.setName("Consulting Package");
-            product2.setDescription("Expert consultation to help you make informed decisions and optimize your operations.");
-            productRepository.save(product2);
-            
-            Product product3 = new Product();
-            product3.setName("Support Plan");
-            product3.setDescription("24/7 support and maintenance to ensure your systems run smoothly.");
-            productRepository.save(product3);
+    }
+
+    private void createProductIfMissing(String name, String description) {
+        if (!productRepository.existsByName(name)) {
+            Product product = new Product();
+            product.setName(name);
+            product.setDescription(description);
+            productRepository.save(product);
         }
-        
-        // Initialize testimonials if they don't exist
-        if (testimonialRepository.count() == 0) {
-            Testimonial testimonial1 = new Testimonial();
-            testimonial1.setName("John Smith");
-            testimonial1.setMessage("Excellent service! The team exceeded our expectations and delivered outstanding results.");
-            testimonial1.setPosition("CEO, Tech Solutions");
-            testimonialRepository.save(testimonial1);
-            
-            Testimonial testimonial2 = new Testimonial();
-            testimonial2.setName("Sarah Johnson");
-            testimonial2.setMessage("Professional, reliable, and innovative. Highly recommend their services.");
-            testimonial2.setPosition("Marketing Director, StartupCorp");
-            testimonialRepository.save(testimonial2);
+    }
+
+    private void createTestimonialIfMissing(String name, String message, String position) {
+        if (!testimonialRepository.existsByName(name)) {
+            Testimonial testimonial = new Testimonial();
+            testimonial.setName(name);
+            testimonial.setMessage(message);
+            testimonial.setPosition(position);
+            testimonialRepository.save(testimonial);
         }
-        
-        // Initialize blog posts if they don't exist
-        if (blogRepository.count() == 0) {
-            BlogPost post1 = new BlogPost();
-            post1.setTitle("5 Tips for Better Business Growth");
-            post1.setContent("Full content here...");
-            blogRepository.save(post1);
-            
-            BlogPost post2 = new BlogPost();
-            post2.setTitle("The Future of Digital Transformation");
-            
-            post2.setContent("Full content here...");
-            blogRepository.save(post2);
-            
-            BlogPost post3 = new BlogPost();
-            post3.setTitle("Customer Success Stories");
-            
-            post3.setContent("Full content here...");
-            blogRepository.save(post3);
+    }
+
+    private void createBlogPostIfMissing(String title, String content) {
+        if (!blogRepository.existsByTitle(title)) {
+            BlogPost post = new BlogPost();
+            post.setTitle(title);
+            post.setContent(content);
+            blogRepository.save(post);
         }
     }
 }

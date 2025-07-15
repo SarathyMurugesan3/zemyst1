@@ -10,12 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import dto.BlogPostDTO;
 import dto.ProductDTO;
 import dto.SectionDTO;
-import dto.SectionDTO.ContactInfo;
 import dto.TestimonialDTO;
 import entity.BlogPost;
 import entity.Product;
@@ -215,15 +212,11 @@ public class LandingPageService {
         dto.setContent(section.getContent());
         dto.setImageName(section.getImageName());
         dto.setHasImage(section.getImage() != null);
-        if ("contact".equalsIgnoreCase(section.getName())) {
-            ObjectMapper objectMapper = new ObjectMapper();
-            try {
-                ContactInfo info = objectMapper.readValue(section.getContent(), ContactInfo.class);
-                dto.setContactInfo(info);
-            } catch (IOException e) {
-                System.err.println("Invalid contact JSON: " + section.getContent());
-                // Set default/fallback or leave contactInfo null
-            }
+        if (section.getName().equalsIgnoreCase("contact")) {
+            SectionDTO.ContactInfo contactInfo = new SectionDTO.ContactInfo();
+            contactInfo.setEmail("info@example.com");
+            contactInfo.setPhone("+91 9876543210");
+            dto.setContactInfo(contactInfo);
         }
 
 

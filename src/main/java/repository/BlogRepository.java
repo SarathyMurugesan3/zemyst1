@@ -6,4 +6,5 @@ import entity.BlogPost;
 
 public interface BlogRepository extends JpaRepository<BlogPost,Long> {
 
+	boolean existsByTitle(String title);
 }
