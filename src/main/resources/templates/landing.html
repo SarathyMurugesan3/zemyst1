@@ -951,16 +951,17 @@
 
 		    const contact = await response.json();
 
-		    if (contact.contactInfo) {
-				const contactInfo = JSON.parse(contact.content);
+		    // Always parse content JSON string (ignore contactInfo)
+		    if (contact.content) {
+		      const contactInfo = JSON.parse(contact.content);
 
-				      const emailLink = document.getElementById('contact-email');
-				      emailLink.textContent = contactInfo.email;
-				      emailLink.href = 'mailto:' + contactInfo.email;
+		      const emailLink = document.getElementById('contact-email');
+		      emailLink.textContent = contactInfo.email;
+		      emailLink.href = 'mailto:' + contactInfo.email;
 
-				      const phoneLink = document.getElementById('contact-phone');
-				      phoneLink.textContent = contactInfo.phone;
-				      phoneLink.href = 'tel:' + contactInfo.phone;
+		      const phoneLink = document.getElementById('contact-phone');
+		      phoneLink.textContent = contactInfo.phone;
+		      phoneLink.href = 'tel:' + contactInfo.phone;
 		    }
 
 		    if (contact.hasImage) {
