@@ -796,7 +796,6 @@
 	    <div class="hero-inner">
 	        <div class="hero-content">
 	            <h1 th:text="${homeSection != null ? homeSection.content : 'Welcome to Our Platform'}"></h1>
-	            <p>Discover amazing products and services tailored for you</p>
 	            <a href="#products" class="cta-button">Get Started</a>
 	        </div>
 	        <div th:if="${homeSection != null and homeSection.hasImage}" class="hero-image-container">
@@ -953,13 +952,15 @@
 		    const contact = await response.json();
 
 		    if (contact.contactInfo) {
-				const emailLink = document.getElementById('contact-email');
-				  emailLink.textContent = contact.contactInfo.email;
-				  emailLink.href = 'mailto:' + contact.contactInfo.email;
+				const contactInfo = JSON.parse(contact.content);
 
-				  const phoneLink = document.getElementById('contact-phone');
-				    phoneLink.textContent = contact.contactInfo.phone;
-				    phoneLink.href = 'tel:' + contact.contactInfo.phone;
+				      const emailLink = document.getElementById('contact-email');
+				      emailLink.textContent = contactInfo.email;
+				      emailLink.href = 'mailto:' + contactInfo.email;
+
+				      const phoneLink = document.getElementById('contact-phone');
+				      phoneLink.textContent = contactInfo.phone;
+				      phoneLink.href = 'tel:' + contactInfo.phone;
 		    }
 
 		    if (contact.hasImage) {
