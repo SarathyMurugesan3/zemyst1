@@ -579,20 +579,33 @@
 		  content.innerHTML = sections.map(section => {
 		    let contentFields = '';
 
-		    if (section.name.toLowerCase() === 'contact' && section.contactInfo) {
-		      // For contact section — render individual fields
-		      contentFields = `
-		        <div class="form-group">
-		          <label>Email</label>
-		          <input type="email" name="email" value="${section.contactInfo.email}" required>
-		        </div>
-		        <div class="form-group">
-		          <label>Phone</label>
-		          <input type="text" name="phone" value="${section.contactInfo.phone}" required>
-		        </div>
-		      `;
+		    if (section.name.toLowerCase() === 'contact' && section.content) {
+		      try {
+		        const contactInfo = JSON.parse(section.content);
+		        contentFields = `
+		          <div class="form-group">
+		            <label>Email</label>
+		            <input type="email" name="email" value="${contactInfo.email || ''}" required>
+		          </div>
+		          <div class="form-group">
+		            <label>Phone</label>
+		            <input type="text" name="phone" value="${contactInfo.phone || ''}" required>
+		          </div>
+		        `;
+		      } catch (err) {
+		        console.error(`Invalid JSON in contact section content: ${section.content}`, err);
+		        contentFields = `
+		          <div class="form-group">
+		            <label>Email</label>
+		            <input type="email" name="email" value="" required>
+		          </div>
+		          <div class="form-group">
+		            <label>Phone</label>
+		            <input type="text" name="phone" value="" required>
+		          </div>
+		        `;
+		      }
 		    } else {
-		      // Default content textarea for other sections
 		      contentFields = `
 		        <div class="form-group">
 		          <label>Content</label>
@@ -620,6 +633,7 @@
 		    `;
 		  }).join('');
 		}
+
         // Load products from API
         async function loadProducts() {
             try {
