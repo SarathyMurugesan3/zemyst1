@@ -8,7 +8,7 @@ public class SectionDTO {
     private String imageName;
     private boolean hasImage;
     private ContactInfo contactInfo;
-    public static class ContactInfo {
+	public static class ContactInfo {
         private String phone;
         private String email;
         // Getters and Setters

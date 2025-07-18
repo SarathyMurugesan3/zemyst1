@@ -152,12 +152,13 @@ public class AdminController {
     
     @PostMapping("/create-testimonial")
     @ResponseBody
-    public String createTestimonial(@RequestParam String name,
+    public String createTestimonial(@RequestParam int rating,
+    							   @RequestParam String name,
                                    @RequestParam String message,
                                    @RequestParam String position,
                                    @RequestParam(required = false) MultipartFile image) {
         try {
-            landingPageService.createTestimonial(name, message, position, image);
+            landingPageService.createTestimonial(rating,name, message, position, image);
             return "Success";
         } catch (Exception e) {
             return "Error: " + e.getMessage();
@@ -166,12 +167,13 @@ public class AdminController {
     @PostMapping("/update-testimonial")
     @ResponseBody
     public String updateTestimonial(@RequestParam Long id,
+    							   @RequestParam int rating,
                                    @RequestParam String name,
                                    @RequestParam String message,
                                    @RequestParam String position,
                                    @RequestParam(required = false) MultipartFile image) {
         try {
-            landingPageService.updateTestimonial(id, name, message, position, image);
+            landingPageService.updateTestimonial(id, rating,name, message, position, image);
             return "Success";
         } catch (Exception e) {
             return "Error: " + e.getMessage();

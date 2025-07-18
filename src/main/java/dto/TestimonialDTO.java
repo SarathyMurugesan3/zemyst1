@@ -6,8 +6,19 @@ public class TestimonialDTO {
     private String name;
     private String message;
     private String position;
+    private String content;
     private String imageName;
     private boolean hasImage;
+    private int rating;
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
 	public TestimonialDTO() {}
 	public Long getId() {
 		return id;
@@ -20,6 +31,13 @@ public class TestimonialDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getContent() {
+	    return content;
+	}
+
+	public void setContent(String content) {
+	    this.content = content;
 	}
 	public String getMessage() {
 		return message;

@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +21,8 @@ import entity.BlogPost;
 import entity.Product;
 import entity.Section;
 import entity.Testimonial;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import repository.BlogRepository;
 import repository.ProductRepository;
 import repository.SectionRepository;
@@ -73,26 +78,27 @@ public class LandingPageService {
     }
     
     public byte[] getImage(String type, Long id) {
+        byte[] image = null;
         switch (type) {
             case "section":
-                return sectionRepository.findById(id)
-                        .map(Section::getImage)
-                        .orElse(null);
+                image = sectionRepository.findById(id).map(Section::getImage).orElse(null);
+                break;
             case "product":
-                return productRepository.findById(id)
-                        .map(Product::getImage)
-                        .orElse(null);
+                image = productRepository.findById(id).map(Product::getImage).orElse(null);
+                break;
+            case "impact":
+            	image = sectionRepository.findById(id).map(Section::getImage).orElse(null);
+            	break;
             case "testimonial":
-                return testimonialRepository.findById(id)
-                        .map(Testimonial::getImage)
-                        .orElse(null);
+                image = testimonialRepository.findById(id).map(Testimonial::getImage).orElse(null);
+                break;
             case "blog":
-                return blogRepository.findById(id)
-                        .map(BlogPost::getImage)
-                        .orElse(null);
-            default:
-                return null;
+                image = blogRepository.findById(id).map(BlogPost::getImage).orElse(null);
+                break;
         }
+
+        System.out.println("Fetched image for " + type + " ID " + id + " with length: " + (image != null ? image.length : 0));
+        return image;
     }
     
     // Section operations
@@ -142,8 +148,9 @@ public class LandingPageService {
     }
     
     // Testimonial operations
-    public void createTestimonial(String name, String message, String position, MultipartFile image) throws IOException {
+    public void createTestimonial(int rating,String name, String message, String position, MultipartFile image) throws IOException {
         Testimonial testimonial = new Testimonial();
+        testimonial.setRating(rating);
         testimonial.setName(name);
         testimonial.setMessage(message);
         testimonial.setPosition(position);
@@ -174,13 +181,14 @@ public class LandingPageService {
         blogRepository.deleteById(id);
     }
  // Edit Testimonial
-    public void updateTestimonial(Long id, String name, String message, String position, MultipartFile image) throws IOException {
+    public void updateTestimonial(Long id, int rating,String name, String message, String position, MultipartFile image) throws IOException {
         Optional<Testimonial> optionalTestimonial = testimonialRepository.findById(id);
         if (optionalTestimonial.isPresent()) {
             Testimonial testimonial = optionalTestimonial.get();
             testimonial.setName(name);
             testimonial.setMessage(message);
             testimonial.setPosition(position);
+            testimonial.setRating(rating);
             if (image != null && !image.isEmpty()) {
                 testimonial.setImage(image.getBytes());
                 testimonial.setImageName(image.getOriginalFilename());
@@ -237,6 +245,7 @@ public class LandingPageService {
     private TestimonialDTO convertToDTO(Testimonial testimonial) {
         TestimonialDTO dto = new TestimonialDTO();
         dto.setId(testimonial.getId());
+        dto.setRating(testimonial.getRating());
         dto.setName(testimonial.getName());
         dto.setMessage(testimonial.getMessage());
         dto.setPosition(testimonial.getPosition());
@@ -244,7 +253,60 @@ public class LandingPageService {
         dto.setHasImage(testimonial.getImage() != null);
         return dto;
     }
-    
+    public void sendContactMail(String to, String subject, String body) {
+        SectionDTO contactSection = getSectionByName("contact");
+
+        if (contactSection == null || contactSection.getContactInfo() == null) {
+            throw new RuntimeException("Contact section or email info missing");
+        }
+
+        String senderEmail = contactSection.getContactInfo().getEmail();
+        String appPassword = contactSection.getContent(); // app password stored in content field
+
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername(senderEmail);
+        mailSender.setPassword(appPassword);
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
+
+            helper.setTo(to);
+            helper.setFrom(senderEmail);
+            helper.setSubject(subject);
+            helper.setText(body, false);
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Email sending failed: " + e.getMessage());
+        }
+    }
+    public void updateSection(SectionDTO dto) {
+        Optional<Section> optionalSection = sectionRepository.findById(dto.getId());
+        if (optionalSection.isPresent()) {
+            Section section = optionalSection.get();
+            section.setContent(dto.getContent());
+            section.setUpdatedAt(LocalDateTime.now());
+            
+            // Optional: update contact info if this is the contact section
+            if ("contact".equalsIgnoreCase(section.getName()) && dto.getContactInfo() != null) {
+                // Store contact info in some way if needed
+                // You can update section.setContent(), setEmail(), etc.
+            }
+
+            sectionRepository.save(section);
+        } else {
+            throw new RuntimeException("Section with ID " + dto.getId() + " not found");
+        }
+    }
+
     private BlogPostDTO convertToDTO(BlogPost blogPost) {
         BlogPostDTO dto = new BlogPostDTO();
         dto.setId(blogPost.getId());

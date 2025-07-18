@@ -23,8 +23,14 @@ public class SecurityConfig {
         http
         	.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/landing", "/images/**","/webjars/**","/api/images/**","/admin/images/**", "/css/**", "/js/**","/sections/contact").permitAll()
-                .anyRequest().authenticated()
+            		.requestMatchers(
+            			    "/", "/landing", "/sections/home",  // ✅ Allow root and home section
+            			    "/css/**", "/js/**", "/images/**", "/webjars/**",
+            			    "/api/images/**", "/admin/images/**",
+            			    "/sections/contact", "/api/sections/**", "/api/products", "/api/testimonials", "/api/blog",
+            			    "/contact/send", "/api/sections/update/**"
+            			).permitAll()
+            	        .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/admin/login")

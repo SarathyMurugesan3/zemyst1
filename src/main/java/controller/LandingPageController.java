@@ -15,12 +15,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import dto.BlogPostDTO;
 import dto.ProductDTO;
 import dto.SectionDTO;
 import dto.TestimonialDTO;
+import service.EmailService;
 import service.LandingPageService;
 
 @Controller
@@ -28,54 +33,78 @@ public class LandingPageController {
     
     @Autowired
     private LandingPageService landingPageService;
+    @Autowired
+    private EmailService emailService; 
+    
+    @ModelAttribute("contactSection")
+    public SectionDTO injectContactSection() {
+        return landingPageService.getSectionByName("contact");
+    }
     
     @GetMapping("/")
     public String index(Model model) {
         // Add all the data needed for the landing page
-        try {
-            // Get sections for hero and about
-            SectionDTO homeSection = landingPageService.getSectionByName("home");
-            SectionDTO aboutSection = landingPageService.getSectionByName("about");
-            SectionDTO impactSection = landingPageService.getSectionByName("impact");
-            SectionDTO contactSection = landingPageService.getSectionByName("contact");
-            model.addAttribute("contactSection", contactSection);
+    	try {
+    		SectionDTO homeSection = landingPageService.getSectionByName("home");
 
-            
-            // Get all other content
-            List<ProductDTO> products = landingPageService.getAllProducts();
-            List<TestimonialDTO> testimonials = landingPageService.getAllTestimonials();
-            List<BlogPostDTO> blogPosts = landingPageService.getAllBlogPosts();
-            
-            // Add to model for Thymeleaf
             model.addAttribute("homeSection", homeSection);
-            model.addAttribute("aboutSection", aboutSection);
-            model.addAttribute("products", products);
-            model.addAttribute("impactSection", impactSection);
-            model.addAttribute("testimonials", testimonials);
-            model.addAttribute("blogPosts", blogPosts);
-            
-            // Debug logging
-            System.out.println("Home Section: " + (homeSection != null ? homeSection.getContent() : "null"));
-            System.out.println("About Section: " + (aboutSection != null ? aboutSection.getContent() : "null"));
-            System.out.println("Products count: " + products.size());
-            System.out.println("Testimonials count: " + testimonials.size());
-            System.out.println("Blog posts count: " + blogPosts.size());
-            
+            model.addAttribute("aboutSection", landingPageService.getSectionByName("about"));
+            model.addAttribute("impactSection", landingPageService.getSectionByName("impact"));
+            model.addAttribute("contactSection", landingPageService.getSectionByName("contact"));
+            model.addAttribute("products", landingPageService.getAllProducts());
+            model.addAttribute("testimonials", landingPageService.getAllTestimonials());
+            model.addAttribute("blogPosts", landingPageService.getAllBlogPosts());
         } catch (Exception e) {
-            System.err.println("Error loading landing page data: " + e.getMessage());
             e.printStackTrace();
-            
-            // Add empty lists to prevent Thymeleaf errors
             model.addAttribute("homeSection", null);
             model.addAttribute("aboutSection", null);
             model.addAttribute("products", List.of());
             model.addAttribute("testimonials", List.of());
             model.addAttribute("blogPosts", List.of());
         }
-        
         return "landing";
     }
-    
+    @PostMapping("/api/sections/update")
+    @ResponseBody
+    public ResponseEntity<?> updateSection(@RequestBody SectionDTO dto) {
+        try {
+            landingPageService.updateSection(dto); // You must have this in your service layer
+            return ResponseEntity.ok(Collections.singletonMap("success", true));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body(Collections.singletonMap("error", "Update failed"));
+        }
+    }
+
+    @PostMapping("/contact/send")
+    @ResponseBody
+    public ResponseEntity<?> handleContactForm(@RequestBody Map<String, String> payload) {
+        String firstName = payload.get("firstName");
+        String lastName = payload.get("lastName");
+        String email = payload.get("email");
+        String company = payload.get("company");
+        String subject = payload.get("subject");
+        String message = payload.get("message");
+
+        String fullMessage = "From: " + firstName + " " + lastName + "\n"
+                           + "Email: " + email + "\n"
+                           + "Company: " + company + "\n"
+                           + "Subject: " + subject + "\n\n"
+                           + message;
+
+        SectionDTO contactSection = landingPageService.getSectionByName("contact");
+        if (contactSection == null || contactSection.getContactInfo() == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Admin email not configured");
+        }
+
+        String adminEmail = contactSection.getContactInfo().getEmail();
+        emailService.sendContactMail(adminEmail, "New Contact Form Submission", fullMessage);
+
+        return ResponseEntity.ok(Collections.singletonMap("success", true));
+    }
+
     @GetMapping("/api/sections")
     @ResponseBody
     public List<SectionDTO> getAllSections() {
@@ -144,6 +173,7 @@ public class LandingPageController {
                 }
                 return ResponseEntity.ok()
                         .contentType(mediaType)
+                        .contentLength(image.length)
                         .body(image);
             } catch (IOException e) {
                 e.printStackTrace();

@@ -21,6 +21,17 @@ public class Testimonial {
 	
 	private String position;
 	
+	@Column(name = "rating")
+	private int rating;
+	
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
 	@Lob
 	@Column(columnDefinition = "LONGBLOB")
 	private byte[] image;
