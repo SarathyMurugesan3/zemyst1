@@ -53,7 +53,7 @@ public class AdminService {
     }
     
     private void createDefaultSections() {
-        String[] sectionNames = {"hero", "about", "impact", "contact"};
+        String[] sectionNames = {"home", "about", "impact", "contact"};
         String[] defaultContents = {
             "Welcome to our amazing platform",
             "We are a company dedicated to excellence",
