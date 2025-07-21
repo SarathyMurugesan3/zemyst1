@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zemyst</title>
+    <link rel="icon" type="image/png" href="/images/Logo.png?v=2"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+	<style>
+	       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+	       
+	       * {
+	           font-family: 'Inter', sans-serif;
+	       }
+	       
+	       /* Advanced Animations */
+		   .letter {
+		      opacity: 0;
+		      display: inline-block;
+		      transform: translateY(20px);
+		      animation: fadeInLetter 0.4s ease-out forwards;
+		    }
+			@keyframes float {
+			  0% { transform: translateY(0); }
+			  50% { transform: translateY(-10px); }
+			  100% { transform: translateY(0); }
+			}
+
+			.animate-float {
+			  animation: float 4s ease-in-out infinite;
+			}
+
+			@keyframes slideInLeft {
+			  from { opacity: 0; transform: translateX(-40px); }
+			  to { opacity: 1; transform: translateX(0); }
+			}
+
+			@keyframes fadeInRight {
+			  from { opacity: 0; transform: translateX(40px); }
+			  to { opacity: 1; transform: translateX(0); }
+			}
+
+			.animate-slide-in-left {
+			  animation: slideInLeft 1s ease-out forwards;
+			}
+
+			.animate-fade-in-right {
+			  animation: fadeInRight 1s ease-out forwards;
+			}
+
+		    @keyframes fadeInLetter {
+				0% {
+				    opacity: 0;
+				    transform: translateY(20px);
+				  }
+				  100% {
+				    opacity: 1;
+				    transform: translateY(0);
+				  }
+		    }
+
+	       @keyframes fadeInUp {
+	           0% { opacity: 0; transform: translateY(30px); }
+	           100% { opacity: 1; transform: translateY(0); }
+	       }
+	       
+	       @keyframes fadeInLeft {
+	           0% { opacity: 0; transform: translateX(-30px); }
+	           100% { opacity: 1; transform: translateX(0); }
+	       }
+	       
+	       @keyframes slideInFromBottom {
+	           0% { opacity: 0; transform: translateY(50px); }
+	           100% { opacity: 1; transform: translateY(0); }
+	       }
+	       
+	       @keyframes glow {
+	           0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+	           50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+	       }
+	       
+	       @keyframes gradientShift {
+	           0% { background-position: 0% 50%; }
+	           50% { background-position: 100% 50%; }
+	           100% { background-position: 0% 50%; }
+	       }
+	       
+	       @keyframes typeWriter {
+	           0% { width: 0; }
+	           100% { width: 100%; }
+	       }
+	       
+	       @keyframes blink {
+	           0%, 50% { border-color: transparent; }
+	           51%, 100% { border-color: white; }
+	       }
+	       
+	       @keyframes slideInFromLeft {
+	           0% { 
+	               opacity: 0; 
+	               transform: translateX(-100px); 
+	           }
+	           100% { 
+	               opacity: 1; 
+	               transform: translateX(0); 
+	           }
+	       }
+	       
+	       @keyframes slideInFromRight {
+	           0% { 
+	               opacity: 0; 
+	               transform: translateX(100px); 
+	           }
+	           100% { 
+	               opacity: 1; 
+	               transform: translateX(0); 
+	           }
+	       }
+	       
+	       @keyframes fadeInScale {
+	           0% { 
+	               opacity: 0; 
+	               transform: scale(0.8); 
+	           }
+	           100% { 
+	               opacity: 1; 
+	               transform: scale(1); 
+	           }
+	       }
+		   @keyframes fadeZoomIn {
+		     0% { opacity: 0; transform: scale(0.95); }
+		     100% { opacity: 1; transform: scale(1); }
+		   }
+		   .navbar-brand:hover img {
+		     animation: pulse 1s infinite;
+		   }
+		   @keyframes pulse {
+		     0% { transform: scale(1); }
+		     50% { transform: scale(1.08); }
+		     100% { transform: scale(1); }
+		   }
+
+		   .animate-fade-zoom-in {
+		     animation: fadeZoomIn 0.8s ease-out both;
+		   }
+		   .image-wrapper {
+		       overflow: hidden;
+		       height: 250px;
+		     }
+
+		     .image-wrapper img {
+		       width: 100%;
+		       height: 100%;
+		       object-fit: cover;
+		       transition: transform 0.5s ease;
+		     }
+
+		     .image-wrapper:hover img {
+		       transform: scale(1.1);
+		     }
+	       /* Custom Classes */
+	       .animate-fade-in-up {
+	           animation: fadeInUp 0.8s ease-out both;
+	       }
+	       
+	       .animate-fade-in-left {
+	           animation: fadeInLeft 0.8s ease-out both;
+	       }
+	       
+	       .animate-fade-in-right {
+	           animation: fadeInRight 0.8s ease-out both;
+	       }
+	       
+	       .animate-slide-in-bottom {
+	           animation: slideInFromBottom 0.8s ease-out both;
+	       }
+	       
+	       .animate-slide-in-left {
+	           animation: slideInFromLeft 0.8s ease-out both;
+	       }
+	       
+	       .animate-slide-in-right {
+	           animation: slideInFromRight 0.8s ease-out both;
+	       }
+	       
+	       .animate-fade-in-scale {
+	           animation: fadeInScale 0.8s ease-out both;
+	       }
+	       
+	       .typewriter {
+	           overflow: hidden;
+	           border-right: 3px solid white;
+	           white-space: nowrap;
+	           margin: 0 auto;
+	           animation: typeWriter 3s steps(40, end), blink 0.75s step-end infinite;
+	           animation-delay: 0.5s;
+	           animation-fill-mode: both;
+	       }
+	       
+	       .text-line {
+	           opacity: 0;
+	           transform: translateY(30px);
+	           animation: fadeInUp 0.8s ease-out forwards;
+	       }
+	       
+	       .text-line-1 { animation-delay: 0.2s; }
+	       .text-line-2 { animation-delay: 0.6s; }
+	       .text-line-3 { animation-delay: 1.0s; }
+	       .text-line-4 { animation-delay: 1.4s; }
+	       
+	       .animate-float {
+	           animation: float 3s ease-in-out infinite;
+	       }
+	       
+	       .animate-glow {
+	           animation: glow 2s ease-in-out infinite alternate;
+	       }
+	       
+	       .bg-gradient-animated {
+	           background: linear-gradient(-45deg, #667eea, #764ba2, #6B73FF, #9A9CE2);
+	           background-size: 400% 400%;
+	           animation: gradientShift 15s ease infinite;
+	       }
+	       
+		   .zoom-img {
+		       transition: transform 0.4s ease;
+		     }
+
+		     .zoom-img:hover {
+		       transform: scale(1.1);
+		     }
+		     .img-container:hover .zoom-img {
+		       transform: scale(1.1);
+		     }
+	       .glassmorphism {
+	           backdrop-filter: blur(16px) saturate(180%);
+	           background-color: rgba(255, 255, 255, 0.1);
+	           border: 1px solid rgba(255, 255, 255, 0.125);
+	       }
+	       
+	       .card-hover {
+	           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	       }
+	       
+	       .card-hover:hover {
+	           transform: translateY(-5px);
+			   transition: transform 0.3s ease, box-shadow 0.3s ease;
+			   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+			 }
+	       
+	       .image-zoom {
+	           transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+	       }
+	       
+	       .image-zoom:hover {
+	           transform: scale(1.1);
+	       }
+	       
+		   .btn-bounce:hover {
+		     animation: bounce 0.6s;
+		   }
+		   @keyframes bounce {
+		     0%   { transform: translateY(0); }
+		     30%  { transform: translateY(-6px); }
+		     50%  { transform: translateY(0); }
+		     70%  { transform: translateY(-3px); }
+		     100% { transform: translateY(0); }
+		   }
+
+		   
+	       .text-gradient {
+	           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	           -webkit-background-clip: text;
+	           -webkit-text-fill-color: transparent;
+	           background-clip: text;
+	       }
+	       
+	       .text-gradient-white {
+	           background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+	           -webkit-background-clip: text;
+	           -webkit-text-fill-color: transparent;
+	           background-clip: text;
+	       }
+	       
+	       .hero-overlay {
+	           background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+	       }
+	       
+	       .nav-blur {
+	           backdrop-filter: blur(20px);
+	           background-color: rgba(255, 255, 255, 0.9);
+	       }
+	       
+	       .stagger-delay-1 { animation-delay: 0.1s; }
+	       .stagger-delay-2 { animation-delay: 0.2s; }
+	       .stagger-delay-3 { animation-delay: 0.3s; }
+	       .stagger-delay-4 { animation-delay: 0.4s; }
+	       .stagger-delay-5 { animation-delay: 0.5s; }
+	       .stagger-delay-6 { animation-delay: 0.6s; }
+	       
+	       .hero-delay-1 { animation-delay: 0.8s; }
+	       .hero-delay-2 { animation-delay: 1.2s; }
+	       .hero-delay-3 { animation-delay: 1.6s; }
+	       .hero-delay-4 { animation-delay: 2.0s; }
+
+	       /* Hero section specific styles */
+	       .hero-section {
+	           height: 90vh;
+	           background: linear-gradient(to right, #4f46e5, #7c3aed, #2563eb);
+	       }
+
+	       /* Contact form specific styles */
+	       .contact-form {
+	           background: rgba(255, 255, 255, 0.1);
+	           backdrop-filter: blur(16px);
+	           border-radius: 1.5rem;
+	       }
+
+	       .contact-form .form-control {
+	           background: rgba(255, 255, 255, 0.2);
+	           border: 1px solid rgba(255, 255, 255, 0.3);
+	           color: white;
+	       }
+
+	       .contact-form .form-control::placeholder {
+	           color: rgba(255, 255, 255, 0.7);
+	       }
+
+	       .contact-form .form-control:focus {
+	           box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+	           border-color: rgba(255, 255, 255, 0.5);
+	           background: rgba(255, 255, 255, 0.2);
+	           color: white;
+	       }
+
+	       /* Smooth Scrolling */
+	       html {
+	           scroll-behavior: smooth;
+	       }
+	       
+	       /* Custom Scrollbar */
+	       ::-webkit-scrollbar {
+	           width: 8px;
+	       }
+	       
+	       ::-webkit-scrollbar-track {
+	           background: #f1f1f1;
+	       }
+	       
+	       ::-webkit-scrollbar-thumb {
+	           background: linear-gradient(135deg, #667eea, #764ba2);
+	           border-radius: 4px;
+	       }
+	       
+	       ::-webkit-scrollbar-thumb:hover {
+	           background: linear-gradient(135deg, #5a6fd8, #6a4190);
+	       }
+
+	       /* Bootstrap component overrides */
+	       .navbar-brand img {
+	           width: 40px;
+	           height: 40px;
+	       }
+
+	       .btn-primary {
+	           background: linear-gradient(135deg, #667eea, #764ba2);
+	           border: none;
+	       }
+
+	       .btn-primary:hover {
+	           background: linear-gradient(135deg, #5a6fd8, #6a4190);
+	       }
+
+	       .card {
+	           border: none;
+	           border-radius: 1rem;
+	       }
+
+	       .card-img-top {
+	           border-radius: 1rem 1rem 0 0;
+	           height: 250px;
+	           object-fit: cover;
+	       }
+		   /* Footer background */
+		   .footer-section {
+		       background-color: #0b1e4d; /* Dark blue */
+		       color: #ffffff; /* Light text for contrast */
+		   }
+
+		   .text-gradient {
+		     background: linear-gradient(270deg, #2563eb, #6b21a8, #22c55e);
+		     background-size: 600% 600%;
+		     -webkit-background-clip: text;
+		     -webkit-text-fill-color: transparent;
+		     animation: gradientShift 6s ease infinite;
+		   }
+		   /* Company name color */
+		   .footer-section .text-gradient-white {
+		       color: #f0f4ff; /* lighter white-ish color */
+		   }
+		   .footer-section .d-flex {
+		       display: flex !important; /* keep flex */
+		       flex-direction: column !important; /* vertical stack */
+		       align-items: flex-start !important; /* left align icons */
+		   }
+		   /* Social icons container */
+		   .footer-section .d-flex > a.social-icon {
+				margin: 0 0 1rem 0; /* bottom margin for spacing */
+			    font-size: 1.5rem;
+			    color: #a8bfff; /* softer blue icon color */
+			    transition: color 0.3s ease;
+		   }
+
+		   /* Social icons hover colors - matching brand colors */
+		   .footer-section .social-icon.twitter:hover {
+		       color: #1da1f2; /* Twitter blue */
+		   }
+		   .footer-section .social-icon.linkedin:hover {
+		       color: #0077b5; /* LinkedIn blue */
+		   }
+		   .footer-section .social-icon.github:hover {
+		       color: #ffffff; /* White for GitHub on hover */
+		   }
+
+		   /* Make sure social icons align vertically centered */
+		   
+		   .footer-section a.text-muted,
+		   .footer-section .text-muted,
+		   .footer-section p.text-muted {
+		       color: #ffffff !important;
+		   }
+		   /* Links in Quick Links and others */
+		   .footer-section a.text-muted {
+		       color: #cfd7ff;
+		   }
+
+		   .footer-section a.text-muted:hover {
+		       color: #d1d9ff !important; 
+		       text-decoration: underline;
+		   }
+
+		   /* Horizontal line color */
+		   .footer-section hr {
+		       border-color: #3a4a7a;
+		   }
+		   .image-zoom {
+		     transition: transform 0.5s ease;
+			 transform-origin: center center;
+		   }
+
+		   .image-zoom:hover {
+		     transform: scale(1.1);
+		   }
+	   </style>
+</head>
+<body class="bg-light">
+    <!-- Header -->
+    <nav class="bg-muted navbar navbar-expand-lg fixed-top nav-blur border-bottom">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center animate-fade-in-left" href="#home">
+                <img src="/images/Logo.png" alt="Zemyst Logo" class="rounded me-2">
+                <span class="fs-3 fw-bold text-gradient">Zemyst</span>
+            </a>
+            
+            <!-- Mobile toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Desktop Navigation -->
+            <div class="collapse navbar-collapse justify-content-end animate-fade-in-right" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium btn-bounce" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium btn-bounce" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium btn-bounce" href="#products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium btn-bounce" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium btn-bounce" href="#blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium btn-bounce" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+	<!-- Hero Section -->
+	<section id="home" class="hero-section position-relative d-flex align-items-start justify-content-center overflow-hidden"
+	style="background-image: url('/images/background.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; min-height: 100vh;">
+	  <!-- Overlay -->
+	  <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.1); backdrop-filter: blur(1px);"></div>
+
+	  <!-- Grid container with top padding -->
+	  <div class="container position-relative pt-5 mt-5 h-100">
+	    <div class="row align-items-center h-100">
+	      <!-- Left: Text Content -->
+	      <div class="col-md-6 d-flex flex-column justify-content-start animate-slide-in-left">
+	        <h1 id="animated-text" class="display-3 fw-bold text-white mb-4">
+	          Welcome to Zemyst
+	        </h1>
+
+	        <p class="fs-5 text-light mb-4 opacity-75" style="text-align: justify;">
+	          <span th:if="${homeSection != null}" th:text="${homeSection.content}">
+	            Welcome to Zemyst
+	          </span>
+	        </p>
+
+	        <a href="#products" class="btn btn-danger btn-bounce text-dark fw-semibold rounded-pill shadow align-self-start px-4 py-2">
+	          Our Products
+	        </a>
+	      </div>
+
+	      <!-- Right: Hero Image -->
+	      <div class="col-md-6 d-flex justify-content-center align-items-start animate-fade-in-right">
+	        <img th:if="${homeSection != null and homeSection.hasImage}"
+	             th:src="@{'/api/images/section/' + ${homeSection.id}}"
+	             alt="Hero Image"
+	             class="img-fluid rounded-3 shadow-lg animate-float" style="max-width: 300px; max-height: 300px; object-fit: contain;" />
+	      </div>
+	    </div>
+	  </div>
+	</section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- About Image -->
+                <div class="col-lg-6 animate-fade-in-left">
+                    <img th:if="${aboutSection != null and aboutSection.hasImage}" 
+                         th:src="@{'/api/images/section/' + ${aboutSection.id}}"
+                         alt="About"
+                         class="img-fluid rounded-4 shadow-lg" style="height: 400px; width: 100%; object-fit: cover;"/>
+                </div>
+                
+                <!-- About Text -->
+                <div class="col-lg-6 animate-fade-in-right">
+                    <h2 class="display-4 fw-bold mb-4 text-gradient">About Our Mission</h2>
+                    <p class="text-muted fs-5 mb-4" style="text-align: justify; line-height: 1.6;"
+                       th:text="${aboutSection != null ? aboutSection.content : 'We are dedicated to creating innovative sustainability solutions that transform the way businesses operate. Our cutting-edge technology and expert team work together to deliver impactful results that benefit both your organization and the environment.'}">
+                        We are dedicated to creating innovative sustainability solutions that transform the way businesses operate. Our cutting-edge technology and expert team work together to deliver impactful results that benefit both your organization and the environment.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3 text-gradient">Our Products</h2>
+                <p class="text-muted fs-5">Discover our comprehensive range of sustainability solutions designed to transform your business operations.</p>
+            </div>
+
+            <div class="row">
+                <div th:if="${#lists.isEmpty(products)}" class="col-12 text-center py-5">
+                    <div class="text-muted fs-5">No products available</div>
+                </div>
+
+                <div th:each="product, iterStat : ${products}" 
+                     class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow border-0">
+                        <div class="position-relative overflow-hidden image-wrapper" style="height: 250px;">
+                            <img th:if="${product.hasImage}"
+                                 th:src="@{'/api/images/product/' + ${product.id}}"
+                                 th:alt="${product.name}"
+                                 class="card-img-top zoom-img"/>
+                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));"></div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-dark mb-2" th:text="${product.name}">Product Name</h5>
+                            <p class="card-text text-muted" th:text="${product.description}">Product Description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+	<!-- Impact Section -->
+	<section id="impact" class="py-5" style="background: linear-gradient(to right, #dbeafe, #f3e8ff);">
+	    <div class="container">
+	        <div class="text-center mb-5">
+	            <h2 class="display-4 fw-bold mb-3 text-gradient">Our Impact</h2>
+	        </div>
+
+	        <!-- Dynamic content from DB (text & image) -->
+	        <div class="container">
+	            <div class="row align-items-start">
+					<div class="col-md-4 col-lg-3 mb-3">
+						<img th:if="${impactSection.hasImage}"
+						     th:src="@{'/api/images/impact/' + ${impactSection.id}}"
+						     alt="Impact Image"
+							 class="img-fluid rounded-3 shadow-lg animate-float"/>
+					</div>
+					<div class="col-md-8 col-lg-9">
+						<p th:text="${impactSection.content}"
+						   class="text-muted fs-5" style="text-align: justify; line-height: 1.6;"></p>
+					</div>
+	            </div>
+	        </div>
+	    </div>
+	</section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5 bg-white">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3 text-gradient">What Our Clients Say</h2>
+                <p class="text-muted fs-5">Hear from industry leaders who have transformed their operations with our solutions.</p>
+            </div>
+
+            <div class="row">
+                <div th:if="${#lists.isEmpty(testimonials)}" class="col-12 text-center py-5">
+                    <div class="text-muted fs-5">No testimonials available</div>
+                </div>
+
+                <div th:each="testimonial, iterStat : ${testimonials}" 
+                     class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow-lg card-hover animate-fade-in-up" style="background: linear-gradient(135deg, #f8f9fa, white);">
+                        <div class="card-body p-4">
+                            <div class="d-flex mb-3">
+								<div class="text-warning">
+								    <span th:each="i : ${#numbers.sequence(1, testimonial.rating)}">
+								        <i class="fas fa-star"></i>
+								    </span>
+								</div>
+                            </div>
+                            <blockquote class="blockquote text-muted fs-5 mb-4 fst-italic" th:text="${testimonial.message}">
+                                "Outstanding service and exceptional results. The team exceeded our expectations in every way."
+                            </blockquote>
+                            <div class="d-flex align-items-center">
+								<div class="rounded-circle overflow-hidden me-3" style="width: 48px; height: 48px;">
+								    <img th:if="${testimonial.id != null}" 
+								         th:src="@{'/api/images/testimonial/' + ${testimonial.id}}" 
+								         alt="Testimonial Image"
+								         class="w-100 h-100" style="object-fit: cover;" />
+								</div>
+                                <div>
+                                    <div class="fw-semibold text-dark" th:text="${testimonial.name}">John Doe</div>
+                                    <small class="text-muted" th:text="${testimonial.position}">CEO, Company Inc.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3 text-gradient">Latest Insights</h2>
+                <p class="text-muted fs-5">Stay updated with the latest trends and innovations in sustainability and technology.</p>
+            </div>
+
+            <div class="row">
+                <div th:if="${#lists.isEmpty(blogPosts)}" class="col-12 text-center py-5">
+                    <div class="text-muted fs-5">No blog posts available</div>
+                </div>
+
+                <div th:each="post, iterStat : ${blogPosts}" 
+                     class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow-lg card-hover animate-fade-in-up">
+                        <div class="position-relative overflow-hidden image-wrapper" style="height: 250px;">
+                            <img th:if="${post.hasImage}" 
+                                 th:src="@{'/api/images/blog/' + ${post.id}}"
+                                 th:alt="${post.title}"
+                                 class="card-img-top image-zoom"/>
+                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));"></div>
+                            <div class="position-absolute top-0 start-0 m-3">
+                                <span class="badge bg-primary">Article</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-dark mb-3" th:text="${post.title}">Blog Title</h5>
+                            <p class="card-text text-muted mb-4" th:text="${post.content}">Blog content preview...</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                
+                                <div class="d-flex align-items-center text-primary" style="cursor: pointer;">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	<!-- Contact Section -->
+	<section id="contact" class="py-5 mb-5" style="background: linear-gradient(135deg, #6b21a8, #4338ca, #2563eb, #0ea5e9);">
+	  <div class="container">
+	    
+	    <!-- Heading -->
+	    <div class="text-center mb-5">
+	      <h2 class="display-4 fw-bold mb-3 text-white">Get In Touch</h2>
+	      <p class="text-white-50 fs-5">
+	        Ready to transform your business with sustainable solutions? Let's start the conversation.
+	      </p>
+	    </div>
+
+	    <!-- Contact Content -->
+	    <div class="row align-items-start">
+	      
+	      <!-- Contact Details (Left Side) -->
+	      <div class="col-lg-6 mb-5 mb-lg-0 animate-fade-in-left">
+	        <div class="contact-info">
+
+	          <!-- Location -->
+	          <div class="d-flex align-items-center mb-4">
+	            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+	              style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
+	              <i class="fas fa-map-marker-alt text-white"></i>
+	            </div>
+	            <div>
+	              <h5 class="text-white fw-semibold mb-0">Our Location</h5>
+	              <p class="text-white-50 mb-0">123 Innovation Drive, Tech City, TC 12345</p>
+	            </div>
+	          </div>
+
+	          <!-- Phone -->
+	          <div class="d-flex align-items-center mb-4">
+	            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+	              style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
+	              <i class="fas fa-phone text-white"></i>
+	            </div>
+	            <div>
+	              <h5 class="text-white fw-semibold mb-0">Call Us</h5>
+	              <p class="text-white-50 mb-0">+1 (555) 123-4567</p>
+	            </div>
+	          </div>
+
+	          <!-- Email -->
+	          <div class="d-flex align-items-center mb-4">
+	            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+	              style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
+	              <i class="fas fa-envelope text-white"></i>
+	            </div>
+	            <div>
+	              <h5 class="text-white fw-semibold mb-0">Email Us</h5>
+	              <p class="text-white-50 mb-0">hello@zemyst.com</p>
+	            </div>
+	          </div>
+
+	          <!-- Working Hours -->
+	          <div class="d-flex align-items-center mb-4">
+	            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+	              style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
+	              <i class="fas fa-clock text-white"></i>
+	            </div>
+	            <div>
+	              <h5 class="text-white fw-semibold mb-0">Working Hours</h5>
+	              <p class="text-white-50 mb-0">Mon - Fri: 9:00 AM - 6:00 PM</p>
+	            </div>
+	          </div>
+
+	        </div>
+	      </div>
+
+	      <!-- Contact Form (Right Side) -->
+	      <div class="col-lg-6 animate-fade-in-right">
+	        <form id="contactForm" class="glass-form p-4 p-md-5 bg-white rounded-4 shadow-sm">
+	          <div class="row g-4">
+	            <div class="col-md-6">
+	              <label for="firstName" class="form-label fw-medium">First Name</label>
+	              <input type="text" class="form-control py-3" id="firstName" name="firstName" placeholder="John">
+	            </div>
+	            <div class="col-md-6">
+	              <label for="lastName" class="form-label fw-medium">Last Name</label>
+	              <input type="text" class="form-control py-3" id="lastName" name="lastName" placeholder="Doe">
+	            </div>
+	          </div>
+
+	          <div class="mb-4 mt-4">
+	            <label for="email" class="form-label fw-medium">Email Address</label>
+	            <input type="email" class="form-control py-3" id="email" name="email" placeholder="john@example.com">
+	          </div>
+
+	          <div class="mb-4">
+	            <label for="company" class="form-label fw-medium">Company</label>
+	            <input type="text" class="form-control py-3" id="company" name="company" placeholder="Your Company">
+	          </div>
+
+	          <div class="mb-4">
+	            <label for="subject" class="form-label fw-medium">Subject</label>
+	            <select class="form-select py-3" id="subject" name="subject">
+	              <option value="">Select a subject</option>
+	              <option value="general">General Inquiry</option>
+	              <option value="products">Product Information</option>
+	              <option value="partnership">Partnership Opportunity</option>
+	              <option value="support">Technical Support</option>
+	            </select>
+	          </div>
+
+	          <div class="mb-4">
+	            <label for="message" class="form-label fw-medium">Message</label>
+	            <textarea class="form-control py-3" id="message" name="message" rows="4"
+	              placeholder="Tell us about your project or inquiry..."></textarea>
+	          </div>
+
+	          <button type="submit" class="btn btn-primary py-3 w-100 fs-5 btn-bounce">
+	            Send Message
+	          </button>
+	        </form>
+	      </div>
+
+	    </div>
+	  </div>
+	</section>
+
+		  <!-- Footer -->
+		  <footer class="footer-section py-5" role="contentinfo">
+		      <div class="container">
+		          <div class="row g-5">
+		              <!-- Company Info -->
+		              <div class="col-lg-3 col-md-6">
+		                  <div class="d-flex align-items-center mb-4">
+		                      <img src="/images/Logo.png" alt="Zemyst Logo" class="me-3 image-zoom" style="height: 40px; width: 40px; border-radius: 0.5rem;" />
+		                      <span class="fs-4 fw-bold text-gradient-white">Zemyst</span>
+		                  </div>
+		                  <p class="text-muted mb-4">
+		                      Reimagining the future with smart sustainability solutions that transform businesses and protect our planet.
+		                  </p>
+
+		                  <div class="d-flex">
+		                      <a href="#" class="social-icon twitter mb-2" aria-label="Twitter">
+		                          <i class="fab fa-twitter"></i>
+		                      </a>
+		                      <a href="#" class="social-icon linkedin mb-2" aria-label="LinkedIn">
+		                          <i class="fab fa-linkedin-in"></i>
+		                      </a>
+		                      <a href="#" class="social-icon github" aria-label="GitHub">
+		                          <i class="fab fa-github"></i>
+		                      </a>
+		                  </div>
+		              </div>
+
+		              <!-- Quick Links -->
+		              <div class="col-lg-3 col-md-6">
+		                  <h5 class="fw-semibold mb-4">Quick Links</h5>
+		                  <ul class="list-unstyled">
+		                      <li class="mb-2"><a href="#home" class="text-muted text-decoration-none">Home</a></li>
+		                      <li class="mb-2"><a href="#about" class="text-muted text-decoration-none">About Us</a></li>
+		                      <li class="mb-2"><a href="#products" class="text-muted text-decoration-none">Products</a></li>
+		                      <li class="mb-2"><a href="#testimonials" class="text-muted text-decoration-none">Testimonials</a></li>
+		                      <li class="mb-2"><a href="#blog" class="text-muted text-decoration-none">Blog</a></li>
+		                  </ul>
+		              </div>
+
+		              <!-- Services -->
+		              <div class="col-lg-3 col-md-6">
+		                  <h5 class="fw-semibold mb-4">Services</h5>
+		                  <ul class="list-unstyled">
+		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Sustainability Consulting</a></li>
+		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Smart Technology Solutions</a></li>
+		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Environmental Impact Assessment</a></li>
+		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Green Innovation</a></li>
+		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Corporate Training</a></li>
+		                  </ul>
+		              </div>
+
+		              <!-- Contact Info -->
+		              <div class="col-lg-3 col-md-6">
+		                  <div class="mb-4">
+		                      <h6 class="fw-semibold">Our Location</h6>
+		                      <p class="text-muted mb-0">123 Innovation Drive, Tech City, TC 12345</p>
+		                  </div>
+		                  
+		                  <div class="mb-4">
+		                      <h6 class="fw-semibold">Call Us</h6>
+		                      <p class="text-muted mb-0">+1 (555) 123-4567</p>
+		                  </div>
+
+		                  <div>
+		                      <h6 class="fw-semibold">Email Us</h6>
+		                      <a href="mailto:hello@zemyst.com" class="text-muted text-decoration-none">hello@zemyst.com</a>
+		                  </div>
+		              </div>
+		          </div>
+
+		          <hr class="my-5 border-secondary">
+		          
+		          <div class="text-center">
+		              <p class="text-muted mb-0">
+		                  © 2025 Zemyst. All rights reserved. |
+		                  <a href="#" class="text-muted text-decoration-none ms-2">Privacy Policy</a> |
+		                  <a href="#" class="text-muted text-decoration-none ms-2">Terms of Service</a>
+		              </p>
+		          </div>
+		      </div>
+		  </footer>
+
+		  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		  <script>
+		      document.addEventListener("DOMContentLoaded", () => {
+		          const text = "Welcome to Zemyst";
+		          const animatedText = document.getElementById("animated-text");
+
+		          let repeatCount = 0;
+
+		          function animateText() {
+		              animatedText.innerHTML = '';
+
+		              [...text].forEach((char, i) => {
+		                  const span = document.createElement("span");
+		                  span.textContent = char === ' ' ? '\u00A0' : char;
+		                  span.className = "letter";
+		                  span.style.animationDelay = `${i * 0.1}s`;
+		                  animatedText.appendChild(span);
+		              });
+
+		              repeatCount++;
+		              if (repeatCount < 3) {
+		                  const totalDuration = text.length * 100 + 1000;
+		                  setTimeout(animateText, totalDuration);
+		              }
+		          }
+
+		          animateText();
+		      });
+
+		      // Smooth scrolling for navigation links
+		      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+		          anchor.addEventListener('click', function (e) {
+		              e.preventDefault();
+		              const target = document.querySelector(this.getAttribute('href'));
+		              if (target) {
+		                  target.scrollIntoView({
+		                      behavior: 'smooth',
+		                      block: 'start'
+		                  });
+		              }
+		          });
+		      });
+
+		      // Scroll-based animations
+		      const observerOptions = {
+		          threshold: 0.1,
+		          rootMargin: '0px 0px -50px 0px'
+		      };
+
+		      const observer = new IntersectionObserver((entries) => {
+		          entries.forEach(entry => {
+		              if (entry.isIntersecting) {
+		                  entry.target.classList.add('animate-fade-in-up');
+		              }
+		          });
+		      }, observerOptions);
+
+		      // Observe elements for scroll animations
+		      document.querySelectorAll('section, .animate-fade-in-up, .animate-fade-in-right').forEach(element => {
+		          observer.observe(element);
+		      });
+
+		      // Contact form submission
+		      async function submitContactForm(event) {
+		          event.preventDefault();
+
+		          const form = event.target;
+		          const data = {
+		              firstName: form.firstName.value,
+		              lastName: form.lastName.value,
+		              email: form.email.value,
+		              company: form.company.value,
+		              subject: form.subject.value,
+		              message: form.message.value
+		          };
+
+		          // Simple validation
+		          if (!data.firstName || !data.email || !data.message) {
+		              alert('Please fill in all required fields.');
+		              return;
+		          }
+
+		          const submitButton = form.querySelector('button[type="submit"]');
+		          const originalText = submitButton.textContent;
+		          submitButton.textContent = 'Sending...';
+		          submitButton.disabled = true;
+
+		          try {
+		              // Simulate API call - replace with actual endpoint
+		              const response = await fetch('/contact/send', {
+		                  method: 'POST',
+		                  headers: { 'Content-Type': 'application/json' },
+		                  body: JSON.stringify(data)
+		              });
+
+		              if (response.ok) {
+		                  alert('Thank you for your message! We\'ll get back to you soon.');
+		                  form.reset();
+		              } else {
+		                  throw new Error('Failed to send message');
+		              }
+		          } catch (error) {
+		              console.error('Error:', error);
+		              alert('There was an error sending your message. Please try again.');
+		          } finally {
+		              submitButton.textContent = originalText;
+		              submitButton.disabled = false;
+		          }
+		      }
+			  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+			    tooltipTriggerList.map(function (tooltipTriggerEl) {
+			      return new bootstrap.Tooltip(tooltipTriggerEl)
+			    })
+		      // Add event listener to form
+		      document.getElementById('contactForm').addEventListener('submit', submitContactForm);
+
+		      // Add loading animation to page
+		      window.addEventListener('load', () => {
+		          document.body.classList.add('loaded');
+		      });
+		</script>
+
+	</body>
+</html>
+
