@@ -2,447 +2,1090 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zemyst</title>
-    <link rel="icon" type="image/png" href="/images/Logo.png?v=2"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-	<style>
-	       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-	       
-	       * {
-	           font-family: 'Inter', sans-serif;
-	       }
-	       
-	       /* Advanced Animations */
-		   .letter {
-		      opacity: 0;
-		      display: inline-block;
-		      transform: translateY(20px);
-		      animation: fadeInLetter 0.4s ease-out forwards;
-		    }
-			@keyframes float {
-			  0% { transform: translateY(0); }
-			  50% { transform: translateY(-10px); }
-			  100% { transform: translateY(0); }
-			}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	 <title>Zemyst</title>
+	 <link rel="icon" type="image/png" href="/images/Logo.png?v=2"/>
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+	 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <style>
+		
+		/*blog*/
+		:root {
+		          --eco-primary: #2d5a47;
+		          --eco-secondary: #4a7c59;
+		          --eco-light: #7fb069;
+		          --eco-accent: #a7c957;
+		          --eco-dark: #1a3d2e;
+		          --eco-medium: #2d5a47;
+		      }
 
-			.animate-float {
-			  animation: float 4s ease-in-out infinite;
-			}
+		      .blog-section {
+		          position: relative;
+		          background: linear-gradient(135deg, #f8fffe 0%, #e8f5e8 100%);
+		          overflow: hidden;
+		          min-height: 100vh;
+		      }
 
-			@keyframes slideInLeft {
-			  from { opacity: 0; transform: translateX(-40px); }
-			  to { opacity: 1; transform: translateX(0); }
-			}
+		      /* Floating particles animation */
+		      .blog-section::before {
+		          content: '';
+		          position: absolute;
+		          top: 0;
+		          left: 0;
+		          width: 100%;
+		          height: 100%;
+		          background-image: 
+		              radial-gradient(circle at 20% 80%, rgba(167, 201, 87, 0.3) 0%, transparent 50%),
+		              radial-gradient(circle at 80% 20%, rgba(127, 176, 105, 0.2) 0%, transparent 50%),
+		              radial-gradient(circle at 40% 40%, rgba(74, 124, 89, 0.1) 0%, transparent 50%);
+		          animation: float 20s ease-in-out infinite;
+		          z-index: 1;
+		      }
 
-			@keyframes fadeInRight {
-			  from { opacity: 0; transform: translateX(40px); }
-			  to { opacity: 1; transform: translateX(0); }
-			}
+		      /* Animated leaf shapes */
+		      .blog-section::after {
+		          content: '';
+		          position: absolute;
+		          top: 0;
+		          left: 0; 
+		          width: 100%;
+		          height: 100%;
+		          background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a7c957' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+		          animation: drift 30s linear infinite;
+		          z-index: 1;
+		      }
 
-			.animate-slide-in-left {
-			  animation: slideInLeft 1s ease-out forwards;
-			}
+		      @keyframes float {
+		          0%, 100% { transform: translateY(0px) rotate(0deg); }
+		          33% { transform: translateY(-20px) rotate(2deg); }
+		          66% { transform: translateY(-10px) rotate(-1deg); }
+		      }
 
-			.animate-fade-in-right {
-			  animation: fadeInRight 1s ease-out forwards;
-			}
+		      @keyframes drift {
+		          0% { transform: translateX(-100px); }
+		          100% { transform: translateX(100vw); }
+		      }
 
-		    @keyframes fadeInLetter {
-				0% {
-				    opacity: 0;
-				    transform: translateY(20px);
-				  }
-				  100% {
-				    opacity: 1;
-				    transform: translateY(0);
-				  }
-		    }
+		      /* Eco-friendly wave animation */
+		      .wave-background {
+		          position: absolute;
+		          bottom: 0;
+		          left: 0;
+		          width: 100%;
+		          height: 200px;
+		          background: linear-gradient(135deg, rgba(167, 201, 87, 0.1), rgba(127, 176, 105, 0.1));
+		          clip-path: ellipse(100% 100% at 50% 100%);
+		          animation: wave 15s ease-in-out infinite;
+		          z-index: 1;
+		      }
 
-	       @keyframes fadeInUp {
-	           0% { opacity: 0; transform: translateY(30px); }
-	           100% { opacity: 1; transform: translateY(0); }
-	       }
-	       
-	       @keyframes fadeInLeft {
-	           0% { opacity: 0; transform: translateX(-30px); }
-	           100% { opacity: 1; transform: translateX(0); }
-	       }
-	       
-	       @keyframes slideInFromBottom {
-	           0% { opacity: 0; transform: translateY(50px); }
-	           100% { opacity: 1; transform: translateY(0); }
-	       }
-	       
-	       @keyframes glow {
-	           0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
-	           50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
-	       }
-	       
-	       @keyframes gradientShift {
-	           0% { background-position: 0% 50%; }
-	           50% { background-position: 100% 50%; }
-	           100% { background-position: 0% 50%; }
-	       }
-	       
-	       @keyframes typeWriter {
-	           0% { width: 0; }
-	           100% { width: 100%; }
-	       }
-	       
-	       @keyframes blink {
-	           0%, 50% { border-color: transparent; }
-	           51%, 100% { border-color: white; }
-	       }
-	       
-	       @keyframes slideInFromLeft {
-	           0% { 
-	               opacity: 0; 
-	               transform: translateX(-100px); 
-	           }
-	           100% { 
-	               opacity: 1; 
-	               transform: translateX(0); 
-	           }
-	       }
-	       
-	       @keyframes slideInFromRight {
-	           0% { 
-	               opacity: 0; 
-	               transform: translateX(100px); 
-	           }
-	           100% { 
-	               opacity: 1; 
-	               transform: translateX(0); 
-	           }
-	       }
-	       
-	       @keyframes fadeInScale {
-	           0% { 
-	               opacity: 0; 
-	               transform: scale(0.8); 
-	           }
-	           100% { 
-	               opacity: 1; 
-	               transform: scale(1); 
-	           }
-	       }
-		   @keyframes fadeZoomIn {
-		     0% { opacity: 0; transform: scale(0.95); }
-		     100% { opacity: 1; transform: scale(1); }
-		   }
-		   .navbar-brand:hover img {
-		     animation: pulse 1s infinite;
-		   }
-		   @keyframes pulse {
-		     0% { transform: scale(1); }
-		     50% { transform: scale(1.08); }
-		     100% { transform: scale(1); }
-		   }
+		      @keyframes wave {
+		          0%, 100% { 
+		              clip-path: ellipse(100% 80% at 50% 100%);
+		              transform: translateY(0);
+		          }
+		          50% { 
+		              clip-path: ellipse(100% 120% at 50% 100%);
+		              transform: translateY(-10px);
+		          }
+		      }
 
-		   .animate-fade-zoom-in {
-		     animation: fadeZoomIn 0.8s ease-out both;
-		   }
-		   
-	       /* Custom Classes */
-	       .animate-fade-in-up {
-	           animation: fadeInUp 0.8s ease-out both;
-	       }
-	       
-	       .animate-fade-in-left {
-	           animation: fadeInLeft 0.8s ease-out both;
-	       }
-	       
-	       .animate-fade-in-right {
-	           animation: fadeInRight 0.8s ease-out both;
-	       }
-	       
-	       .animate-slide-in-bottom {
-	           animation: slideInFromBottom 0.8s ease-out both;
-	       }
-	       
-	       .animate-slide-in-left {
-	           animation: slideInFromLeft 0.8s ease-out both;
-	       }
-	       
-	       .animate-slide-in-right {
-	           animation: slideInFromRight 0.8s ease-out both;
-	       }
-	       
-	       .animate-fade-in-scale {
-	           animation: fadeInScale 0.8s ease-out both;
-	       }
-	       
-	       .typewriter {
-	           overflow: hidden;
-	           border-right: 3px solid white;
-	           white-space: nowrap;
-	           margin: 0 auto;
-	           animation: typeWriter 3s steps(40, end), blink 0.75s step-end infinite;
-	           animation-delay: 0.5s;
-	           animation-fill-mode: both;
-	       }
-	       
-	       .text-line {
-	           opacity: 0;
-	           transform: translateY(30px);
-	           animation: fadeInUp 0.8s ease-out forwards;
-	       }
-	       
-	       .text-line-1 { animation-delay: 0.2s; }
-	       .text-line-2 { animation-delay: 0.6s; }
-	       .text-line-3 { animation-delay: 1.0s; }
-	       .text-line-4 { animation-delay: 1.4s; }
-	       
-	       .animate-float {
-	           animation: float 3s ease-in-out infinite;
-	       }
-	       
-	       .animate-glow {
-	           animation: glow 2s ease-in-out infinite alternate;
-	       }
-	       
-	       .bg-gradient-animated {
-	           background: linear-gradient(-45deg, #667eea, #764ba2, #6B73FF, #9A9CE2);
-	           background-size: 400% 400%;
-	           animation: gradientShift 15s ease infinite;
-	       }
-	       
-		   .zoom-img {
-		       transition: transform 0.5s ease;
-		     }
-		     .img-container:hover .zoom-img {
-		       transform: scale(1.1);
-		     }
-	       .glassmorphism {
-	           backdrop-filter: blur(16px) saturate(180%);
-	           background-color: rgba(255, 255, 255, 0.1);
-	           border: 1px solid rgba(255, 255, 255, 0.125);
-	       }
-	       
-	       .card-hover {
-	           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	       }
-	       
-	       .card-hover:hover {
-	           transform: translateY(-5px);
-			   transition: transform 0.3s ease, box-shadow 0.3s ease;
-			   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-			 }
-	       
-	       .image-zoom {
-	           transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-	       }
-	       
-	       .image-zoom:hover {
-	           transform: scale(1.1);
-	       }
-	       
-		   .btn-bounce:hover {
-		     animation: bounce 0.6s;
-		   }
-		   @keyframes bounce {
-		     0%   { transform: translateY(0); }
-		     30%  { transform: translateY(-6px); }
-		     50%  { transform: translateY(0); }
-		     70%  { transform: translateY(-3px); }
-		     100% { transform: translateY(0); }
-		   }
+		      /* Content styling */
+		      .container {
+		          position: relative;
+		          z-index: 10;
+		      }
 
-		   
-	       .text-gradient {
-	           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	           -webkit-background-clip: text;
-	           -webkit-text-fill-color: transparent;
-	           background-clip: text;
-	       }
-	       
-	       .text-gradient-white {
-	           background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-	           -webkit-background-clip: text;
-	           -webkit-text-fill-color: transparent;
-	           background-clip: text;
-	       }
-	       
-	       .hero-overlay {
-	           background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
-	       }
-	       
-	       .nav-blur {
-	           backdrop-filter: blur(20px);
-	           background-color: rgba(255, 255, 255, 0.9);
-	       }
-	       
-	       .stagger-delay-1 { animation-delay: 0.1s; }
-	       .stagger-delay-2 { animation-delay: 0.2s; }
-	       .stagger-delay-3 { animation-delay: 0.3s; }
-	       .stagger-delay-4 { animation-delay: 0.4s; }
-	       .stagger-delay-5 { animation-delay: 0.5s; }
-	       .stagger-delay-6 { animation-delay: 0.6s; }
-	       
-	       .hero-delay-1 { animation-delay: 0.8s; }
-	       .hero-delay-2 { animation-delay: 1.2s; }
-	       .hero-delay-3 { animation-delay: 1.6s; }
-	       .hero-delay-4 { animation-delay: 2.0s; }
+		      .text-eco {
+		          color: var(--eco-primary);
+		          position: relative;
+		      }
 
-	       /* Hero section specific styles */
-	       .hero-section {
-	           height: 90vh;
-	           background: linear-gradient(to right, #4f46e5, #7c3aed, #2563eb);
-	       }
+		      .text-eco::after {
+		          content: '';
+		          position: absolute;
+		          bottom: -5px;
+		          left: 50%;
+		          transform: translateX(-50%);
+		          width: 50px;
+		          height: 3px;
+		          background: linear-gradient(90deg, var(--eco-accent), var(--eco-light));
+		          border-radius: 2px;
+		          animation: glow 2s ease-in-out infinite alternate;
+		      }
 
-	       /* Contact form specific styles */
-	       .contact-form {
-	           background: rgba(255, 255, 255, 0.1);
-	           backdrop-filter: blur(16px);
-	           border-radius: 1.5rem;
-	       }
+		      @keyframes glow {
+		          0% { width: 30px; opacity: 0.7; }
+		          100% { width: 70px; opacity: 1; }
+		      }
 
-	       .contact-form .form-control {
-	           background: rgba(255, 255, 255, 0.2);
-	           border: 1px solid rgba(255, 255, 255, 0.3);
-	           color: white;
-	       }
+		      .blog-card {
+		          background: rgba(255, 255, 255, 0.9);
+		          backdrop-filter: blur(10px);
+		          border: 1px solid rgba(167, 201, 87, 0.2);
+		          transition: all 0.3s ease;
+		          position: relative;
+		          overflow: hidden;
+		      }
 
-	       .contact-form .form-control::placeholder {
-	           color: rgba(255, 255, 255, 0.7);
-	       }
+		      .blog-card::before {
+		          content: '';
+		          position: absolute;
+		          top: 0;
+		          left: -100%;
+		          width: 100%;
+		          height: 100%;
+		          background: linear-gradient(90deg, transparent, rgba(167, 201, 87, 0.1), transparent);
+		          transition: left 0.6s ease;
+		          z-index: 1;
+		      }
 
-	       .contact-form .form-control:focus {
-	           box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
-	           border-color: rgba(255, 255, 255, 0.5);
-	           background: rgba(255, 255, 255, 0.2);
-	           color: white;
-	       }
+		      .blog-card:hover::before {
+		          left: 100%;
+		      }
 
-	       /* Smooth Scrolling */
-	       html {
-	           scroll-behavior: smooth;
-	       }
-	       
-	       /* Custom Scrollbar */
-	       ::-webkit-scrollbar {
-	           width: 8px;
-	       }
-	       
-	       ::-webkit-scrollbar-track {
-	           background: #f1f1f1;
-	       }
-	       
-	       ::-webkit-scrollbar-thumb {
-	           background: linear-gradient(135deg, #667eea, #764ba2);
-	           border-radius: 4px;
-	       }
-	       
-	       ::-webkit-scrollbar-thumb:hover {
-	           background: linear-gradient(135deg, #5a6fd8, #6a4190);
-	       }
+		      .blog-card:hover {
+		          transform: translateY(-10px);
+		          background: rgba(255, 255, 255, 0.95);
+		          box-shadow: 0 20px 40px rgba(45, 90, 71, 0.2);
+		          border-color: rgba(167, 201, 87, 0.4);
+		      }
 
-	       /* Bootstrap component overrides */
-	       .navbar-brand img {
-	           width: 40px;
-	           height: 40px;
-	       }
+		      .card-body {
+		          position: relative;
+		          z-index: 2;
+		      }
 
-	       .btn-primary {
-	           background: linear-gradient(135deg, #667eea, #764ba2);
-	           border: none;
-	       }
+		      .badge.bg-eco {
+		          background: linear-gradient(135deg, var(--eco-accent), var(--eco-light)) !important;
+		          animation: pulse 2s infinite;
+		      }
 
-	       .btn-primary:hover {
-	           background: linear-gradient(135deg, #5a6fd8, #6a4190);
-	       }
+		      @keyframes pulse {
+		          0%, 100% { transform: scale(1); }
+		          50% { transform: scale(1.05); }
+		      }
 
-	       .card {
-	           border: none;
-	           border-radius: 1rem;
-	       }
+		      /* Animated icons */
+		      .animate-fade-in-up {
+		          opacity: 0;
+		          transform: translateY(30px);
+		          animation: fadeInUp 0.8s ease forwards;
+		      }
 
-	       .card-img-top {
-	           border-radius: 1rem 1rem 0 0;
-	           height: 250px;
-	           object-fit: cover;
-	       }
-		   /* Footer background */
-		   .footer-section {
-		       background-color: #0b1e4d; /* Dark blue */
-		       color: #ffffff; /* Light text for contrast */
-		   }
+		      @keyframes fadeInUp {
+		          to {
+		              opacity: 1;
+		              transform: translateY(0);
+		          }
+		      }
 
-		   .text-gradient {
-		     background: linear-gradient(270deg, #2563eb, #6b21a8, #22c55e);
-		     background-size: 600% 600%;
-		     -webkit-background-clip: text;
-		     -webkit-text-fill-color: transparent;
-		     animation: gradientShift 6s ease infinite;
-		   }
-		   /* Company name color */
-		   .footer-section .text-gradient-white {
-		       color: #f0f4ff; /* lighter white-ish color */
-		   }
-		   .footer-section .d-flex {
-		       display: flex !important; /* keep flex */
-		       flex-direction: column !important; /* vertical stack */
-		       align-items: flex-start !important; /* left align icons */
-		   }
-		   /* Social icons container */
-		   .footer-section .d-flex > a.social-icon {
-				margin: 0 0 1rem 0; /* bottom margin for spacing */
-			    font-size: 1.5rem;
-			    color: #a8bfff; /* softer blue icon color */
-			    transition: color 0.3s ease;
-		   }
+		      /* Floating elements */
+		      .floating-element {
+		          position: absolute;
+		          opacity: 0.1;
+		          animation: float-random 20s ease-in-out infinite;
+		          z-index: 2;
+		      }
 
-		   /* Social icons hover colors - matching brand colors */
-		   .footer-section .social-icon.twitter:hover {
-		       color: #1da1f2; /* Twitter blue */
-		   }
-		   .footer-section .social-icon.linkedin:hover {
-		       color: #0077b5; /* LinkedIn blue */
-		   }
-		   .footer-section .social-icon.github:hover {
-		       color: #ffffff; /* White for GitHub on hover */
-		   }
+		      .floating-element:nth-child(1) {
+		          top: 10%;
+		          left: 10%;
+		          font-size: 2rem;
+		          color: var(--eco-light);
+		          animation-delay: 0s;
+		      }
 
-		   /* Make sure social icons align vertically centered */
-		   
-		   .footer-section a.text-muted,
-		   .footer-section .text-muted,
-		   .footer-section p.text-muted {
-		       color: #ffffff !important;
-		   }
-		   /* Links in Quick Links and others */
-		   .footer-section a.text-muted {
-		       color: #cfd7ff;
-		   }
+		      .floating-element:nth-child(2) {
+		          top: 20%;
+		          right: 15%;
+		          font-size: 1.5rem;
+		          color: var(--eco-accent);
+		          animation-delay: 5s;
+		      }
 
-		   .footer-section a.text-muted:hover {
-		       color: #d1d9ff !important; 
-		       text-decoration: underline;
-		   }
+		      .floating-element:nth-child(3) {
+		          bottom: 30%;
+		          left: 20%;
+		          font-size: 1.8rem;
+		          color: var(--eco-secondary);
+		          animation-delay: 10s;
+		      }
 
-		   /* Horizontal line color */
-		   .footer-section hr {
-		       border-color: #3a4a7a;
-		   }
-		   .image-zoom {
-		     transition: transform 0.5s ease;
-			 transform-origin: center center;
-		   }
+		      .floating-element:nth-child(4) {
+		          bottom: 20%;
+		          right: 10%;
+		          font-size: 2.2rem;
+		          color: var(--eco-light);
+		          animation-delay: 15s;
+		      }
 
-		   .image-zoom:hover {
-		     transform: scale(1.1);
-		   }
-	   </style>
+		      @keyframes float-random {
+		          0%, 100% { 
+		              transform: translateY(0px) translateX(0px) rotate(0deg);
+		              opacity: 0.1;
+		          }
+		          25% { 
+		              transform: translateY(-20px) translateX(10px) rotate(5deg);
+		              opacity: 0.2;
+		          }
+		          50% { 
+		              transform: translateY(-10px) translateX(-5px) rotate(-3deg);
+		              opacity: 0.15;
+		          }
+		          75% { 
+		              transform: translateY(-30px) translateX(15px) rotate(7deg);
+		              opacity: 0.1;
+		          }
+		      }
+
+		      /* Enhanced button styling */
+		      .btn-outline-light {
+		          background: linear-gradient(135deg, transparent, rgba(167, 201, 87, 0.1));
+		          border: 2px solid var(--eco-accent);
+		          color: var(--eco-primary);
+		          position: relative;
+		          overflow: hidden;
+		          transition: all 0.3s ease;
+		      }
+
+		      .btn-outline-light::before {
+		          content: '';
+		          position: absolute;
+		          top: 0;
+		          left: -100%;
+		          width: 100%;
+		          height: 100%;
+		          background: linear-gradient(135deg, var(--eco-accent), var(--eco-light));
+		          transition: left 0.3s ease;
+		          z-index: -1;
+		      }
+
+		      .btn-outline-light:hover::before {
+		          left: 0;
+		      }
+
+		      .btn-outline-light:hover {
+		          color: white;
+		          border-color: var(--eco-light);
+		          transform: translateY(-2px);
+		          box-shadow: 0 10px 20px rgba(167, 201, 87, 0.3);
+		      }
+
+		      /* Responsive animations */
+		      @media (max-width: 768px) {
+		          .floating-element {
+		              font-size: 1rem !important;
+		          }
+		          
+		          .blog-card:hover {
+		              transform: translateY(-5px);
+		          }
+		      }
+		/*about*/
+		:root {
+		            --eco-primary: #2d5a27;
+		            --eco-secondary: #4a7c59;
+		            --eco-accent: #7fb069;
+		            --eco-light: #b8e6b8;
+		            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+		            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+		        }
+
+		        body {
+		            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		            overflow-x: hidden;
+		        }
+
+		        /* Animated Background */
+		        .about-section {
+		            position: relative;
+		            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		            min-height: 100vh;
+		            overflow: hidden;
+		        }
+
+		        .about-section::before {
+		            content: '';
+		            position: absolute;
+		            top: 0;
+		            left: 0;
+		            right: 0;
+		            bottom: 0;
+		            background: 
+		                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+		                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+		                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+		            animation: backgroundShift 20s ease-in-out infinite;
+		        }
+
+		        @keyframes backgroundShift {
+		            0%, 100% { 
+		                background: 
+		                    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+		                    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+		                    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+		            }
+		            50% { 
+		                background: 
+		                    radial-gradient(circle at 60% 30%, rgba(120, 119, 198, 0.4) 0%, transparent 50%),
+		                    radial-gradient(circle at 30% 70%, rgba(255, 119, 198, 0.4) 0%, transparent 50%),
+		                    radial-gradient(circle at 80% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+		            }
+		        }
+
+		        /* Floating Particles */
+		        .floating-particle {
+		            position: absolute;
+		            width: 4px;
+		            height: 4px;
+		            background: rgba(255, 255, 255, 0.6);
+		            border-radius: 50%;
+		            animation: float 15s infinite ease-in-out;
+		        }
+
+		        .floating-particle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+		        .floating-particle:nth-child(2) { top: 20%; left: 80%; animation-delay: 2s; }
+		        .floating-particle:nth-child(3) { top: 60%; left: 20%; animation-delay: 4s; }
+		        .floating-particle:nth-child(4) { top: 80%; left: 70%; animation-delay: 6s; }
+		        .floating-particle:nth-child(5) { top: 40%; left: 90%; animation-delay: 8s; }
+		        .floating-particle:nth-child(6) { top: 70%; left: 40%; animation-delay: 10s; }
+
+		        @keyframes float {
+		            0%, 100% { 
+		                transform: translateY(0px) rotate(0deg);
+		                opacity: 0.3;
+		            }
+		            50% { 
+		                transform: translateY(-20px) rotate(180deg);
+		                opacity: 1;
+		            }
+		        }
+
+		        /* Content Styling */
+		        .content-wrapper {
+		            position: relative;
+		            z-index: 10;
+		            background: rgba(255, 255, 255, 0.95);
+		            backdrop-filter: blur(10px);
+		            border-radius: 24px;
+		            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+		            overflow: hidden;
+		            animation: slideInUp 1s ease-out;
+		        }
+
+		        @keyframes slideInUp {
+		            from {
+		                opacity: 0;
+		                transform: translateY(60px);
+		            }
+		            to {
+		                opacity: 1;
+		                transform: translateY(0);
+		            }
+		        }
+
+		        /* Image Container with Hover Effects */
+		        .image-container {
+		            position: relative;
+		            overflow: hidden;
+		            border-radius: 20px;
+		            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+		            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		        }
+
+		        .image-container:hover {
+		            transform: translateY(-10px) scale(1.02);
+		            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+		        }
+
+		        .image-container::before {
+		            content: '';
+		            position: absolute;
+		            top: 0;
+		            left: -100%;
+		            width: 100%;
+		            height: 100%;
+		            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+		            transition: left 0.5s;
+		            z-index: 2;
+		        }
+
+		        .image-container:hover::before {
+		            left: 100%;
+		        }
+
+		        .logo-image {
+		            width: 100%;
+		            height: 400px;
+		            object-fit: contain;  /* Changed from cover to contain for PNG transparency */
+		            background: transparent;
+		            transition: all 0.4s ease;
+		            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+		        }
+
+		        .image-container:hover .logo-image {
+		            transform: scale(1.05);
+		            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.2));
+		        }
+
+		        /* Text Animations */
+		        .text-eco {
+		            color: var(--eco-primary);
+		            position: relative;
+		            display: inline-block;
+		        }
+
+		        .text-eco::after {
+		            content: '';
+		            position: absolute;
+		            bottom: -5px;
+		            left: 0;
+		            width: 0;
+		            height: 3px;
+		            background: linear-gradient(90deg, var(--eco-primary), var(--eco-accent));
+		            transition: width 0.6s ease;
+		        }
+
+		        .text-eco:hover::after {
+		            width: 100%;
+		        }
+
+		        /* Stats Animation */
+		        .stat-item {
+		            padding: 20px;
+		            border-radius: 15px;
+		            background: linear-gradient(135deg, rgba(45, 90, 39, 0.1) 0%, rgba(127, 176, 105, 0.1) 100%);
+		            transition: all 0.3s ease;
+		            position: relative;
+		            overflow: hidden;
+		        }
+
+		        .stat-item::before {
+		            content: '';
+		            position: absolute;
+		            top: 0;
+		            left: -100%;
+		            width: 100%;
+		            height: 100%;
+		            background: linear-gradient(90deg, transparent, rgba(127, 176, 105, 0.2), transparent);
+		            transition: left 0.8s;
+		        }
+
+		        .stat-item:hover::before {
+		            left: 100%;
+		        }
+
+		        .stat-item:hover {
+		            transform: translateY(-5px);
+		            box-shadow: 0 10px 25px rgba(45, 90, 39, 0.2);
+		        }
+
+		        .stat-number {
+		            font-size: 2.5rem;
+		            font-weight: 700;
+		            background: linear-gradient(135deg, var(--eco-primary), var(--eco-accent));
+		            -webkit-background-clip: text;
+		            -webkit-text-fill-color: transparent;
+		            background-clip: text;
+		            animation: countUp 2s ease-out;
+		        }
+
+		        @keyframes countUp {
+		            from { opacity: 0; transform: translateY(20px); }
+		            to { opacity: 1; transform: translateY(0); }
+		        }
+
+		        /* Improved Text Styling */
+		        .story-text {
+		            font-size: 1.1rem;
+		            line-height: 1.8;
+		            color: #555;
+		            text-align: justify;
+		            animation: fadeInLeft 1.2s ease-out 0.3s both;
+		        }
+
+		        @keyframes fadeInLeft {
+		            from {
+		                opacity: 0;
+		                transform: translateX(-30px);
+		            }
+		            to {
+		                opacity: 1;
+		                transform: translateX(0);
+		            }
+		        }
+
+		        .section-title {
+		            font-size: 3rem;
+		            font-weight: 800;
+		            margin-bottom: 2rem;
+		            animation: fadeInDown 1s ease-out 0.2s both;
+		        }
+
+		        @keyframes fadeInDown {
+		            from {
+		                opacity: 0;
+		                transform: translateY(-30px);
+		            }
+		            to {
+		                opacity: 1;
+		                transform: translateY(0);
+		            }
+		        }
+
+		        /* Responsive Design */
+		        @media (max-width: 768px) {
+		            .content-wrapper {
+		                margin: 20px;
+		                padding: 30px 20px;
+		            }
+		            
+		            .section-title {
+		                font-size: 2.2rem;
+		            }
+		            
+		            .story-text {
+		                font-size: 1rem;
+		            }
+		            
+		            .logo-image {
+		                height: 300px;
+		            }
+		        }
+
+		        /* Glassmorphism Effect */
+		        .glass-card {
+		            background: rgba(255, 255, 255, 0.1);
+		            backdrop-filter: blur(10px);
+		            border: 1px solid rgba(255, 255, 255, 0.2);
+		            border-radius: 15px;
+		            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+		            transition: all 0.3s ease;
+		        }
+
+		        .glass-card:hover {
+		            background: rgba(255, 255, 255, 0.15);
+		            transform: translateY(-2px);
+		        }
+        :root {
+            --eco-dark: #1a3d2e;
+            --eco-medium: #2d5a47;
+            --eco-light: #4a7c5a;
+            --eco-accent: #7dd87d;
+            --eco-bright: #a8e6a8;
+            --eco-very-light: #e8f5e8;
+            --dark-overlay: rgba(26, 61, 46, 0.9);
+            --light-overlay: rgba(232, 245, 232, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Animated Backgrounds */
+        .floating-leaves {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, var(--eco-accent), var(--eco-light));
+            border-radius: 0 100% 0 100%;
+            animation: float 15s infinite linear;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 C300,120 900,0 1200,60 L1200,120 L0,120 Z' fill='%23e8f5e8'/%3E%3C/svg%3E");
+            background-size: cover;
+            animation: wave 8s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-50px);
+            }
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--eco-accent);
+            border-radius: 50%;
+            animation: particleFloat 20s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(200px);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(135deg, var(--eco-dark), var(--eco-medium)) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(125, 216, 125, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--eco-accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--eco-dark) 0%, var(--eco-medium) 50%, var(--eco-light) 100%);
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm15 0c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/svg%3E");
+            animation: bgMove 30s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-20px, -20px); }
+            50% { transform: translate(20px, -10px); }
+            75% { transform: translate(-10px, 20px); }
+        }
+
+        .text-animated {
+            background: linear-gradient(45deg, var(--eco-accent), var(--eco-bright), #ffffff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .animate-float {
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        /* About Section */
+        .about-section {
+            background: linear-gradient(45deg, var(--eco-very-light), #ffffff);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--eco-bright) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: patternMove 25s linear infinite;
+            opacity: 0.1;
+        }
+
+        @keyframes patternMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Products Section */
+        .products-section {
+            background: linear-gradient(135deg, var(--eco-dark), var(--eco-medium));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .products-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M50 50c13.807 0 25-11.193 25-25S63.807 0 50 0 25 11.193 25 25s11.193 25 25 25zm0 25c13.807 0 25-11.193 25-25S63.807 25 50 25 25 36.193 25 50s11.193 25 25 25z'/%3E%3C/g%3E%3C/svg%3E");
+            animation: bgPulse 20s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.02; transform: scale(1); }
+            50% { opacity: 0.05; transform: scale(1.1); }
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(125, 216, 125, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(125, 216, 125, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .product-card:hover::before {
+            left: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(26, 61, 46, 0.2);
+        }
+
+        /* Impact Section */
+        .impact-section {
+            background: linear-gradient(45deg, var(--eco-very-light), rgba(125, 216, 125, 0.1));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%234a7c5a' fill-opacity='0.03'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z'/%3E%3C/g%3E%3C/svg%3E");
+            animation: impactPattern 15s linear infinite;
+        }
+
+        @keyframes impactPattern {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(80px); }
+        }
+
+        /* Blog Section */
+        .blog-section {
+            background: linear-gradient(135deg, #ffffff, var(--eco-very-light));
+            position: relative;
+        }
+
+        .blog-card {
+            background: #ffffff;
+            border: 1px solid rgba(125, 216, 125, 0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--eco-accent), var(--eco-light));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(26, 61, 46, 0.15);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--eco-medium), var(--eco-dark));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-form {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-form .form-control {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(125, 216, 125, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .glass-form .form-control:focus {
+            background: #ffffff;
+            border-color: var(--eco-accent);
+            box-shadow: 0 0 0 0.2rem rgba(125, 216, 125, 0.25);
+        }
+
+        /* Footer */
+        .footer-section {
+            background: linear-gradient(135deg, var(--eco-dark), #0f2419);
+            position: relative;
+            color: #ffffff;
+        }
+
+        .footer-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M20 20c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(125, 216, 125, 0.1);
+            color: var(--eco-accent);
+            border-radius: 50%;
+            text-decoration: none;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--eco-accent);
+            color: var(--eco-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        .animate-fade-in-left {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        .animate-fade-in-right {
+            animation: fadeInRight 1s ease-out;
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+		a.btn {
+		  position: relative;
+		  z-index: 10;
+		}
+
+        .btn-eco {
+            background: linear-gradient(45deg, var(--eco-accent), var(--eco-light));
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-eco::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-eco:hover::before {
+            left: 100%;
+        }
+
+        .btn-eco:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(125, 216, 125, 0.4);
+        }
+
+        /* Utility Classes */
+        .bg-eco-dark { background-color: var(--eco-dark) !important; }
+        .bg-eco-light { background-color: var(--eco-very-light) !important; }
+        .text-eco { color: var(--eco-dark) !important; }
+        .text-eco-light { color: var(--eco-accent) !important; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .display-3 { font-size: 2.5rem; }
+            .display-4 { font-size: 2rem; }
+            .hero-section { min-height: 80vh; }
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
     <!-- Header -->
-    <nav class="navbar navbar-expand-lg fixed-top nav-blur border-bottom">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center animate-fade-in-left" href="#home">
                 <img src="/images/Logo.png" alt="Zemyst Logo" class="rounded me-2">
-                <span class="fs-3 fw-bold text-gradient">Zemyst</span>
+                <span class="fs-3 fw-bold text-white">Zemyst</span>
             </a>
             
             <!-- Mobile toggler -->
@@ -454,188 +1097,219 @@
             <div class="collapse navbar-collapse justify-content-end animate-fade-in-right" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link fw-medium btn-bounce" href="#home">Home</a>
+                        <a class="text-white nav-link fw-medium" href="#home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium btn-bounce" href="#about">About</a>
+                        <a class="text-white nav-link fw-medium" href="/about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium btn-bounce" href="#products">Products</a>
+                        <a class="text-white nav-link fw-medium" href="/products">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium btn-bounce" href="#testimonials">Testimonials</a>
+                        <a class="text-white nav-link fw-medium" href="#blog">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-medium btn-bounce" href="#blog">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-medium btn-bounce" href="#contact">Contact</a>
+                        <a class="text-white nav-link fw-medium" href="#contact">Contact</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-	<!-- Hero Section -->
-	<section id="home" class="hero-section position-relative d-flex align-items-start justify-content-center overflow-hidden"
-	style="background-image: url('/images/background.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center; min-height: 100vh;">
-	  <!-- Overlay -->
-	  <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.1); backdrop-filter: blur(1px);"></div>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section d-flex align-items-center justify-content-center text-white position-relative">
+        <!-- Floating Leaves Animation -->
+        <div class="floating-leaves">
+            <div class="leaf" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="leaf" style="left: 20%; animation-delay: 2s;"></div>
+            <div class="leaf" style="left: 30%; animation-delay: 4s;"></div>
+            <div class="leaf" style="left: 40%; animation-delay: 6s;"></div>
+            <div class="leaf" style="left: 50%; animation-delay: 8s;"></div>
+            <div class="leaf" style="left: 60%; animation-delay: 10s;"></div>
+            <div class="leaf" style="left: 70%; animation-delay: 12s;"></div>
+            <div class="leaf" style="left: 80%; animation-delay: 14s;"></div>
+            <div class="leaf" style="left: 90%; animation-delay: 16s;"></div>
+        </div>
 
-	  <!-- Grid container with top padding -->
-	  <div class="container position-relative pt-5 mt-5 h-100">
-	    <div class="row align-items-center h-100">
-	      <!-- Left: Text Content -->
-	      <div class="col-md-6 d-flex flex-column justify-content-start animate-slide-in-left">
-	        <h1 id="animated-text" class="display-3 fw-bold text-white mb-4">
-	          Welcome to Zemyst
-	        </h1>
-
-	        <p class="fs-5 text-white mb-4 opacity-75" style="text-align: justify;">
-	          <span th:if="${homeSection != null}" th:text="${homeSection.content}">
-	            Welcome to Zemyst
-	          </span>
-	        </p>
-
-	        <a href="#products" class="btn btn-light btn-bounce text-dark fw-semibold rounded-pill shadow align-self-start px-4 py-2">
-	          Our Products
-	        </a>
-	      </div>
-
-	      <!-- Right: Hero Image -->
-	      <div class="col-md-6 d-flex justify-content-center align-items-start animate-fade-in-right">
-	        <img th:if="${homeSection != null and homeSection.hasImage}"
-	             th:src="@{'/api/images/section/' + ${homeSection.id}}"
-	             alt="Hero Image"
-	             class="img-fluid rounded-3 shadow-lg animate-float" style="max-width: 300px; max-height: 300px; object-fit: contain;" />
-	      </div>
-	    </div>
-	  </div>
-	</section>
-
-    <!-- About Section -->
-    <section id="about" class="py-5 bg-white">
-        <div class="container">
+        <!-- Hero Content -->
+        <div class="container position-relative z-2">
             <div class="row align-items-center">
-                <!-- About Image -->
-                <div class="col-lg-6 animate-fade-in-left">
-                    <img th:if="${aboutSection != null and aboutSection.hasImage}" 
-                         th:src="@{'/api/images/section/' + ${aboutSection.id}}"
-                         alt="About"
-                         class="img-fluid rounded-4 shadow-lg" style="height: 400px; width: 100%; object-fit: cover;"/>
-                </div>
-                
-                <!-- About Text -->
-                <div class="col-lg-6 animate-fade-in-right">
-                    <h2 class="display-4 fw-bold mb-4 text-gradient">About Our Mission</h2>
-                    <p class="text-muted fs-5 mb-4" style="text-align: justify; line-height: 1.6;"
-                       th:text="${aboutSection != null ? aboutSection.content : 'We are dedicated to creating innovative sustainability solutions that transform the way businesses operate. Our cutting-edge technology and expert team work together to deliver impactful results that benefit both your organization and the environment.'}">
-                        We are dedicated to creating innovative sustainability solutions that transform the way businesses operate. Our cutting-edge technology and expert team work together to deliver impactful results that benefit both your organization and the environment.
+                <!-- Left: Text Content -->
+                <div class="col-lg-6 animate-slide-in-left">
+                    <h1 class="display-3 fw-bold mb-4">
+                        Welcome to <span class="text-animated">Zemyst</span><br>
+                        <span class="text-eco-light">Sustainable Innovation</span>
+                    </h1>
+                    <p class="fs-5 opacity-75 mb-4" style="text-align: justify;" th:text="${homeSection != null ? homeSection.content : 'Welcome to Zemyst - Leading the way in sustainable technology solutions that transform businesses while protecting our planet for future generations.'}">
+                        Welcome to Zemyst - Leading the way in sustainable technology solutions that transform businesses while protecting our planet for future generations.
                     </p>
+                    <a href="/products" class="btn btn-eco rounded-pill shadow px-4 py-3 fs-5">
+                        Explore Our Solutions
+                    </a>
+                </div>
+
+                <!-- Right: Hero Image -->
+                <div class="col-lg-6 d-flex justify-content-center animate-fade-in-right">
+                    <img th:if="${homeSection != null and homeSection.hasImage}"
+                         th:src="@{'/api/images/section/' + ${homeSection.id}}"
+                         alt="Hero Image"
+                         class="img-fluid rounded-3 shadow-lg animate-float"
+                         style="max-width: 400px; object-fit: contain;" />
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Products Section -->
-    <section id="products" class="py-5 bg-light">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold mb-3 text-gradient">Our Products</h2>
-                <p class="text-muted fs-5">Discover our comprehensive range of sustainability solutions designed to transform your business operations.</p>
-            </div>
-
-            <div class="row">
-                <div th:if="${#lists.isEmpty(products)}" class="col-12 text-center py-5">
-                    <div class="text-muted fs-5">No products available</div>
-                </div>
-
-                <div th:each="product, iterStat : ${products}" 
-                     class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100 shadow-lg card-hover animate-fade-in-up">
-                        <div class="img-container overflow-hidden" style="height: 250px; overflow: visible;">
-                            <img th:if="${product.hasImage}"
-                                 th:src="@{'/api/images/product/' + ${product.id}}"
-                                 th:alt="${product.name}"
-                                 class="card-img-top image-zoom"/>
-                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));"></div>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold text-dark mb-3" th:text="${product.name}">Product Name</h5>
-                            <p class="card-text text-muted" th:text="${product.description}">Product Description</p>
-                            <div class="d-flex align-items-center text-primary mt-3" style="cursor: pointer;">
-                           
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-	<!-- Impact Section -->
-	<section id="impact" class="py-5" style="background: linear-gradient(to right, #dbeafe, #f3e8ff);">
-	    <div class="container">
-	        <div class="text-center mb-5">
-	            <h2 class="display-4 fw-bold mb-3 text-gradient">Our Impact</h2>
-	        </div>
-
-	        <!-- Dynamic content from DB (text & image) -->
+	<!-- About Section -->
+	    <section id="about" class="about-section d-flex align-items-center">
+	        <!-- Floating Particles -->
+	        <div class="floating-particle"></div>
+	        <div class="floating-particle"></div>
+	        <div class="floating-particle"></div>
+	        <div class="floating-particle"></div>
+	        <div class="floating-particle"></div>
+	        <div class="floating-particle"></div>
+	        
 	        <div class="container">
-	            <div class="row align-items-start">
-					<div class="col-md-4 col-lg-3 mb-3">
-						<img th:if="${impactSection.hasImage}"
-						     th:src="@{'/api/images/impact/' + ${impactSection.id}}"
-						     alt="Impact Image"
-							 class="img-fluid rounded-3 shadow-lg animate-float"/>
-					</div>
-					<div class="col-md-8 col-lg-9">
-						<p th:text="${impactSection.content}"
-						   class="text-muted fs-5" style="text-align: justify; line-height: 1.6;"></p>
-					</div>
+	            <div class="content-wrapper p-5">
+	                <div class="row align-items-center g-5">
+	                    <div class="col-lg-6">
+	                        <div class="image-container">
+	                            <!-- Replace with your transparent PNG logo -->
+	                            <img src="/images/Logo.png" 
+	                                 alt="Zemyst Logo" 
+	                                 class="logo-image" />
+	                        </div>
+	                    </div>
+	                    
+	                    <div class="col-lg-6">
+	                        <h2 class="section-title text-eco">Our Story</h2>
+	                        <p class="story-text mb-4">
+	                            Unveiling the Path: Zemyst's Journey to a Greener Horizon. 
+	                            Step into the captivating narrative of Zemyst, where passion, purpose, and 
+	                            innovation intertwine. Our story is a captivating tale of dreamers and doers, 
+	                            driven by a profound mission: to redefine the future of sustainability.
+	                            With unwavering determination, we embarked on a quest to harness the power of nature, 
+	                            unraveling its secrets to unlock a world free from plastic's grasp.
+	                        </p>
+	                        
+	                        <div class="row g-4">
+	                            <div class="col-6">
+	                                <div class="stat-item text-center glass-card p-4">
+	                                    <div class="stat-number text-eco">500+</div>
+	                                    <div class="text-muted fw-medium">Projects Completed</div>
+	                                </div>
+	                            </div>
+	                            <div class="col-6">
+	                                <div class="stat-item text-center glass-card p-4">
+	                                    <div class="stat-number text-eco">50M+</div>
+	                                    <div class="text-muted fw-medium">CO2 Reduced (tons)</div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
 	            </div>
 	        </div>
-	    </div>
-	</section>
+	    </section>
+		<!-- Products Section (Limited to 2 products) -->
+		<section id="products" class="products-section py-5">
+		    <div class="container py-5">
+		        <div class="text-center mb-5">
+		            <h2 class="display-4 fw-bold mb-3 text-white">Our Products</h2>
+		            <p class="text-white-50 fs-5">Discover our innovative sustainability solutions designed to transform your business operations.</p>
+		        </div>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-5 bg-white">
-        <div class="container">
+		        <div class="row justify-content-center">
+		            <div th:if="${#lists.isEmpty(products)}" class="col-12 text-center py-5">
+		                <div class="text-white-50 fs-5">No products available</div>
+		            </div>
+
+		            <!-- Limited to first 2 products -->
+		            <div th:each="product, iterStat : ${#lists.size(products) > 2 ? products.subList(0, 2) : products}" 
+		                 class="col-lg-5 col-md-8 mb-4 mx-3">
+		                <div class="product-card h-100 rounded-4 shadow-lg animate-fade-in-up" style="animation-delay: 0.2s;">
+		                    <div class="overflow-hidden rounded-top-4" style="height: 280px;">
+		                        <img th:if="${product.hasImage}"
+		                             th:src="@{'/api/images/product/' + ${product.id}}"
+		                             th:alt="${product.name}"
+		                             class="card-img-top w-100 h-100"
+		                             style="object-fit: cover; transition: transform 0.3s ease;"
+		                             onmouseover="this.style.transform='scale(1.1)'"
+		                             onmouseout="this.style.transform='scale(1)'"/>
+		                    </div>
+		                    <div class="card-body p-4">
+		                        <h5 class="card-title fw-bold text-eco mb-3 fs-4" th:text="${product.name}">Product Name</h5>
+		                        <p class="card-text text-muted fs-6 mb-4" th:text="${product.description}">Product Description</p>
+		                        <button class="btn btn-eco rounded-pill px-4 py-2">
+		                            Learn More <i class="fas fa-arrow-right ms-2"></i>
+		                        </button>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+
+		        <!-- Show more products link if there are more than 2 -->
+		        <div th:if="${#lists.size(products) > 2}" class="text-center mt-4">
+		            <a href="/products" class="btn btn-outline-light rounded-pill px-5 py-3">
+		                View All Products <i class="fas fa-external-link-alt ms-2"></i>
+		            </a>
+		        </div>
+		    </div>
+		</section>
+		
+    <!-- Impact Section -->
+    <section id="impact" class="impact-section py-5">
+        <div class="particles">
+            <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 30%; animation-delay: 5s;"></div>
+            <div class="particle" style="left: 50%; animation-delay: 10s;"></div>
+            <div class="particle" style="left: 70%; animation-delay: 15s;"></div>
+            <div class="particle" style="left: 90%; animation-delay: 20s;"></div>
+        </div>
+        
+        <div class="container py-5">
             <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold mb-3 text-gradient">What Our Clients Say</h2>
-                <p class="text-muted fs-5">Hear from industry leaders who have transformed their operations with our solutions.</p>
+                <h2 class="display-4 fw-bold mb-3 text-eco">Our Impact</h2>
+                <p class="text-muted fs-5">Making a difference for a sustainable future</p>
             </div>
 
-            <div class="row">
-                <div th:if="${#lists.isEmpty(testimonials)}" class="col-12 text-center py-5">
-                    <div class="text-muted fs-5">No testimonials available</div>
+            <div class="row align-items-center">
+                <!-- Image -->
+                <div class="col-md-5 col-lg-4 d-flex justify-content-center mb-4 mb-md-0 animate-fade-in-left">
+                    <img th:if="${impactSection.hasImage}"
+                         th:src="@{'/api/images/impact/' + ${impactSection.id}}"
+                         alt="Impact Image"
+                         class="img-fluid rounded-3 shadow-lg animate-float" />
                 </div>
 
-                <div th:each="testimonial, iterStat : ${testimonials}" 
-                     class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100 shadow-lg card-hover animate-fade-in-up" style="background: linear-gradient(135deg, #f8f9fa, white);">
-                        <div class="card-body p-4">
-                            <div class="d-flex mb-3">
-								<div class="text-warning">
-								    <span th:each="i : ${#numbers.sequence(1, testimonial.rating)}">
-								        <i class="fas fa-star"></i>
-								    </span>
-								</div>
+                <!-- Text -->
+                <div class="col-md-7 col-lg-8 animate-fade-in-right">
+                    <p th:text="${impactSection.content}"
+                       class="text-muted fs-5"
+                       style="text-align: justify; line-height: 1.8;">
+                       Our innovative solutions have helped organizations worldwide reduce their environmental footprint while increasing operational efficiency. Through our technology partnerships and sustainable practices, we've achieved measurable impact across multiple industries.
+                    </p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="bg-white rounded-3 p-3 shadow-sm">
+                                <i class="fas fa-leaf text-eco fs-1 mb-2"></i>
+                                <h4 class="text-eco fw-bold">Carbon Neutral</h4>
+                                <p class="text-muted mb-0">Operations</p>
                             </div>
-                            <blockquote class="blockquote text-muted fs-5 mb-4 fst-italic" th:text="${testimonial.message}">
-                                "Outstanding service and exceptional results. The team exceeded our expectations in every way."
-                            </blockquote>
-                            <div class="d-flex align-items-center">
-								<div class="rounded-circle overflow-hidden me-3" style="width: 48px; height: 48px;">
-								    <img th:if="${testimonial.id != null}" 
-								         th:src="@{'/api/images/testimonial/' + ${testimonial.id}}" 
-								         alt="Testimonial Image"
-								         class="w-100 h-100" style="object-fit: cover;" />
-								</div>
-                                <div>
-                                    <div class="fw-semibold text-dark" th:text="${testimonial.name}">John Doe</div>
-                                    <small class="text-muted" th:text="${testimonial.position}">CEO, Company Inc.</small>
-                                </div>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="bg-white rounded-3 p-3 shadow-sm">
+                                <i class="fas fa-recycle text-eco fs-1 mb-2"></i>
+                                <h4 class="text-eco fw-bold">95%</h4>
+                                <p class="text-muted mb-0">Waste Reduction</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <div class="bg-white rounded-3 p-3 shadow-sm">
+                                <i class="fas fa-solar-panel text-eco fs-1 mb-2"></i>
+                                <h4 class="text-eco fw-bold">100%</h4>
+                                <p class="text-muted mb-0">Renewable Energy</p>
                             </div>
                         </div>
                     </div>
@@ -643,373 +1317,444 @@
             </div>
         </div>
     </section>
+	<!-- Blog Section -->
+	    <section id="blog" class="blog-section py-5">
+	        <!-- Floating eco elements -->
+	        <div class="floating-element"><i class="fas fa-leaf"></i></div>
+	        <div class="floating-element"><i class="fas fa-seedling"></i></div>
+	        <div class="floating-element"><i class="fas fa-tree"></i></div>
+	        <div class="floating-element"><i class="fas fa-recycle"></i></div>
+	        
+	        <!-- Wave background -->
+	        <div class="wave-background"></div>
+	        
+	        <div class="container py-5">
+	            <div class="text-center mb-5">
+	                <h2 class="display-4 fw-bold mb-3 text-eco">Latest Insights</h2>
+	                <p class="text-muted fs-5">Stay updated with the latest trends and innovations in sustainability and technology.</p>
+	            </div>
 
-    <!-- Blog Section -->
-    <section id="blog" class="py-5 bg-light">
-        <div class="container">
+	            <div class="row">
+	                <div th:if="${#lists.isEmpty(blogPosts)}" class="col-12 text-center py-5">
+	                    <div class="text-muted fs-5">No blog posts available</div>
+	                </div>
+
+	                <div th:each="post, iterStat : ${#lists.size(blogPosts) > 3 ? blogPosts.subList(0, 3) : blogPosts}" 
+	                     class="col-lg-4 col-md-6 mb-4">
+	                    <div class="blog-card h-100 rounded-4 shadow-sm animate-fade-in-up" style="animation-delay: 0.1s;">
+	                        <div class="position-relative overflow-hidden rounded-top-4" style="height: 250px;">
+	                            <img th:if="${post.hasImage}" 
+	                                 th:src="@{'/api/images/blog/' + ${post.id}}"
+	                                 th:alt="${post.title}"
+	                                 class="card-img-top w-100 h-100"
+	                                 style="object-fit: cover; transition: transform 0.3s ease;"
+	                                 onmouseover="this.style.transform='scale(1.05)'"
+	                                 onmouseout="this.style.transform='scale(1)'"/>
+	                            <div class="position-absolute top-0 start-0 m-3">
+	                                <span class="badge bg-eco">Article</span>
+	                            </div>
+	                        </div>
+	                        <div class="card-body p-4">
+	                            <h5 class="card-title fw-bold text-eco mb-3" th:text="${post.title}">Blog Title</h5>
+	                            <p class="card-text text-muted mb-4" th:text="${post.content}">Blog content preview...</p>
+	                            <a href="#" class="text-eco text-decoration-none fw-semibold">
+	                                Read More <i class="fas fa-arrow-right ms-1"></i>
+	                            </a>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            
+	            <!-- Show more products link if there are more than 3 -->
+	            <div th:if="${#lists.size(blogPosts) > 3}" class="text-center mt-4">
+	                <a href="/about" class="btn btn-outline-light rounded-pill px-5 py-3">
+	                    View All Blogs <i class="fas fa-external-link-alt ms-2"></i>
+	                </a>
+	            </div>
+	        </div>
+	    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section py-5">
+        <div class="floating-leaves">
+            <div class="leaf" style="left: 15%; animation-delay: 1s; opacity: 0.3;"></div>
+            <div class="leaf" style="left: 35%; animation-delay: 3s; opacity: 0.3;"></div>
+            <div class="leaf" style="left: 55%; animation-delay: 5s; opacity: 0.3;"></div>
+            <div class="leaf" style="left: 75%; animation-delay: 7s; opacity: 0.3;"></div>
+        </div>
+
+        <div class="container py-5">
+            <!-- Heading -->
             <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold mb-3 text-gradient">Latest Insights</h2>
-                <p class="text-muted fs-5">Stay updated with the latest trends and innovations in sustainability and technology.</p>
+                <h2 class="display-4 fw-bold mb-3 text-white">Get In Touch</h2>
+                <p class="text-white-50 fs-5">
+                    Ready to transform your business with sustainable solutions? Let's start the conversation.
+                </p>
             </div>
 
-            <div class="row">
-                <div th:if="${#lists.isEmpty(blogPosts)}" class="col-12 text-center py-5">
-                    <div class="text-muted fs-5">No blog posts available</div>
-                </div>
+            <!-- Contact Content -->
+            <div class="row align-items-start">
+                
+                <!-- Contact Details (Left Side) -->
+                <div class="col-lg-6 mb-5 mb-lg-0 animate-fade-in-left">
+                    <div class="contact-info">
 
-                <div th:each="post, iterStat : ${blogPosts}" 
-                     class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100 shadow-lg card-hover animate-fade-in-up">
-                        <div class="position-relative overflow-hidden" style="height: 250px;">
-                            <img th:if="${post.hasImage}" 
-                                 th:src="@{'/api/images/blog/' + ${post.id}}"
-                                 th:alt="${post.title}"
-                                 class="card-img-top image-zoom"/>
-                            <div class="position-absolute top-0 start-0 w-100 h-100" style="background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));"></div>
-                            <div class="position-absolute top-0 start-0 m-3">
-                                <span class="badge bg-primary">Article</span>
+                        <!-- Location -->
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                                style="width: 48px; height: 48px; background: rgba(125, 216, 125, 0.2);">
+                                <i class="fas fa-map-marker-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white fw-semibold mb-0">Our Location</h5>
+                                <p class="text-white-50 mb-0">123 Innovation Drive, Tech City, TC 12345</p>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold text-dark mb-3" th:text="${post.title}">Blog Title</h5>
-                            <p class="card-text text-muted mb-4" th:text="${post.content}">Blog content preview...</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                
-                                <div class="d-flex align-items-center text-primary" style="cursor: pointer;">
-                                    
-                                </div>
+
+                        <!-- Phone -->
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                                style="width: 48px; height: 48px; background: rgba(125, 216, 125, 0.2);">
+                                <i class="fas fa-phone text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white fw-semibold mb-0">Call Us</h5>
+                                <p class="text-white-50 mb-0">+1 (555) 123-4567</p>
                             </div>
                         </div>
+
+                        <!-- Email -->
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                                style="width: 48px; height: 48px; background: rgba(125, 216, 125, 0.2);">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white fw-semibold mb-0">Email Us</h5>
+                                <p class="text-white-50 mb-0">hello@zemyst.com</p>
+                            </div>
+                        </div>
+
+                        <!-- Working Hours -->
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
+                                style="width: 48px; height: 48px; background: rgba(125, 216, 125, 0.2);">
+                                <i class="fas fa-clock text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white fw-semibold mb-0">Working Hours</h5>
+                                <p class="text-white-50 mb-0">Mon - Fri: 9:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
+                <!-- Contact Form (Right Side) -->
+                <div class="col-lg-6 animate-fade-in-right">
+                    <form id="contactForm" class="glass-form p-4 p-md-5 rounded-4 shadow-lg">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label text-white fw-medium">First Name</label>
+                                <input type="text" class="form-control py-3" id="firstName" name="firstName" placeholder="John">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label text-white fw-medium">Last Name</label>
+                                <input type="text" class="form-control py-3" id="lastName" name="lastName" placeholder="Doe">
+                            </div>
+                        </div>
+
+                        <div class="mb-4 mt-4">
+                            <label for="email" class="form-label text-white fw-medium">Email Address</label>
+                            <input type="email" class="form-control py-3" id="email" name="email" placeholder="john@example.com">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="rating" class="form-label text-white fw-medium">Rating</label>
+                            <input type="number" class="form-control py-3" id="rating" name="rating" placeholder="5" min="1" max="5">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="message" class="form-label text-white fw-medium">Message</label>
+                            <textarea class="form-control py-3" id="message" name="message" rows="4"
+                                placeholder="Tell us about your project or inquiry..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-eco py-3 w-100 fs-5 fw-semibold">
+                            Send Message <i class="fas fa-paper-plane ms-2"></i>
+                        </button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </section>
-	<!-- Contact Section -->
-	<section id="contact" class="py-5 mb-5" style="background: linear-gradient(135deg, #6b21a8, #4338ca, #2563eb, #0ea5e9);">
-	  <div class="container">
-	    
-	    <!-- Heading -->
-	    <div class="text-center mb-5">
-	      <h2 class="display-4 fw-bold mb-3 text-white">Get In Touch</h2>
-	      <p class="text-white-50 fs-5">
-	        Ready to transform your business with sustainable solutions? Let's start the conversation.
-	      </p>
-	    </div>
 
-	    <!-- Contact Content -->
-	    <div class="row align-items-start">
-	      
-	      <!-- Contact Details (Left Side) -->
-	      <div class="col-lg-6 mb-5 mb-lg-0 animate-fade-in-left">
-	        <div class="contact-info">
+    <!-- Footer -->
+    <footer class="footer-section py-5" role="contentinfo">
+        <div class="container position-relative">
+            <div class="row g-5">
+                <!-- Company Info -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="/images/Logo.png" alt="Zemyst Logo" class="me-3" style="height: 40px; width: 40px; border-radius: 0.5rem;" />
+                        <span class="fs-4 fw-bold text-white">Zemyst</span>
+                    </div>
+                    <p class="text-white-50 mb-4">
+                        Reimagining the future with smart sustainability solutions that transform businesses and protect our planet.
+                    </p>
 
-	          <!-- Location -->
-	          <div class="d-flex align-items-center mb-4">
-	            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
-	              style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
-	              <i class="fas fa-map-marker-alt text-white"></i>
-	            </div>
-	            <div>
-	              <h5 class="text-white fw-semibold mb-0">Our Location</h5>
-	              <p class="text-white-50 mb-0">123 Innovation Drive, Tech City, TC 12345</p>
-	            </div>
-	          </div>
+                    <div>
+                        <a href="#" class="social-icon" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
 
-	          <!-- Phone -->
-	          <div class="d-flex align-items-center mb-4">
-	            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
-	              style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
-	              <i class="fas fa-phone text-white"></i>
-	            </div>
-	            <div>
-	              <h5 class="text-white fw-semibold mb-0">Call Us</h5>
-	              <p class="text-white-50 mb-0">+1 (555) 123-4567</p>
-	            </div>
-	          </div>
+                <!-- Quick Links -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-semibold mb-4 text-white">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#about" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="#products" class="text-white-50 text-decoration-none">Products</a></li>
+                        <li class="mb-2"><a href="#impact" class="text-white-50 text-decoration-none">Impact</a></li>
+                        <li class="mb-2"><a href="#blog" class="text-white-50 text-decoration-none">Blog</a></li>
+                    </ul>
+                </div>
 
-	          <!-- Email -->
-	          <div class="d-flex align-items-center mb-4">
-	            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
-	              style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
-	              <i class="fas fa-envelope text-white"></i>
-	            </div>
-	            <div>
-	              <h5 class="text-white fw-semibold mb-0">Email Us</h5>
-	              <p class="text-white-50 mb-0">hello@zemyst.com</p>
-	            </div>
-	          </div>
+                <!-- Services -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-semibold mb-4 text-white">Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Sustainability Consulting</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Smart Technology Solutions</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Environmental Impact Assessment</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Green Innovation</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Corporate Training</a></li>
+                    </ul>
+                </div>
 
-	          <!-- Working Hours -->
-	          <div class="d-flex align-items-center mb-4">
-	            <div class="rounded-circle d-flex align-items-center justify-content-center me-3"
-	              style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
-	              <i class="fas fa-clock text-white"></i>
-	            </div>
-	            <div>
-	              <h5 class="text-white fw-semibold mb-0">Working Hours</h5>
-	              <p class="text-white-50 mb-0">Mon - Fri: 9:00 AM - 6:00 PM</p>
-	            </div>
-	          </div>
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="mb-4">
+                        <h6 class="fw-semibold text-white">Our Location</h6>
+                        <p class="text-white-50 mb-0">123 Innovation Drive, Tech City, TC 12345</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="fw-semibold text-white">Call Us</h6>
+                        <p class="text-white-50 mb-0">+1 (555) 123-4567</p>
+                    </div>
 
-	        </div>
-	      </div>
+                    <div>
+                        <h6 class="fw-semibold text-white">Email Us</h6>
+                        <a href="mailto:hello@zemyst.com" class="text-white-50 text-decoration-none">hello@zemyst.com</a>
+                    </div>
+                </div>
+            </div>
 
-	      <!-- Contact Form (Right Side) -->
-	      <div class="col-lg-6 animate-fade-in-right">
-	        <form id="contactForm" class="glass-form p-4 p-md-5 bg-white rounded-4 shadow-sm">
-	          <div class="row g-4">
-	            <div class="col-md-6">
-	              <label for="firstName" class="form-label fw-medium">First Name</label>
-	              <input type="text" class="form-control py-3" id="firstName" name="firstName" placeholder="John">
-	            </div>
-	            <div class="col-md-6">
-	              <label for="lastName" class="form-label fw-medium">Last Name</label>
-	              <input type="text" class="form-control py-3" id="lastName" name="lastName" placeholder="Doe">
-	            </div>
-	          </div>
+            <hr class="my-5 border-secondary opacity-25">
+            
+            <div class="text-center">
+                <p class="text-white-50 mb-0">
+                    © 2025 Zemyst. All rights reserved. |
+                    <a href="#" class="text-white-50 text-decoration-none ms-2">Privacy Policy</a> |
+                    <a href="#" class="text-white-50 text-decoration-none ms-2">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
 
-	          <div class="mb-4 mt-4">
-	            <label for="email" class="form-label fw-medium">Email Address</label>
-	            <input type="email" class="form-control py-3" id="email" name="email" placeholder="john@example.com">
-	          </div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+		const textElement = document.querySelector('.text-animated');
+		        if (textElement) {
+		            const words = ['Zemyst', 'Future'];
+		            let wordIndex = 0;
+		            let charIndex = 0;
+		            let isDeleting = false;
 
-	          <div class="mb-4">
-	            <label for="company" class="form-label fw-medium">Company</label>
-	            <input type="text" class="form-control py-3" id="company" name="company" placeholder="Your Company">
-	          </div>
+		            function typeWriter() {
+		                const currentWord = words[wordIndex];
+		                
+		                if (isDeleting) {
+		                    textElement.textContent = currentWord.substring(0, charIndex - 1);
+		                    charIndex--;
+		                } else {
+		                    textElement.textContent = currentWord.substring(0, charIndex + 1);
+		                    charIndex++;
+		                }
 
-	          <div class="mb-4">
-	            <label for="subject" class="form-label fw-medium">Subject</label>
-	            <select class="form-select py-3" id="subject" name="subject">
-	              <option value="">Select a subject</option>
-	              <option value="general">General Inquiry</option>
-	              <option value="products">Product Information</option>
-	              <option value="partnership">Partnership Opportunity</option>
-	              <option value="support">Technical Support</option>
-	            </select>
-	          </div>
+		                if (!isDeleting && charIndex === currentWord.length) {
+		                    isDeleting = true;
+		                    setTimeout(typeWriter, 1500);
+		                } else if (isDeleting && charIndex === 0) {
+		                    isDeleting = false;
+		                    wordIndex = (wordIndex + 1) % words.length;
+		                    setTimeout(typeWriter, 300);
+		                } else {
+		                    setTimeout(typeWriter, isDeleting ? 50 : 100);
+		                }
+		            }
 
-	          <div class="mb-4">
-	            <label for="message" class="form-label fw-medium">Message</label>
-	            <textarea class="form-control py-3" id="message" name="message" rows="4"
-	              placeholder="Tell us about your project or inquiry..."></textarea>
-	          </div>
+		            setTimeout(typeWriter, 1000);
+		        }
 
-	          <button type="submit" class="btn btn-primary py-3 w-100 fs-5 btn-bounce">
-	            Send Message
-	          </button>
-	        </form>
-	      </div>
+		const observerOptions = {
+		           threshold: 0.1,
+		           rootMargin: '0px 0px -50px 0px'
+		       };
 
-	    </div>
-	  </div>
-	</section>
+		       const observer = new IntersectionObserver((entries) => {
+		           entries.forEach(entry => {
+		               if (entry.isIntersecting) {
+		                   entry.target.style.animationPlayState = 'running';
+		               }
+		           });
+		       }, observerOptions);
 
-		  <!-- Footer -->
-		  <footer class="footer-section py-5" role="contentinfo">
-		      <div class="container">
-		          <div class="row g-5">
-		              <!-- Company Info -->
-		              <div class="col-lg-3 col-md-6">
-		                  <div class="d-flex align-items-center mb-4">
-		                      <img src="/images/Logo.png" alt="Zemyst Logo" class="me-3 image-zoom" style="height: 40px; width: 40px; border-radius: 0.5rem;" />
-		                      <span class="fs-4 fw-bold text-gradient-white">Zemyst</span>
-		                  </div>
-		                  <p class="text-muted mb-4">
-		                      Reimagining the future with smart sustainability solutions that transform businesses and protect our planet.
-		                  </p>
+		       // Observe all animated elements
+		       document.querySelectorAll('.content-wrapper, .stat-item').forEach(el => {
+		           observer.observe(el);
+		       });
 
-		                  <div class="d-flex">
-		                      <a href="#" class="social-icon twitter mb-2" aria-label="Twitter">
-		                          <i class="fab fa-twitter"></i>
-		                      </a>
-		                      <a href="#" class="social-icon linkedin mb-2" aria-label="LinkedIn">
-		                          <i class="fab fa-linkedin-in"></i>
-		                      </a>
-		                      <a href="#" class="social-icon github" aria-label="GitHub">
-		                          <i class="fab fa-github"></i>
-		                      </a>
-		                  </div>
-		              </div>
+		       // Counter animation
+		       function animateCounters() {
+		           const counters = document.querySelectorAll('.stat-number');
+		           counters.forEach(counter => {
+		               const target = parseInt(counter.textContent.replace(/\D/g, ''));
+		               const increment = target / 50;
+		               let current = 0;
+		               
+		               const timer = setInterval(() => {
+		                   current += increment;
+		                   if (current >= target) {
+		                       counter.textContent = counter.textContent.replace(/\d+/, target);
+		                       clearInterval(timer);
+		                   } else {
+		                       counter.textContent = counter.textContent.replace(/\d+/, Math.floor(current));
+		                   }
+		               }, 40);
+		           });
+		       }
+			   // Navbar background on scroll
+			           window.addEventListener('scroll', function() {
+			               const navbar = document.querySelector('.navbar');
+			               if (navbar) {
+			                   if (window.scrollY > 50) {
+			                       navbar.style.background = 'linear-gradient(135deg, rgba(26, 61, 46, 0.95), rgba(45, 90, 71, 0.95))';
+			                       navbar.style.backdropFilter = 'blur(15px)';
+			                   } else {
+			                       navbar.style.background = 'linear-gradient(135deg, var(--eco-dark), var(--eco-medium))';
+			                       navbar.style.backdropFilter = 'blur(10px)';
+			                   }
+			               }
+			           });
+			   
+			   // Enhanced blog card interactions
+			         document.querySelectorAll('.blog-card').forEach(card => {
+			             card.addEventListener('mouseenter', function() {
+			                 this.style.transform = 'translateY(-10px) rotateY(5deg)';
+			             });
+			             
+			             card.addEventListener('mouseleave', function() {
+			                 this.style.transform = 'translateY(0) rotateY(0deg)';
+			             });
+			         });
+		       // Start counter animation when section comes into view
+		       const sectionObserver = new IntersectionObserver((entries) => {
+		           entries.forEach(entry => {
+		               if (entry.isIntersecting) {
+		                   setTimeout(animateCounters, 500);
+		                   sectionObserver.unobserve(entry.target);
+		               }
+		           });
+		       }, { threshold: 0.5 });
 
-		              <!-- Quick Links -->
-		              <div class="col-lg-3 col-md-6">
-		                  <h5 class="fw-semibold mb-4">Quick Links</h5>
-		                  <ul class="list-unstyled">
-		                      <li class="mb-2"><a href="#home" class="text-muted text-decoration-none">Home</a></li>
-		                      <li class="mb-2"><a href="#about" class="text-muted text-decoration-none">About Us</a></li>
-		                      <li class="mb-2"><a href="#products" class="text-muted text-decoration-none">Products</a></li>
-		                      <li class="mb-2"><a href="#testimonials" class="text-muted text-decoration-none">Testimonials</a></li>
-		                      <li class="mb-2"><a href="#blog" class="text-muted text-decoration-none">Blog</a></li>
-		                  </ul>
-		              </div>
+		       sectionObserver.observe(document.querySelector('.about-section'));
+			   // Parallax effect for floating elements
+			           window.addEventListener('scroll', function() {
+			               const scrolled = window.pageYOffset;
+			               const parallax = document.querySelectorAll('.floating-element');
+			               const speed = 0.2;
 
-		              <!-- Services -->
-		              <div class="col-lg-3 col-md-6">
-		                  <h5 class="fw-semibold mb-4">Services</h5>
-		                  <ul class="list-unstyled">
-		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Sustainability Consulting</a></li>
-		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Smart Technology Solutions</a></li>
-		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Environmental Impact Assessment</a></li>
-		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Green Innovation</a></li>
-		                      <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Corporate Training</a></li>
-		                  </ul>
-		              </div>
+			               parallax.forEach((element, index) => {
+			                   const yPos = -(scrolled * speed * (index + 1));
+			                   element.style.transform = `translate3d(0, ${yPos}px, 0)`;
+			               });
+			           });
+					   // Dynamic background color change based on scroll
+					           window.addEventListener('scroll', function() {
+					               const scrollPercent = window.pageYOffset / (document.body.scrollHeight - window.innerHeight);
+					               const blogSection = document.querySelector('.blog-section');
+					               
+					               if (blogSection) {
+					                   const hue = 120 + (scrollPercent * 60); // From green to blue-green
+					                   blogSection.style.background = `linear-gradient(135deg, 
+					                       hsl(${hue}, 20%, 98%) 0%, 
+					                       hsl(${hue}, 30%, 90%) 100%)`;
+					               }
+					           });
 
-		              <!-- Contact Info -->
-		              <div class="col-lg-3 col-md-6">
-		                  <div class="mb-4">
-		                      <h6 class="fw-semibold">Our Location</h6>
-		                      <p class="text-muted mb-0">123 Innovation Drive, Tech City, TC 12345</p>
-		                  </div>
-		                  
-		                  <div class="mb-4">
-		                      <h6 class="fw-semibold">Call Us</h6>
-		                      <p class="text-muted mb-0">+1 (555) 123-4567</p>
-		                  </div>
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Thank you for your message! We will get back to you soon.');
+        });
 
-		                  <div>
-		                      <h6 class="fw-semibold">Email Us</h6>
-		                      <a href="mailto:hello@zemyst.com" class="text-muted text-decoration-none">hello@zemyst.com</a>
-		                  </div>
-		              </div>
-		          </div>
+        // Add typewriter effect to hero text
+        const textElement2 = document.querySelector('.text-animated2');
+        if (textElement) {
+            const words = ['Zemyst', 'Future'];
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
 
-		          <hr class="my-5 border-secondary">
-		          
-		          <div class="text-center">
-		              <p class="text-muted mb-0">
-		                  © 2025 Zemyst. All rights reserved. |
-		                  <a href="#" class="text-muted text-decoration-none ms-2">Privacy Policy</a> |
-		                  <a href="#" class="text-muted text-decoration-none ms-2">Terms of Service</a>
-		              </p>
-		          </div>
-		      </div>
-		  </footer>
+            function typeWriter() {
+                const currentWord = words[wordIndex];
+                
+                if (isDeleting) {
+                    textElement.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    textElement.textContent = currentWord.substring(0, charIndex + 1);
+                    charIndex++;
+                }
 
-		  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-		  <script>
-		      document.addEventListener("DOMContentLoaded", () => {
-		          const text = "Welcome to Zemyst";
-		          const animatedText = document.getElementById("animated-text");
+                if (!isDeleting && charIndex === currentWord.length) {
+                    isDeleting = true;
+                    setTimeout(typeWriter, 1500);
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                    setTimeout(typeWriter, 300);
+                } else {
+                    setTimeout(typeWriter, isDeleting ? 50 : 100);
+                }
+            }
 
-		          let repeatCount = 0;
-
-		          function animateText() {
-		              animatedText.innerHTML = '';
-
-		              [...text].forEach((char, i) => {
-		                  const span = document.createElement("span");
-		                  span.textContent = char === ' ' ? '\u00A0' : char;
-		                  span.className = "letter";
-		                  span.style.animationDelay = `${i * 0.1}s`;
-		                  animatedText.appendChild(span);
-		              });
-
-		              repeatCount++;
-		              if (repeatCount < 3) {
-		                  const totalDuration = text.length * 100 + 1000;
-		                  setTimeout(animateText, totalDuration);
-		              }
-		          }
-
-		          animateText();
-		      });
-
-		      // Smooth scrolling for navigation links
-		      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-		          anchor.addEventListener('click', function (e) {
-		              e.preventDefault();
-		              const target = document.querySelector(this.getAttribute('href'));
-		              if (target) {
-		                  target.scrollIntoView({
-		                      behavior: 'smooth',
-		                      block: 'start'
-		                  });
-		              }
-		          });
-		      });
-
-		      // Scroll-based animations
-		      const observerOptions = {
-		          threshold: 0.1,
-		          rootMargin: '0px 0px -50px 0px'
-		      };
-
-		      const observer = new IntersectionObserver((entries) => {
-		          entries.forEach(entry => {
-		              if (entry.isIntersecting) {
-		                  entry.target.classList.add('animate-fade-in-up');
-		              }
-		          });
-		      }, observerOptions);
-
-		      // Observe elements for scroll animations
-		      document.querySelectorAll('section, .animate-fade-in-up, .animate-fade-in-right').forEach(element => {
-		          observer.observe(element);
-		      });
-
-		      // Contact form submission
-		      async function submitContactForm(event) {
-		          event.preventDefault();
-
-		          const form = event.target;
-		          const data = {
-		              firstName: form.firstName.value,
-		              lastName: form.lastName.value,
-		              email: form.email.value,
-		              company: form.company.value,
-		              subject: form.subject.value,
-		              message: form.message.value
-		          };
-
-		          // Simple validation
-		          if (!data.firstName || !data.email || !data.message) {
-		              alert('Please fill in all required fields.');
-		              return;
-		          }
-
-		          const submitButton = form.querySelector('button[type="submit"]');
-		          const originalText = submitButton.textContent;
-		          submitButton.textContent = 'Sending...';
-		          submitButton.disabled = true;
-
-		          try {
-		              // Simulate API call - replace with actual endpoint
-		              const response = await fetch('/contact/send', {
-		                  method: 'POST',
-		                  headers: { 'Content-Type': 'application/json' },
-		                  body: JSON.stringify(data)
-		              });
-
-		              if (response.ok) {
-		                  alert('Thank you for your message! We\'ll get back to you soon.');
-		                  form.reset();
-		              } else {
-		                  throw new Error('Failed to send message');
-		              }
-		          } catch (error) {
-		              console.error('Error:', error);
-		              alert('There was an error sending your message. Please try again.');
-		          } finally {
-		              submitButton.textContent = originalText;
-		              submitButton.disabled = false;
-		          }
-		      }
-			  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-			    tooltipTriggerList.map(function (tooltipTriggerEl) {
-			      return new bootstrap.Tooltip(tooltipTriggerEl)
-			    })
-		      // Add event listener to form
-		      document.getElementById('contactForm').addEventListener('submit', submitContactForm);
-
-		      // Add loading animation to page
-		      window.addEventListener('load', () => {
-		          document.body.classList.add('loaded');
-		      });
-		</script>
-
-	</body>
+            setTimeout(typeWriter, 1000);
+        }
+    </script>
+</body>
 </html>
-

@@ -52,17 +52,48 @@ public class LandingPageController {
             model.addAttribute("impactSection", landingPageService.getSectionByName("impact"));
             model.addAttribute("contactSection", landingPageService.getSectionByName("contact"));
             model.addAttribute("products", landingPageService.getAllProducts());
-            model.addAttribute("testimonials", landingPageService.getAllTestimonials());
             model.addAttribute("blogPosts", landingPageService.getAllBlogPosts());
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("homeSection", null);
             model.addAttribute("aboutSection", null);
             model.addAttribute("products", List.of());
-            model.addAttribute("testimonials", List.of());
             model.addAttribute("blogPosts", List.of());
         }
         return "landing";
+    }
+    @GetMapping("/products")
+    public String products(Model model) {
+    	try {
+    		System.out.println("Serving /products page");
+    		model.addAttribute("products", landingPageService.getAllProducts());
+    		model.addAttribute("testimonials",landingPageService.getAllTestimonials());
+    		
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		model.addAttribute("product", List.of());
+    		model.addAttribute("testimonials",List.of());
+    	}
+    	return "products";
+    }
+    @GetMapping("/about")
+    public String about(Model model) {
+    	try {
+    		model.addAttribute("aboutSection", landingPageService.getSectionByName("about"));
+    		model.addAttribute("blogPosts", landingPageService.getAllBlogPosts());
+    		model.addAttribute("testimonials", landingPageService.getAllTestimonials());
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		model.addAttribute("aboutSection", null);
+    		model.addAttribute("blogPosts", List.of());
+    		model.addAttribute("testimonials", List.of());
+    	}
+    	return "about";
+    }
+    
+    @GetMapping("/contact")
+    public String contact(Model model) {
+    	return "contact";
     }
     @PostMapping("/api/sections/update")
     @ResponseBody

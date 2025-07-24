@@ -24,10 +24,11 @@ public class SecurityConfig {
         	.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers(
-            			    "/", "/landing", "/sections/home",  // ✅ Allow root and home section
+            				"/favicon.ico","/products","/products/**",
+            			    "/", "/landing","/about", "/about/**", "/sections/home", 
             			    "/css/**", "/js/**", "/images/**", "/webjars/**",
             			    "/api/images/**", "/admin/images/**",
-            			    "/sections/contact", "/api/sections/**", "/api/products", "/api/testimonials", "/api/blog",
+            			    "/sections/contact","/api/sections/**", "/api/products", "/api/testimonials", "/api/blog",
             			    "/contact/send", "/api/sections/update/**"
             			).permitAll()
             	        .anyRequest().authenticated()
