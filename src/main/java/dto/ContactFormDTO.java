@@ -8,6 +8,25 @@ public class ContactFormDTO {
     private String company;
     private String subject;
     private String message;
+    private int rating;
+    @Override
+    public String toString() {
+        return "ContactFormDTO{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", company='" + company + '\'' +
+                ", subject='" + subject + '\'' +
+                ", message='" + message + '\'' +
+                ", rating=" + rating +
+                '}';
+    }
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

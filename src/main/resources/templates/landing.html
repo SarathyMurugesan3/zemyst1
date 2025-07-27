@@ -9,27 +9,25 @@
 	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 	 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
     <style>
-		@media (max-width: 768px) {
-		  .hero-section {
-			padding-top: 100px; /* Prevent navbar overlap */
-			   padding-left: 20px;
-			   padding-right: 20px;
-			   text-align: center;/* Adjust based on navbar height */
-		  }
-		}
-		
-		@media (max-width: 768px) {
-		  .hero-section .row {
-		    flex-direction: column-reverse !important; /* Ensures text comes before image */
-		    align-items: center;
-		  }
-
-		  .hero-section .col-lg-6 {
-		    text-align: center;
-		    margin-bottom: 20px;
-		  }
+		.navbar-logo {
+		    object-fit: contain;
+		    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3)); /* subtle shadow */
+		    transition: transform 0.3s ease;
 		}
 
+		.navbar-logo:hover {
+		    transform: scale(1.05); /* small zoom on hover */
+		}
+
+		@media (max-width: 768px) {
+		  h2.display-3 {
+		    font-size: 2rem !important;
+		  }
+
+		  p.fs-5 {
+		    font-size: 1rem !important;
+		  }
+		}
 
 		
 		/*blog*/
@@ -326,7 +324,7 @@
 		        }
 
 		        /* Animated Background */
-		        .about-section {
+		       /* .about-section {
 		            position: relative;
 		            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 		            min-height: 100vh;
@@ -345,7 +343,7 @@
 		                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
 		                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
 		            animation: backgroundShift 20s ease-in-out infinite;
-		        }
+		        }*/
 
 		        @keyframes backgroundShift {
 		            0%, 100% { 
@@ -443,6 +441,17 @@
 		            left: 100%;
 		        }
 
+				.logo-image.polished-image {
+				    border-radius: 1rem;
+				    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+				    transition: transform 0.3s ease-in-out;
+				}
+
+				.logo-image.polished-image:hover {
+				    transform: scale(1.05); /* subtle zoom on hover */
+				}
+
+				
 		        .logo-image {
 		            width: 100%;
 		            height: 400px;
@@ -717,15 +726,15 @@
 
         /* Navigation */
         .navbar {
-            background: linear-gradient(135deg, var(--eco-dark), var(--eco-medium)) !important;
+            background: 'white';
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(125, 216, 125, 0.2);
             transition: all 0.3s ease;
         }
 
         .navbar-brand img {
-            width: 40px;
-            height: 40px;
+            width: 80px;
+            height: 80px;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
@@ -765,7 +774,6 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm15 0c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/svg%3E");
             animation: bgMove 30s ease-in-out infinite;
         }
 
@@ -826,7 +834,8 @@
 
         /* Products Section */
         .products-section {
-            background: linear-gradient(135deg, var(--eco-dark), var(--eco-medium));
+            /*background: linear-gradient(135deg, var(--eco-dark), var(--eco-medium));*/
+			background-color: #e8f5e9;
             position: relative;
             overflow: hidden;
         }
@@ -878,7 +887,8 @@
 
         /* Impact Section */
         .impact-section {
-            background: linear-gradient(45deg, var(--eco-very-light), rgba(125, 216, 125, 0.1));
+            /*background: linear-gradient(45deg, var(--eco-very-light), rgba(125, 216, 125, 0.1));*/
+			background-color: #72C475;
             position: relative;
             overflow: hidden;
         }
@@ -890,7 +900,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='%234a7c5a' fill-opacity='0.03'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z'/%3E%3C/g%3E%3C/svg%3E");
             animation: impactPattern 15s linear infinite;
         }
 
@@ -935,7 +944,7 @@
         }
 
         /* Contact Section */
-        .contact-section {
+        .contact-section, .footer-section {
             background: linear-gradient(135deg, var(--eco-medium), var(--eco-dark));
             position: relative;
             overflow: hidden;
@@ -961,7 +970,7 @@
 
         /* Footer */
         .footer-section {
-            background: linear-gradient(135deg, var(--eco-dark), #0f2419);
+            background: linear-gradient(135deg, var(--eco-dark), #1D4131);
             position: relative;
             color: #ffffff;
         }
@@ -973,7 +982,6 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M20 20c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/svg%3E");
         }
 
         .social-icon {
@@ -1072,6 +1080,11 @@
             position: relative;
             overflow: hidden;
         }
+		.image-wrapper {
+		    background: transparent;
+		    box-shadow: none;
+		    padding: 0;
+		}
 
         .btn-eco::before {
             content: '';
@@ -1109,11 +1122,11 @@
 </head>
 <body>
     <!-- Header -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="bg-white navbar navbar-expand-lg fixed-top bg-white">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center animate-fade-in-left" href="#home">
-                <img src="/images/Logo.png" alt="Zemyst Logo" class="rounded me-2">
-                <span class="fs-3 fw-bold text-white">Zemyst</span>
+                <img src="/images/Logo.png" alt="Zemyst Logo" class="navbar-logo me-2">
+                <span class="fs-3 fw-bold text-dark" style="font-family: 'Times New Roman',Times,Serif;">Zemyst</span>
             </a>
             
             <!-- Mobile toggler -->
@@ -1125,19 +1138,19 @@
             <div class="collapse navbar-collapse justify-content-end animate-fade-in-right" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="text-white nav-link fw-medium" href="#home">Home</a>
+                        <a class="text-dark nav-link fw-medium" style="font-family: 'Times New Roman',Times,Serif;" href="#home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="text-white nav-link fw-medium" href="/about">About</a>
+                        <a class="text-dark nav-link fw-medium" style="font-family: 'Times New Roman',Times,Serif;" href="/about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="text-white nav-link fw-medium" href="/products">Products</a>
+                        <a class="text-dark nav-link fw-medium" style="font-family: 'Times New Roman',Times,Serif;" href="/products">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="text-white nav-link fw-medium" href="#blog">Blog</a>
+                        <a class="text-dark nav-link fw-medium" style="font-family: 'Times New Roman',Times,Serif;" href="#blog">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="text-white nav-link fw-medium" href="#contact">Contact</a>
+                        <a class="text-dark nav-link fw-medium" style="font-family: 'Times New Roman',Times,Serif;" href="#contact">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -1145,8 +1158,9 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero-section d-flex align-items-center justify-content-center text-white position-relative">
-        <!-- Floating Leaves Animation -->
+    <section id="home" class="hero-section d-flex align-items-center justify-content-center text-white position-relative"
+	th:style="'background-image: url(/api/images/section/' + ${homeSection.id} + '); background-size: cover; background-position: center; background-repeat: no-repeat;'">
+        <!-- Floating Leaves Animation 
         <div class="floating-leaves">
             <div class="leaf" style="left: 10%; animation-delay: 0s;"></div>
             <div class="leaf" style="left: 20%; animation-delay: 2s;"></div>
@@ -1157,17 +1171,17 @@
             <div class="leaf" style="left: 70%; animation-delay: 12s;"></div>
             <div class="leaf" style="left: 80%; animation-delay: 14s;"></div>
             <div class="leaf" style="left: 90%; animation-delay: 16s;"></div>
-        </div>
+        </div>-->
 
         <!-- Hero Content -->
         <div class="container position-relative z-2">
             <div class="row align-items-center">
                 <!-- Left: Text Content -->
                 <div class="col-lg-6 animate-slide-in-left">
-                    <h1 class="display-3 fw-bold mb-4">
+                    <h2 class="fs-2 fw-bold mb-4">
                         Welcome to <span class="text-animated">Zemyst</span><br>
                         <span class="text-eco-light">Sustainable Innovation</span>
-                    </h1>
+                    </h2>
                     <p class="fs-5 opacity-75 mb-4" style="text-align: justify;" th:text="${homeSection != null ? homeSection.content : 'Welcome to Zemyst - Leading the way in sustainable technology solutions that transform businesses while protecting our planet for future generations.'}">
                         Welcome to Zemyst - Leading the way in sustainable technology solutions that transform businesses while protecting our planet for future generations.
                     </p>
@@ -1177,13 +1191,13 @@
                 </div>
 
                 <!-- Right: Hero Image -->
-                <div class="col-lg-6 d-flex justify-content-center animate-fade-in-right">
+               <!-- <div class="col-lg-6 d-flex justify-content-center animate-fade-in-right">
                     <img th:if="${homeSection != null and homeSection.hasImage}"
                          th:src="@{'/api/images/section/' + ${homeSection.id}}"
                          alt="Hero Image"
-                         class="img-fluid rounded-3 shadow-lg animate-float"
+                         class="img-fluid rounded-3 shadow-lg"
                          style="max-width: 400px; object-fit: contain;" />
-                </div>
+                </div>-->
             </div>
         </div>
     </section>
@@ -1201,26 +1215,26 @@
 	            <div class="content-wrapper p-5">
 	                <div class="row align-items-center g-5">
 	                    <div class="col-lg-6">
-	                        <div class="image-container">
+	                        <div class="image-wrapper glass-card p-4 text-center">
 	                            <!-- Replace with your transparent PNG logo -->
-	                            <img src="/images/Logo.png" 
-	                                 alt="Zemyst Logo" 
-	                                 class="logo-image" />
+								<img th:if="${story != null and story.hasImage}"
+								     th:src="@{'/api/images/section/' + ${story.id}}"
+								     alt="Zemyst Logo"
+								     class="img-fluid rounded-3 shadow-lg"
+									 style="object-fit: cover; transition: transform 0.3s ease;"
+									 onmouseover="this.style.transform='scale(1.05)'"
+									 onmouseout="this.style.transform='scale(1)'"/>
 	                        </div>
 	                    </div>
 	                    
 	                    <div class="col-lg-6">
-	                        <h2 class="section-title text-eco">Our Story</h2>
-	                        <p class="story-text mb-4">
-	                            Unveiling the Path: Zemyst's Journey to a Greener Horizon. 
-	                            Step into the captivating narrative of Zemyst, where passion, purpose, and 
-	                            innovation intertwine. Our story is a captivating tale of dreamers and doers, 
-	                            driven by a profound mission: to redefine the future of sustainability.
-	                            With unwavering determination, we embarked on a quest to harness the power of nature, 
-	                            unraveling its secrets to unlock a world free from plastic's grasp.
-	                        </p>
+	                        <h2 class=" fs-2 section-title text-eco">Our Story</h2>
+							<p class="story-text mb-4"
+							   th:text="${story != null ? story.content : 'Unveiling the Path: Zemyst’s Journey...'}">
+							   Unveiling the Path: Zemyst’s Journey...
+							</p>
 	                        
-	                        <div class="row g-4">
+	                       <!-- <div class="row g-4">
 	                            <div class="col-6">
 	                                <div class="stat-item text-center glass-card p-4">
 	                                    <div class="stat-number text-eco">500+</div>
@@ -1233,7 +1247,7 @@
 	                                    <div class="text-muted fw-medium">CO2 Reduced (tons)</div>
 	                                </div>
 	                            </div>
-	                        </div>
+	                        </div>-->
 	                    </div>
 	                </div>
 	            </div>
@@ -1243,8 +1257,8 @@
 		<section id="products" class="products-section py-5">
 		    <div class="container py-5">
 		        <div class="text-center mb-5">
-		            <h2 class="display-4 fw-bold mb-3 text-white">Our Products</h2>
-		            <p class="text-white-50 fs-5">Discover our innovative sustainability solutions designed to transform your business operations.</p>
+		            <h3 class="fs-2 fw-bold mb-3 text-dark">Our Products</h3>
+		            <p class="text-dark-50 fs-5">Emphasize research and development efforts to create that are derived from renewable resources, have a reduced carbon footprint, and offer comparable or superior performance to traditional materials.</p>
 		        </div>
 
 		        <div class="row justify-content-center">
@@ -1297,8 +1311,7 @@
         
         <div class="container py-5">
             <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold mb-3 text-eco">Our Impact</h2>
-                <p class="text-muted fs-5">Making a difference for a sustainable future</p>
+                <h3 class="fs-2 display-4 fw-bold mb-3 text-eco">Our Impact</h3>
             </div>
 
             <div class="row align-items-center">
@@ -1307,7 +1320,10 @@
                     <img th:if="${impactSection.hasImage}"
                          th:src="@{'/api/images/impact/' + ${impactSection.id}}"
                          alt="Impact Image"
-                         class="img-fluid rounded-3 shadow-lg animate-float" />
+                         class="img-fluid rounded-3 shadow-lg"
+						 style="object-fit: cover; transition: transform 0.3s ease;"
+						 onmouseover="this.style.transform='scale(1.05)'"
+						 onmouseout="this.style.transform='scale(1)'" />
                 </div>
 
                 <!-- Text -->
@@ -1318,29 +1334,29 @@
                        Our innovative solutions have helped organizations worldwide reduce their environmental footprint while increasing operational efficiency. Through our technology partnerships and sustainable practices, we've achieved measurable impact across multiple industries.
                     </p>
                     
-                    <div class="row mt-4">
+                   <!-- <div class="row mt-4">
                         <div class="col-md-4 text-center mb-3">
                             <div class="bg-white rounded-3 p-3 shadow-sm">
                                 <i class="fas fa-leaf text-eco fs-1 mb-2"></i>
-                                <h4 class="text-eco fw-bold">Carbon Neutral</h4>
+                                <h5 class="text-eco fw-bold">Carbon Neutral</h5>
                                 <p class="text-muted mb-0">Operations</p>
                             </div>
                         </div>
                         <div class="col-md-4 text-center mb-3">
                             <div class="bg-white rounded-3 p-3 shadow-sm">
                                 <i class="fas fa-recycle text-eco fs-1 mb-2"></i>
-                                <h4 class="text-eco fw-bold">95%</h4>
+                                <h5 class="text-eco fw-bold">95%</h5>
                                 <p class="text-muted mb-0">Waste Reduction</p>
                             </div>
                         </div>
                         <div class="col-md-4 text-center mb-3">
                             <div class="bg-white rounded-3 p-3 shadow-sm">
                                 <i class="fas fa-solar-panel text-eco fs-1 mb-2"></i>
-                                <h4 class="text-eco fw-bold">100%</h4>
+                                <h5 class="text-eco fw-bold">100%</h5>
                                 <p class="text-muted mb-0">Renewable Energy</p>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -1358,7 +1374,7 @@
 	        
 	        <div class="container py-5">
 	            <div class="text-center mb-5">
-	                <h2 class="display-4 fw-bold mb-3 text-eco">Latest Insights</h2>
+	                <h3 class="fs-2 fw-bold mb-3 text-eco">Latest Insights</h3>
 	                <p class="text-muted fs-5">Stay updated with the latest trends and innovations in sustainability and technology.</p>
 	            </div>
 
@@ -1384,8 +1400,20 @@
 	                        </div>
 	                        <div class="card-body p-4">
 	                            <h5 class="card-title fw-bold text-eco mb-3" th:text="${post.title}">Blog Title</h5>
-	                            <p class="card-text text-muted mb-4" th:text="${post.content}">Blog content preview...</p>
-	                            <a href="#" class="text-eco text-decoration-none fw-semibold">
+								<div class="blog-content">
+								<p class="card-text text-muted mb-4 content-preview" 
+								   th:text="${#strings.length(post.content) > 120 ? #strings.substring(post.content, 0, 120) + '...' : post.content}">
+								   Blog content preview...
+								</p>
+								<!-- Full content (initially hidden) -->
+								<p class="card-text text-muted mb-4 content-full" 
+								   th:text="${post.content}" 
+								   style="display: none;">
+								   Full blog content...
+								</p>
+								</div>	                            
+								<a href="#" class="text-eco text-decoration-none fw-semibold" 								th:if="${#strings.length(post.content) > 120}"
+								   onclick="toggleReadMore(this); return false;">
 	                                Read More <i class="fas fa-arrow-right ms-1"></i>
 	                            </a>
 	                        </div>
@@ -1403,7 +1431,10 @@
 	    </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact-section py-5">
+    <section id="contact" 	th:class="'contact-section py-5' + (!${contactSection.hasImage} ? ' animated-bg' : '')"
+	         th:style="${contactSection.hasImage} ? 
+	            'background-image: url(/api/images/section/' + ${contactSection.id} + ');  background-size: cover; background-position: center; background-repeat: no-repeat;' 
+	            : ''">
         <div class="floating-leaves">
             <div class="leaf" style="left: 15%; animation-delay: 1s; opacity: 0.3;"></div>
             <div class="leaf" style="left: 35%; animation-delay: 3s; opacity: 0.3;"></div>
@@ -1414,7 +1445,7 @@
         <div class="container py-5">
             <!-- Heading -->
             <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold mb-3 text-white">Get In Touch</h2>
+                <h3 class="fs-2 fw-bold mb-3 text-white">Get In Touch</h3>
                 <p class="text-white-50 fs-5">
                     Ready to transform your business with sustainable solutions? Let's start the conversation.
                 </p>
@@ -1435,7 +1466,8 @@
                             </div>
                             <div>
                                 <h5 class="text-white fw-semibold mb-0">Our Location</h5>
-                                <p class="text-white-50 mb-0">123 Innovation Drive, Tech City, TC 12345</p>
+								<p th:text="${contactSection != null and contactSection.address != null ? contactSection.address : '123 Innovation, Tech City, TC 12345'}"
+								                               class="text-white-50 mb-0">123 Innovation, Tech City, TC 12345</p>
                             </div>
                         </div>
 
@@ -1447,7 +1479,8 @@
                             </div>
                             <div>
                                 <h5 class="text-white fw-semibold mb-0">Call Us</h5>
-                                <p class="text-white-50 mb-0">+1 (555) 123-4567</p>
+								<p th:text="${contactSection != null and contactSection.phone != null ? contactSection.phone : '+1 (555) 123-4567'}"
+								                               class="text-white-50 mb-0">+1 (555) 123-4567</p>
                             </div>
                         </div>
 
@@ -1459,7 +1492,8 @@
                             </div>
                             <div>
                                 <h5 class="text-white fw-semibold mb-0">Email Us</h5>
-                                <p class="text-white-50 mb-0">hello@zemyst.com</p>
+								<p th:text="${contactSection != null and contactSection.email != null ? contactSection.email : 'hello@zemyst.com'}"
+								                               class="text-white-50 mb-0">hello@zemyst.com</p>
                             </div>
                         </div>
 
@@ -1471,7 +1505,8 @@
                             </div>
                             <div>
                                 <h5 class="text-white fw-semibold mb-0">Working Hours</h5>
-                                <p class="text-white-50 mb-0">Mon - Fri: 9:00 AM - 6:00 PM</p>
+								<p th:text="${contactSection != null and contactSection.workingHours != null ? contactSection.workingHours : 'Mon - Fri: 9:00 AM - 6:00 PM'}"
+								                               class="text-white-50 mb-0">Mon - Fri: 9:00 AM - 6:00 PM</p>
                             </div>
                         </div>
 
@@ -1480,33 +1515,43 @@
 
                 <!-- Contact Form (Right Side) -->
                 <div class="col-lg-6 animate-fade-in-right">
-                    <form id="contactForm" class="glass-form p-4 p-md-5 rounded-4 shadow-lg">
+                    <form th:action="@{/send-email}" th:object="${contactForm}" method="post" class="glass-form p-4 p-md-5 rounded-4 shadow-lg">
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <label for="firstName" class="form-label text-white fw-medium">First Name</label>
-                                <input type="text" class="form-control py-3" id="firstName" name="firstName" placeholder="John">
+                                <input type="text" th:field="*{firstName}" class="form-control py-3" placeholder="John">
                             </div>
                             <div class="col-md-6">
                                 <label for="lastName" class="form-label text-white fw-medium">Last Name</label>
-                                <input type="text" class="form-control py-3" id="lastName" name="lastName" placeholder="Doe">
+                                <input type="text" th:field="*{lastName}" class="form-control py-3" placeholder="Doe">
                             </div>
                         </div>
 
                         <div class="mb-4 mt-4">
                             <label for="email" class="form-label text-white fw-medium">Email Address</label>
-                            <input type="email" class="form-control py-3" id="email" name="email" placeholder="john@example.com">
+                            <input type="email" th:field="*{email}" class="form-control py-3" placeholder="john@example.com">
                         </div>
-
-                        <div class="mb-4">
-                            <label for="rating" class="form-label text-white fw-medium">Rating</label>
-                            <input type="number" class="form-control py-3" id="rating" name="rating" placeholder="5" min="1" max="5">
-                        </div>
+						<div class="mb-4">
+												    <label for="company" class="form-label text-white fw-medium">Company</label>
+												    <input type="text"  th:field="*{company}" class="form-control py-3" placeholder=".....">
+												</div>
+						<div class="mb-4">
+						    <label for="subject" class="form-label text-white fw-medium">Subject</label>
+						    <input type="text" th:field="*{subject}" class="form-control py-3" placeholder="....">
+						</div>
+						
+						
 
                         <div class="mb-4">
                             <label for="message" class="form-label text-white fw-medium">Message</label>
-                            <textarea class="form-control py-3" id="message" name="message" rows="4"
+                            <textarea class="form-control py-3" th:field="*{message}"  rows="4"
                                 placeholder="Tell us about your project or inquiry..."></textarea>
                         </div>
+
+						<div class="mb-4">
+						    <label for="rating" class="form-label text-white fw-medium">Rating</label>
+						    <input type="number" th:field="*{rating}" class="form-control py-3" placeholder="5" min="1" max="5">
+						</div>
 
                         <button type="submit" class="btn btn-eco py-3 w-100 fs-5 fw-semibold">
                             Send Message <i class="fas fa-paper-plane ms-2"></i>
@@ -1520,33 +1565,41 @@
 
     <!-- Footer -->
     <footer class="footer-section py-5" role="contentinfo">
-        <div class="container position-relative">
-            <div class="row g-5">
+        <div class="floating-leaves">
+			<div class="leaf" style="left: 15%; animation-delay: 1s; opacity: 0.3;"></div>
+			<div class="leaf" style="left: 35%; animation-delay: 3s; opacity: 0.3;"></div>
+			<div class="leaf" style="left: 55%; animation-delay: 5s; opacity: 0.3;"></div>
+			<div class="leaf" style="left: 75%; animation-delay: 7s; opacity: 0.3;"></div>
+		</div>
+            <div class="row g-5 px-5 px-md-5">
                 <!-- Company Info -->
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-5 py-5  col-md-6">
                     <div class="d-flex align-items-center mb-4">
-                        <img src="/images/Logo.png" alt="Zemyst Logo" class="me-3" style="height: 40px; width: 40px; border-radius: 0.5rem;" />
-                        <span class="fs-4 fw-bold text-white">Zemyst</span>
+                        <img src="/images/Logo.png" alt="Zemyst Logo" class="me-3" style="max-height: 50px; border-radius: 0.5rem;" />
+                        <span class="fs-4 fw-bold text-white" style="font-family: 'Times New Roman',Times,Serif;">Zemyst</span>
                     </div>
                     <p class="text-white-50 mb-4">
                         Reimagining the future with smart sustainability solutions that transform businesses and protect our planet.
                     </p>
 
-                    <div>
-                        <a href="#" class="social-icon" aria-label="Twitter">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                    </div>
+					<div>
+					  <a href="https://www.linkedin.com/company/zemyst/?viewAsMember=true"
+					     class="btn btn-outline-light btn-lg rounded-circle me-2"
+					     target="_blank"
+					     aria-label="LinkedIn">
+					    <i class="fab fa-linkedin-in"></i>
+					  </a>
+					  <a href="https://www.instagram.com/zemyst_in/"
+					     class="btn btn-outline-light btn-lg rounded-circle"
+					     target="_blank"
+					     aria-label="Instagram">
+					    <i class="fab fa-instagram"></i>
+					  </a>
+					</div>
                 </div>
 
                 <!-- Quick Links -->
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 py-5 col-md-6">
                     <h5 class="fw-semibold mb-4 text-white">Quick Links</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="#home" class="text-white-50 text-decoration-none">Home</a></li>
@@ -1558,7 +1611,7 @@
                 </div>
 
                 <!-- Services -->
-                <div class="col-lg-3 col-md-6">
+                <!--<div class="col-lg-3 col-md-6">
                     <h5 class="fw-semibold mb-4 text-white">Services</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Sustainability Consulting</a></li>
@@ -1567,24 +1620,24 @@
                         <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Green Innovation</a></li>
                         <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Corporate Training</a></li>
                     </ul>
-                </div>
+                </div>-->
 
                 <!-- Contact Info -->
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 py-5 col-md-6">
                     <div class="mb-4">
-                        <h6 class="fw-semibold text-white">Our Location</h6>
-                        <p class="text-white-50 mb-0">123 Innovation Drive, Tech City, TC 12345</p>
-                    </div>
+                        <h5 class="fw-semibold text-white">Our Location</h5> 
+						<p th:text="${contactSection != null and contactSection.address != null ? contactSection.address : '123 Innovation, Tech City, TC 12345'}"
+														                               class="text-white-50 mb-0">123 Innovation, Tech City, TC 12345</p>                    </div>
                     
                     <div class="mb-4">
-                        <h6 class="fw-semibold text-white">Call Us</h6>
-                        <p class="text-white-50 mb-0">+1 (555) 123-4567</p>
-                    </div>
+                        <h5 class="fw-semibold text-white">Call Us</h5>
+						<p th:text="${contactSection != null and contactSection.phone != null ? contactSection.phone : '+1 (555) 123-4567'}"
+														                               class="text-white-50 mb-0">+1 (555) 123-4567</p>                    </div>
 
                     <div>
-                        <h6 class="fw-semibold text-white">Email Us</h6>
-                        <a href="mailto:hello@zemyst.com" class="text-white-50 text-decoration-none">hello@zemyst.com</a>
-                    </div>
+                        <h5 class="fw-semibold text-white">Email Us</h5>
+						<p th:text="${contactSection != null and contactSection.email != null ? contactSection.email : 'hello@zemyst.com'}"
+														                               class="text-white-50 mb-0">hello@zemyst.com</p>                    </div>
                 </div>
             </div>
 
@@ -1596,7 +1649,6 @@
                     <a href="#" class="text-white-50 text-decoration-none ms-2">Privacy Policy</a> |
                     <a href="#" class="text-white-50 text-decoration-none ms-2">Terms of Service</a>
                 </p>
-            </div>
         </div>
     </footer>
 
@@ -1604,22 +1656,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script>
-		document.addEventListener("DOMContentLoaded", function () {
-		    const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
-		    const navbarCollapse = document.querySelector(".navbar-collapse");
-
-		    navLinks.forEach(function (link) {
-		      link.addEventListener("click", function () {
-		        // Only collapse if it’s currently open
-		        if (navbarCollapse.classList.contains("show")) {
-		          const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
-		            toggle: true
-		          });
-		        }
-		      });
-		    });
-		  });
-        // Smooth scrolling for navigation links
+		function toggleReadMore(element) {
+		    const blogContent = element.closest('.card-body').querySelector('.blog-content');
+		    const preview = blogContent.querySelector('.content-preview');
+		    const fullContent = blogContent.querySelector('.content-full');
+		    const icon = element.querySelector('i');
+		    
+		    if (preview.style.display === 'none') {
+		        // Show preview, hide full content
+		        preview.style.display = 'block';
+		        fullContent.style.display = 'none';
+		        element.innerHTML = 'Read More <i class="fas fa-arrow-right ms-1"></i>';
+		    } else {
+		        // Show full content, hide preview
+		        preview.style.display = 'none';
+		        fullContent.style.display = 'block';
+		        element.innerHTML = 'Read Less <i class="fas fa-arrow-up ms-1"></i>';
+		    }
+		}
+		
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -1704,11 +1759,13 @@
 			               const navbar = document.querySelector('.navbar');
 			               if (navbar) {
 			                   if (window.scrollY > 50) {
-			                       navbar.style.background = 'linear-gradient(135deg, rgba(26, 61, 46, 0.95), rgba(45, 90, 71, 0.95))';
-			                       navbar.style.backdropFilter = 'blur(15px)';
+			                       navbar.style.background = 'white';
+			                       navbar.style.backdropFilter = 'none';
+								   navbar.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.1)'; 
 			                   } else {
-			                       navbar.style.background = 'linear-gradient(135deg, var(--eco-dark), var(--eco-medium))';
-			                       navbar.style.backdropFilter = 'blur(10px)';
+			                       navbar.style.background = 'white';
+			                       navbar.style.backdropFilter = 'none';
+								   navbar.style.boxShadow = 'none';
 			                   }
 			               }
 			           });
@@ -1757,6 +1814,22 @@
 					                       hsl(${hue}, 30%, 90%) 100%)`;
 					               }
 					           });
+							   
+							   document.addEventListener("DOMContentLoaded", function () {
+							       const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+							       const navbarCollapse = document.querySelector(".navbar-collapse");
+
+							       navLinks.forEach(function (link) {
+							         link.addEventListener("click", function () {
+							           // Only collapse if it’s currently open
+							           if (navbarCollapse.classList.contains("show")) {
+							             const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+							               toggle: true
+							             });
+							           }
+							         });
+							       });
+							     });
 
         // Contact form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {

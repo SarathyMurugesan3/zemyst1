@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import dto.BlogPostDTO;
+import dto.SectionDTO;
 import dto.TestimonialDTO;
 import service.AdminService;
 import service.LandingPageService;
@@ -40,6 +41,17 @@ public class AdminController {
         }
         return "admin";
     }
+
+@PostMapping("/delete-section-image")
+@ResponseBody
+public String deleteSectionImage(@RequestParam Long id) {
+    try {
+        landingPageService.deleteSectionImage(id);
+        return "Success";
+    } catch (Exception e) {
+        return "Error: " + e.getMessage();
+    }
+}
     @GetMapping("/blog")
     @ResponseBody
     public List<BlogPostDTO> getAllBlogPosts() {
@@ -56,17 +68,6 @@ public class AdminController {
         return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/images/contact")
-    @ResponseBody
-    public ResponseEntity<byte[]> getContactImage() {
-        byte[] imageData = landingPageService.getContactImage();
-        if (imageData == null) {
-            return ResponseEntity.notFound().build();
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
-    }
 
     @GetMapping("/edit")
     public String editPage(Model model) {
@@ -98,20 +99,44 @@ public class AdminController {
         headers.setContentType(MediaType.IMAGE_JPEG); // or detect MIME type
         return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
     }
-
     @PostMapping("/update-section")
     @ResponseBody
     public String updateSection(@RequestParam Long id, 
                                @RequestParam String content, 
-                               @RequestParam(required = false) MultipartFile image) {
+                               
+                               @RequestParam(required = false) MultipartFile image,
+                               @RequestParam(required = false) String phone,
+                               @RequestParam(required = false) String email,
+                               @RequestParam(required = false) String address,
+                               @RequestParam(required = false) String workingHours) {
         try {
-            landingPageService.updateSection(id, content, image);
+            SectionDTO dto = new SectionDTO();
+            dto.setId(id);
+            dto.setContent(content);
+            
+            // Check if this is contact section and handle contact info
+            if (phone != null || email != null || address != null || workingHours != null) {
+                SectionDTO.ContactInfo contactInfo = new SectionDTO.ContactInfo();
+                contactInfo.setPhone(phone);
+                contactInfo.setEmail(email);
+                contactInfo.setAddress(address);
+                contactInfo.setWorkingHours(workingHours);
+                dto.setContactInfo(contactInfo);
+                
+                System.out.println("Updating contact section with:");
+                System.out.println("Email: " + email);
+                System.out.println("Phone: " + phone);
+                System.out.println("Address: " + address);
+                System.out.println("Working Hours: " + workingHours);
+            }
+            
+            landingPageService.updateSection(id, content, image, dto);
             return "Success";
         } catch (Exception e) {
+            e.printStackTrace(); // Add this for debugging
             return "Error: " + e.getMessage();
         }
     }
-    
     @PostMapping("/update-product")
     @ResponseBody
     public String updateProduct(@RequestParam Long id,

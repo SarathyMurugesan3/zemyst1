@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import dto.BlogPostDTO;
+import dto.ContactFormDTO;
 import dto.ProductDTO;
 import dto.SectionDTO;
 import dto.TestimonialDTO;
-import service.EmailService;
 import service.LandingPageService;
 
 @Controller
@@ -33,8 +33,7 @@ public class LandingPageController {
     
     @Autowired
     private LandingPageService landingPageService;
-    @Autowired
-    private EmailService emailService; 
+
     
     @ModelAttribute("contactSection")
     public SectionDTO injectContactSection() {
@@ -46,22 +45,37 @@ public class LandingPageController {
         // Add all the data needed for the landing page
     	try {
     		SectionDTO homeSection = landingPageService.getSectionByName("home");
+            SectionDTO contactSection = landingPageService.getSectionByName("contact");
+
 
             model.addAttribute("homeSection", homeSection);
             model.addAttribute("aboutSection", landingPageService.getSectionByName("about"));
             model.addAttribute("impactSection", landingPageService.getSectionByName("impact"));
-            model.addAttribute("contactSection", landingPageService.getSectionByName("contact"));
+            model.addAttribute("story", landingPageService.getSectionByName("story"));
+            model.addAttribute("contactSection", contactSection);
             model.addAttribute("products", landingPageService.getAllProducts());
             model.addAttribute("blogPosts", landingPageService.getAllBlogPosts());
+            model.addAttribute("contactForm", new ContactFormDTO()); // ✅ add this
+            if (contactSection != null) {
+                System.out.println("Contact Section - Address: " + contactSection.getAddress());
+                System.out.println("Contact Section - Phone: " + contactSection.getPhone());
+                System.out.println("Contact Section - Email: " + contactSection.getEmail());
+                System.out.println("Contact Section - Working Hours: " + contactSection.getWorkingHours());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("homeSection", null);
             model.addAttribute("aboutSection", null);
+            model.addAttribute("story", null);
             model.addAttribute("products", List.of());
+            model.addAttribute("contactSection", null);
             model.addAttribute("blogPosts", List.of());
+            model.addAttribute("contactForm", new ContactFormDTO()); // also add here
+
         }
         return "landing";
     }
+
     @GetMapping("/products")
     public String products(Model model) {
     	try {
@@ -90,11 +104,6 @@ public class LandingPageController {
     	}
     	return "about";
     }
-    
-    @GetMapping("/contact")
-    public String contact(Model model) {
-    	return "contact";
-    }
     @PostMapping("/api/sections/update")
     @ResponseBody
     public ResponseEntity<?> updateSection(@RequestBody SectionDTO dto) {
@@ -106,34 +115,6 @@ public class LandingPageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                  .body(Collections.singletonMap("error", "Update failed"));
         }
-    }
-
-    @PostMapping("/contact/send")
-    @ResponseBody
-    public ResponseEntity<?> handleContactForm(@RequestBody Map<String, String> payload) {
-        String firstName = payload.get("firstName");
-        String lastName = payload.get("lastName");
-        String email = payload.get("email");
-        String company = payload.get("company");
-        String subject = payload.get("subject");
-        String message = payload.get("message");
-
-        String fullMessage = "From: " + firstName + " " + lastName + "\n"
-                           + "Email: " + email + "\n"
-                           + "Company: " + company + "\n"
-                           + "Subject: " + subject + "\n\n"
-                           + message;
-
-        SectionDTO contactSection = landingPageService.getSectionByName("contact");
-        if (contactSection == null || contactSection.getContactInfo() == null) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body("Admin email not configured");
-        }
-
-        String adminEmail = contactSection.getContactInfo().getEmail();
-        emailService.sendContactMail(adminEmail, "New Contact Form Submission", fullMessage);
-
-        return ResponseEntity.ok(Collections.singletonMap("success", true));
     }
 
     @GetMapping("/api/sections")
@@ -171,20 +152,18 @@ public class LandingPageController {
         Map<String, Object> response = new HashMap<>();
         response.put("id", section.getId());
         response.put("content", section.getContent());
-        response.put("hasImage", section.isHasImage());
+        response.put("hasImage", false);
 
-        SectionDTO.ContactInfo contactInfo = section.getContactInfo();
-        if (contactInfo != null) {
-            Map<String, String> contactMap = new HashMap<>();
-            contactMap.put("phone", contactInfo.getPhone());
-            contactMap.put("email", contactInfo.getEmail());
-            response.put("contactInfo", contactMap);
-        } else {
-            response.put("contactInfo", Collections.emptyMap());
-        }
+        Map<String, String> contactMap = new HashMap<>();
+        contactMap.put("phone", section.getPhone());
+        contactMap.put("email", section.getEmail());
+        contactMap.put("address", section.getAddress());
+        contactMap.put("workingHours", section.getWorkingHours());
+        response.put("contactInfo", contactMap);
 
         return ResponseEntity.ok(response);
     }
+    
     
     @GetMapping("/api/blog")
     @ResponseBody

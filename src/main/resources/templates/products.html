@@ -324,10 +324,11 @@
         #products {
             position: relative;
             z-index: 2;
-            background: linear-gradient(135deg, 
+            /*background: linear-gradient(135deg, 
                 rgba(10, 26, 10, 0.85) 0%, 
                 rgba(26, 46, 26, 0.9) 50%, 
-                rgba(15, 32, 39, 0.85) 100%);
+                rgba(15, 32, 39, 0.85) 100%);*/
+				background-color: #e8f5e9;
             backdrop-filter: blur(15px);
             border-top: 2px solid rgba(34, 197, 94, 0.3);
             border-bottom: 2px solid rgba(34, 197, 94, 0.3);
@@ -339,11 +340,12 @@
         #testimonials {
             position: relative;
             z-index: 2;
-            background: linear-gradient(135deg, 
+            /*background: linear-gradient(135deg, 
                 rgba(15, 32, 39, 0.9) 0%, 
                 rgba(26, 46, 26, 0.95) 50%, 
-                rgba(10, 26, 10, 0.9) 100%);
+                rgba(10, 26, 10, 0.9) 100%);*/
             backdrop-filter: blur(20px);
+			background-color: #e8f5e9;
         }
 
         /* Enhanced Card Styling */
@@ -772,8 +774,8 @@
     <section id="products" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold mb-3 text-white section-header">Our Products</h2>
-                <p class="text-white fs-5">Discover our comprehensive range of sustainability solutions designed to transform your business operations.</p>
+                <h2 class="display-4 fw-bold mb-3 text-dark">Our Products</h2>
+                <p class="text-dark fs-5">Emphasize research and development efforts to create that are derived from renewable resources, have a reduced carbon footprint, and offer comparable or superior performance to traditional materials.</p>
             </div>
 
             <div class="row">
@@ -791,8 +793,8 @@
                                  class="card-img-top image-zoom"/>
                         </div>
                         <div class="card-body p-4">
-                            <h5 class="card-title fw-bold text-white mb-3" th:text="${product.name}">Product Name</h5>
-                            <p class="card-text text-white-50" th:text="${product.description}">Product Description</p>
+                            <h5 class="card-title fw-bold text-dark mb-3" th:text="${product.name}">Product Name</h5>
+                            <p class="card-text text-dark-50" th:text="${product.description}">Product Description</p>
                             <div class="d-flex align-items-center text-primary mt-3" style="cursor: pointer;">
                             </div>
                         </div>
@@ -803,11 +805,12 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="py-5">
+    <section th:if="${testimonials != null and #lists.size(testimonials) >= 1}"  
+		id="testimonials" class="py-5">
         <div class="container-fluid">
             <div class="text-center mb-5">
-                <h2 class="display-4 fw-bold text-white mb-3 section-header">What Our Clients Say</h2>
-                <p class="text-white fs-5">Hear from industry leaders who have transformed their operations with our solutions.</p>
+                <h2 class="display-4 fw-bold text-dark mb-3 ">What Our Clients Say</h2>
+                <p class="text-dark fs-5">Hear from industry leaders who have transformed their operations with our solutions.</p>
             </div>
 
             <div class="testimonial-container">
@@ -827,12 +830,12 @@
                                     </span>
                                     <span th:if="${testimonial.rating < 5}" 
                                           th:each="i : ${#numbers.sequence(testimonial.rating + 1, 5)}">
-                                        <i class="far fa-star text-muted"></i>
+                                        <i class="far fa-star text-dark"></i>
                                     </span>
                                 </div>
 
                                 <!-- Testimonial Message -->
-                                <blockquote class="testimonial-message" th:text="${testimonial.message}">
+                                <blockquote class="testimonial-message text-dark" th:text="${testimonial.message}">
                                     "Working with this team has been transformative for our business. Their innovative approach to sustainability has not only reduced our environmental impact but also improved our bottom line significantly."
                                 </blockquote>
 
@@ -850,8 +853,8 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="client-name" th:text="${testimonial.name}">Sarah Johnson</div>
-                                        <div class="client-position" th:text="${testimonial.position}">CEO, Green Solutions Inc.</div>
+                                        <div class="client-name text-dark" th:text="${testimonial.name}">Sarah Johnson</div>
+                                        <div class="client-position text-dark" th:text="${testimonial.position}">CEO, Green Solutions Inc.</div>
                                     </div>
                                 </div>
                             </div>
@@ -872,6 +875,24 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+		function toggleReadMore(element) {
+			    const blogContent = element.closest('.card-body').querySelector('.blog-content');
+			    const preview = blogContent.querySelector('.content-preview');
+			    const fullContent = blogContent.querySelector('.content-full');
+			    const icon = element.querySelector('i');
+			    
+			    if (preview.style.display === 'none') {
+			        // Show preview, hide full content
+			        preview.style.display = 'block';
+			        fullContent.style.display = 'none';
+			        element.innerHTML = 'Read More <i class="fas fa-arrow-right ms-1"></i>';
+			    } else {
+			        // Show full content, hide preview
+			        preview.style.display = 'none';
+			        fullContent.style.display = 'block';
+			        element.innerHTML = 'Read Less <i class="fas fa-arrow-up ms-1"></i>';
+			    }
+			}
         // Enhanced Mouse Tracking for Cards
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('mousemove', (e) => {

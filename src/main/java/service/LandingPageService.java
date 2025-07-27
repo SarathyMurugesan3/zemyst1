@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dto.BlogPostDTO;
 import dto.ProductDTO;
@@ -21,8 +20,6 @@ import entity.BlogPost;
 import entity.Product;
 import entity.Section;
 import entity.Testimonial;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import repository.BlogRepository;
 import repository.ProductRepository;
 import repository.SectionRepository;
@@ -43,21 +40,47 @@ public class LandingPageService {
     @Autowired
     private BlogRepository blogRepository;
     
+    @Autowired
+    private EmailService emailService;
+
+    public void sendContactMail(String to, String subject, String body) {
+        emailService.sendEmail(to, subject, body);
+    }
+
+
+public void deleteSectionImage(Long id) {
+    Optional<Section> optionalSection = sectionRepository.findById(id);
+    if (optionalSection.isPresent()) {
+        Section section = optionalSection.get();
+        
+        // Don't allow image deletion for contact section
+      
+        
+        // Clear the image data
+        section.setImage(null);
+        section.setImageName(null);
+        section.setUpdatedAt(LocalDateTime.now());
+        
+        sectionRepository.save(section);
+    } else {
+        throw new RuntimeException("Section with ID " + id + " not found");
+    }
+}
+
     public List<SectionDTO> getAllSections() {
         return sectionRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-    
-    public byte[] getContactImage() {
-        Optional<Section> contactSection = sectionRepository.findByName("contact");
-        return contactSection.map(Section::getImage).orElse(null);
-    }
+   
 
     public SectionDTO getSectionByName(String name) {
         Optional<Section> section = sectionRepository.findByName(name);
-        return section.map(this::convertToDTO).orElse(null);
-    }
+        return section.map(s -> {
+            SectionDTO dto = convertToDTO(s);
+            dto.parseContentAsJson();  // 🔥 Parse the contact info from JSON if it's the contact section
+            return dto;
+        }).orElse(null);    }
     
     public List<ProductDTO> getAllProducts() {
         return productRepository.findAll().stream()
@@ -79,8 +102,11 @@ public class LandingPageService {
     
     public byte[] getImage(String type, Long id) {
         byte[] image = null;
-        switch (type) {
+        switch (type.toLowerCase()) {
             case "section":
+                image = sectionRepository.findById(id).map(Section::getImage).orElse(null);
+                break;
+            case "about":
                 image = sectionRepository.findById(id).map(Section::getImage).orElse(null);
                 break;
             case "product":
@@ -95,25 +121,95 @@ public class LandingPageService {
             case "blog":
                 image = blogRepository.findById(id).map(BlogPost::getImage).orElse(null);
                 break;
+            default:
+                System.out.println("Unknown image type: " + type);
+                break;
         }
 
-        System.out.println("Fetched image for " + type + " ID " + id + " with length: " + (image != null ? image.length : 0));
         return image;
     }
     
     // Section operations
-    public void updateSection(Long id, String content, MultipartFile image) throws IOException {
+    public void updateSection(Long id, String content, MultipartFile image, SectionDTO dto) throws IOException {
         Optional<Section> optionalSection = sectionRepository.findById(id);
         if (optionalSection.isPresent()) {
             Section section = optionalSection.get();
-            section.setContent(content);
+
+            if ("contact".equalsIgnoreCase(section.getName()) && dto.getContactInfo() != null) {
+                // Store contact info in individual fields AND as JSON for backward compatibility
+                SectionDTO.ContactInfo contactInfo = dto.getContactInfo();
+                
+                // Set individual fields in the entity
+                if (dto.getAddress() != null) section.setAddress(dto.getAddress());
+                if (dto.getPhone() != null) section.setPhone(dto.getPhone());
+                if (dto.getEmail() != null) section.setEmail(dto.getEmail());
+                if (dto.getWorkingHours() != null) section.setWorkingHours(dto.getWorkingHours());
+                
+                // Also store as JSON in content field for consistency
+                ObjectMapper mapper = new ObjectMapper();
+                String contactJson = mapper.writeValueAsString(contactInfo);
+                section.setContent(contactJson);
+            } else {
+                section.setContent(content);
+            }
+
+            // Handle image upload (but skip for contact section)
             if (image != null && !image.isEmpty()) {
                 section.setImage(image.getBytes());
                 section.setImageName(image.getOriginalFilename());
             }
+
             section.setUpdatedAt(LocalDateTime.now());
             sectionRepository.save(section);
+        } else {
+            throw new RuntimeException("Section with ID " + id + " not found");
         }
+    }
+
+    // Updated convertToDTO method to handle contact info properly
+    private SectionDTO convertToDTO(Section section) {
+        SectionDTO dto = new SectionDTO();
+        dto.setId(section.getId());
+        dto.setName(section.getName());
+        dto.setContent(section.getContent());
+        dto.setImageName(section.getImageName());
+        dto.setHasImage(section.getImage() != null && section.getImage().length > 0);
+        
+        if ("contact".equalsIgnoreCase(section.getName())) {
+            // First try to get from individual fields (preferred)
+        	dto.setAddress(section.getAddress());
+            dto.setPhone(section.getPhone());
+            dto.setEmail(section.getEmail());
+            dto.setWorkingHours(section.getWorkingHours());
+            if (section.getEmail() != null || section.getPhone() != null || 
+                section.getAddress() != null || section.getWorkingHours() != null) {
+                
+                SectionDTO.ContactInfo info = new SectionDTO.ContactInfo();
+                info.setEmail(section.getEmail());
+                info.setPhone(section.getPhone());
+                info.setAddress(section.getAddress());
+                info.setWorkingHours(section.getWorkingHours());
+                dto.setContactInfo(info);
+            } else {
+                // Fallback to JSON parsing from content field
+                try {
+                    String json = section.getContent();
+                    if (json != null && !json.isBlank()) {
+                        ObjectMapper mapper = new ObjectMapper();
+                        SectionDTO.ContactInfo info = mapper.readValue(json, SectionDTO.ContactInfo.class);
+                        dto.setContactInfo(info);
+                        dto.setEmail(info.getEmail());
+                        dto.setPhone(info.getPhone());
+                        dto.setAddress(info.getAddress());
+                        dto.setWorkingHours(info.getWorkingHours());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace(); // Log error but don't block
+                }
+            }
+        }
+
+        return dto;
     }
     
     // Product operations
@@ -212,24 +308,7 @@ public class LandingPageService {
         }
     }
 
-    // DTO conversion methods
-    private SectionDTO convertToDTO(Section section) {
-        SectionDTO dto = new SectionDTO();
-        dto.setId(section.getId());
-        dto.setName(section.getName());
-        dto.setContent(section.getContent());
-        dto.setImageName(section.getImageName());
-        dto.setHasImage(section.getImage() != null);
-        if (section.getName().equalsIgnoreCase("contact")) {
-            SectionDTO.ContactInfo contactInfo = new SectionDTO.ContactInfo();
-            contactInfo.setEmail("info@example.com");
-            contactInfo.setPhone("+91 9876543210");
-            dto.setContactInfo(contactInfo);
-        }
-
-
-        return dto;
-    }
+    
     
     private ProductDTO convertToDTO(Product product) {
         ProductDTO dto = new ProductDTO();
@@ -252,41 +331,6 @@ public class LandingPageService {
         dto.setImageName(testimonial.getImageName());
         dto.setHasImage(testimonial.getImage() != null);
         return dto;
-    }
-    public void sendContactMail(String to, String subject, String body) {
-        SectionDTO contactSection = getSectionByName("contact");
-
-        if (contactSection == null || contactSection.getContactInfo() == null) {
-            throw new RuntimeException("Contact section or email info missing");
-        }
-
-        String senderEmail = contactSection.getContactInfo().getEmail();
-        String appPassword = contactSection.getContent(); // app password stored in content field
-
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
-        mailSender.setUsername(senderEmail);
-        mailSender.setPassword(appPassword);
-
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
-
-            helper.setTo(to);
-            helper.setFrom(senderEmail);
-            helper.setSubject(subject);
-            helper.setText(body, false);
-
-            mailSender.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Email sending failed: " + e.getMessage());
-        }
     }
     public void updateSection(SectionDTO dto) {
         Optional<Section> optionalSection = sectionRepository.findById(dto.getId());

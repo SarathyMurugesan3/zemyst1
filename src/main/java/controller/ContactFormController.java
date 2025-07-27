@@ -1,44 +1,59 @@
 package controller;
 
 import dto.ContactFormDTO;
-import dto.SectionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import service.LandingPageService;
 
-@RestController
-@RequestMapping("/api/contact")
+@Controller
 public class ContactFormController {
 
     @Autowired
-    private LandingPageService landingPageService;
+    private JavaMailSender mailSender;
 
-    @PostMapping
-    public ResponseEntity<?> handleContactForm(@RequestBody ContactFormDTO form) {
-        SectionDTO contactSection = landingPageService.getSectionByName("contact");
-        if (contactSection == null || contactSection.getContactInfo() == null) {
-            return ResponseEntity.badRequest().body("Admin email not configured");
-        }
+    @GetMapping("/contact")
+    public String showForm(Model model) {
+        model.addAttribute("contactForm", new ContactFormDTO());
+        return "contact"; // contact.html
+    }
 
-        String adminEmail = contactSection.getContactInfo().getEmail();
-        String subject = "New Contact Form: " + form.getSubject();
-        String body = String.format("""
-                Name: %s %s
-                Email: %s
-                Company: %s
-                Subject: %s
-                Message:
-                %s
-                """, form.getFirstName(), form.getLastName(), form.getEmail(),
-                form.getCompany(), form.getSubject(), form.getMessage());
-
+    @PostMapping("/send-email")
+    public String sendEmail(@ModelAttribute("contactForm") ContactFormDTO form, Model model) {
         try {
-            landingPageService.sendContactMail(adminEmail, subject, body);
-            return ResponseEntity.ok("Message sent successfully");
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("srtupepr@gmail.com");
+            message.setTo("srtupepr@gmail.com");
+            message.setTo("srtupepr@gmail.com");
+            message.setSubject("Contact Form: " + form.getSubject());
+
+            String body = """
+                    First Name: %s
+                    Last Name: %s
+                    Email: %s
+                    Company: %s
+                    Rating: %d
+
+                    Message:
+                    %s
+                    """.formatted(
+                    form.getFirstName(),
+                    form.getLastName(),
+                    form.getEmail(),
+                    form.getCompany(),
+                    form.getRating(),
+                    form.getMessage()
+            );
+
+            message.setText(body);
+            mailSender.send(message);
+
+            model.addAttribute("message", "Email sent successfully!");
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body("Email sending failed: " + e.getMessage());
+            model.addAttribute("message", "Failed to send email: " + e.getMessage());
         }
+        return "thank-you";
     }
 }

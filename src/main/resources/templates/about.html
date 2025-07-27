@@ -204,12 +204,13 @@
 	    }
 
 	    .bg-eco-dark {
-	      background: linear-gradient(135deg, 
+	      /*background: linear-gradient(135deg, 
 	        #0a3d20 0%, 
 	        #1e4a32 25%, 
 	        #2d5a3d 50%, 
 	        #1a3b28 75%, 
-	        #0f2a1a 100%);
+	        #0f2a1a 100%);*/
+		  background-color: #e8f5e9;
 	      position: relative;
 	      overflow: hidden;
 	    }
@@ -302,7 +303,8 @@
 	    }
 
 	    .eco-title {
-	      background: linear-gradient(135deg, #ffffff, #e8f5e8);
+	      /*background: linear-gradient(135deg, #ffffff, #e8f5e8);*/
+		  background-color: #2D5A27;
 	      -webkit-background-clip: text;
 	      -webkit-text-fill-color: transparent;
 	      background-clip: text;
@@ -430,7 +432,7 @@
 	    }
 
 	    .eco-text {
-	      color: #e8f5e8;
+	      color:black;
 	      font-size: 1.1rem;
 	      line-height: 1.8;
 	      text-align: justify;
@@ -813,8 +815,19 @@
 	                    </div>
 	                    <div class="card-body p-4">
 	                        <h5 class="card-title fw-bold text-eco mb-3" th:text="${post.title}">Blog Title</h5>
-	                        <p class="card-text text-muted mb-4" th:text="${post.content}">Blog content preview...</p>
-	                        <a href="#" class="text-eco text-decoration-none fw-semibold">
+							<div class="blog-content">
+							<p class="card-text text-muted mb-4 content-preview" 
+							   th:text="${#strings.length(post.content) > 120 ? #strings.substring(post.content, 0, 120) + '...' : post.content}">
+							   Blog content preview...
+							</p>	          
+							<p class="card-text text-muted mb-4 content-full" 
+							   th:text="${post.content}" 
+							   style="display: none;">
+							   Full blog content...
+							</p>
+							</div>             
+							 <a href="#" class="text-eco text-decoration-none fw-semibold" 							th:if="${#strings.length(post.content) > 120}"
+							   onclick="toggleReadMore(this); return false;">
 	                            Read More <i class="fas fa-arrow-right ms-1"></i>
 	                        </a>
 	                    </div>
@@ -825,11 +838,12 @@
 	</section>
 	
   <!-- Testimonials Section -->
-  <section id="testimonials" class="py-5 bg-dark-green">
+  <section th:if="${testimonials != null and #lists.size(testimonials) >= 1}" 
+	 id="testimonials" class="py-5 bg-light-green">
     <div class="container-fluid">
       <div class="text-center mb-5">
-        <h2 class="display-4 fw-bold text-white mb-3" data-aos="fade-up">What Our Clients Say</h2>
-        <p class="text-white fs-5" data-aos="fade-up" data-aos-delay="100">Hear from industry leaders who have transformed their operations with our solutions.</p>
+        <h2 style="color: #2D5A27;" class="display-4 fw-bold mb-3" data-aos="fade-up">What Our Clients Say</h2>
+        <p style="color: #2D5A27;" class="fs-5" data-aos="fade-up" data-aos-delay="100">Hear from industry leaders who have transformed their operations with our solutions.</p>
       </div>
 
       <div class="testimonial-container">
@@ -895,6 +909,24 @@
   <!-- AOS -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
+	function toggleReadMore(element) {
+	    const blogContent = element.closest('.card-body').querySelector('.blog-content');
+	    const preview = blogContent.querySelector('.content-preview');
+	    const fullContent = blogContent.querySelector('.content-full');
+	    const icon = element.querySelector('i');
+	    
+	    if (preview.style.display === 'none') {
+	        // Show preview, hide full content
+	        preview.style.display = 'block';
+	        fullContent.style.display = 'none';
+	        element.innerHTML = 'Read More <i class="fas fa-arrow-right ms-1"></i>';
+	    } else {
+	        // Show full content, hide preview
+	        preview.style.display = 'none';
+	        fullContent.style.display = 'block';
+	        element.innerHTML = 'Read Less <i class="fas fa-arrow-up ms-1"></i>';
+	    }
+	}
 	AOS.init({
 	     duration: 1000,
 	     once: true,

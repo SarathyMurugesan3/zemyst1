@@ -1,6 +1,7 @@
 package entity;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,8 +37,49 @@ public class Section {
 	
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt = LocalDateTime.now();
-	
+	@Lob
+    private String address;
+    
+    private String phone;
+    
+    private String email;
+    
+    @Column(name = "working_hours")
+    @Lob
+    private String workingHours;
 	public Section() {}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getWorkingHours() {
+		return workingHours;
+	}
+
+	public void setWorkingHours(String workingHours) {
+		this.workingHours = workingHours;
+	}
 
 	public Long getId() {
 		return id;
@@ -93,6 +135,11 @@ public class Section {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Optional<Section> map(Object object) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
